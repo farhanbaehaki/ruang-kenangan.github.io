@@ -323,16 +323,19 @@ body {
   overflow: hidden;
 }
 
-/* layer lembut */
 .section::before {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,200,200,0.18), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(255,220,180,0.18), transparent 45%);
-  opacity: 0.6;
-  z-index: -1;
+    radial-gradient(circle at 15% 20%, rgba(255,200,200,0.25), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(255,220,180,0.25), transparent 50%);
+  z-index: 0;
+}
+
+.section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .floating-hearts {
