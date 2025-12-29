@@ -139,9 +139,8 @@ body.dark .letter h3 { color: #1E1E1E; } /* teks hitam untuk surat */
 
 /* DARK MODE TOGGLE BUTTON MENGAMBANG */
 #themeToggle {
-  position: sticky; /* tetap di pojok kanan atas walau scroll */
+  position: absolute; /* tetap di pojok kanan atas walau scroll */
   top: 20px;
-  margin-left: auto; /* agar tetap di kanan */
   right: 20px;
   border: none;
   padding: 10px 12px;
