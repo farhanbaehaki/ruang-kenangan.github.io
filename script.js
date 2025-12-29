@@ -103,3 +103,24 @@ window.addEventListener("scroll", () => {
   const angle = 45 + scrollPos * 0.1; // perlahan berubah
   body.style.background = `linear-gradient(${angle}deg, #dceeff, #ffffff, #e0f0ff, #a4d4f2)`;
 });
+
+const bubblesContainer = document.createElement("div");
+bubblesContainer.className = "floating-bubbles";
+document.body.appendChild(bubblesContainer);
+
+setInterval(() => {
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  const size = Math.random() * 20 + 10;
+  bubble.style.width = bubble.style.height = size + "px";
+  bubble.style.left = Math.random() * 100 + "vw";
+  bubble.style.animationDuration = 8 + Math.random() * 6 + "s";
+
+  bubblesContainer.appendChild(bubble);
+  setTimeout(() => bubble.remove(), 14000);
+}, 600);
+
+window.addEventListener("load", () => {
+  const heroText = document.querySelector(".hero h1, .hero h2");
+  heroText.forEach(el => el.classList.add("show"));
+});
