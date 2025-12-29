@@ -129,13 +129,14 @@ function typeWriter() {
   }
 });
 
-/* ===== SURPRISE ===== */
+// Typewriter untuk surat
+letterText.style.opacity = 1; // muncul saat mulai typewriter
+
+// Surprise button
 function showSurprise() {
   const text = document.getElementById("surpriseText");
   const btn = document.querySelector(".surprise");
-
   if (!text) return;
-
   text.classList.add("show");
   btn && (btn.style.display = "none");
 }
