@@ -1,4 +1,4 @@
-/* RESET & GLOBAL */
+
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -90,16 +90,53 @@ h3 { font-family:'Playfair Display', serif; margin-bottom:24px; }
 
 /* DARK MODE */
 body.dark {
-  background:#121212;
-  color:#F1ECE7;
+  background: #121212;
+  color: #F1ECE7; /* teks umum dark mode */
 }
-body.dark .section { background:transparent; }
-body.dark p, body.dark h1, body.dark h2, body.dark h3 { color:#F1ECE7; }
-body.dark small { color:#B5B5B5; }
-body.dark button { background:#2A2A2A; color:#F1ECE7; }
-body.dark .gallery img { filter:brightness(0.9); }
+
+body.dark .section {
+  background: transparent;
+}
+
+/* Teks umum di dark mode */
+body.dark p,
+body.dark h1,
+body.dark h2,
+body.dark h3 {
+  color: #F1ECE7;
+}
+
+/* Teks kecil di dark mode */
+body.dark small {
+  color: #B5B5B5;
+}
+
+/* Tombol dark mode */
+body.dark button {
+  background: #2A2A2A;
+  color: #F1ECE7;
+}
+
+/* Gallery dark mode */
+body.dark .gallery img {
+  filter: brightness(0.9);
+}
+
+/* Hero gradient dark mode */
 body.dark .hero::before {
   background: linear-gradient(120deg, #1a1a1a, #2a2a2a, #121212, #2a2a2a, #1a1a1a);
+}
+
+/* Teks letter tetap hitam di dark mode */
+body.dark .letter p,
+body.dark .letter h3 {
+  color: #1E1E1E; /* teks hitam untuk surat */
+}
+
+/* Tombol mode cerah jadi abu */
+body:not(.dark) button {
+  background: #B0B0B0; /* abu */
+  color: #1E1E1E; /* teks tombol gelap */
 }
 
 /* MOBILE */
@@ -116,16 +153,4 @@ body.dark .hero::before {
   .letter{width:95%;padding:18px;}
   button{padding:12px 24px;font-size:13px;}
   .floating-hearts .heart{font-size:10px;}
-}
-
-/* TEXT LETTER */
-.letter p, .letter h3 {
-  color: #1E1E1E; /* default untuk mode terang */
-  transition: color 0.4s ease;
-}
-
-/* MODE GELAP */
-body.dark .letter p,
-body.dark .letter h3 {
-  color: #000000; /* teks letter jadi hitam saat mode gelap */
 }
