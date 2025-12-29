@@ -153,3 +153,21 @@ setInterval(() => {
   document.getElementById("minutes").textContent = Math.floor(d / 60000) % 60;
   document.getElementById("seconds").textContent = Math.floor(d / 1000) % 60;
 }, 1000);
+
+const heartsContainer = document.querySelector(".floating-hearts");
+
+if (heartsContainer) {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = Math.random() > 0.5 ? "🤍" : "💗";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 8 + Math.random() * 6 + "s";
+    heart.style.fontSize = 12 + Math.random() * 10 + "px";
+
+    heartsContainer.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 14000);
+  }, 900);
+}
