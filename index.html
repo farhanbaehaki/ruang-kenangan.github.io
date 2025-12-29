@@ -1,84 +1,106 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Letter Surprise</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter&family=Playfair+Display&family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Naura 🤍</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- DARK/LIGHT TOGGLE -->
-<button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+  <!-- FLOATING BACKGROUND ANIMATIONS -->
+  <div class="floating-bubbles"></div>
+  <div class="floating-hearts"></div>
 
-<!-- HERO -->
-<section class="hero">
-  <h1>Happy Birthday!</h1>
-  <h2>May your day be filled with love, laughter, and joy 💌</h2>
-</section>
+  <!-- DARK MODE BUTTON -->
+  <button id="themeToggle" aria-label="Toggle Dark Mode">🌙</button>
 
-<!-- ENVELOPE & LETTERS -->
-<section class="cssletter">
-  <div class="envelope">
-    <button class="heart" id="openEnvelope" aria-label="Open Envelope">
-      <span class="heart-text">Open</span>
-    </button>
-    <div class="envelope-flap"></div>
-    <div class="envelope-folds">
-      <div class="envelope-left"></div>
-      <div class="envelope-right"></div>
-      <div class="envelope-bottom"></div>
+  <!-- HERO SECTION -->
+  <section class="section hero fade-up">
+    <h1 class="fade-slide">Happy Birthday</h1>
+    <h2 class="fade-slide">my favorite person 🎂</h2>
+    <button id="startBtn">klik pelan-pelan yaa 👉</button>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="section fade-up">
+    <h3>menuju hari spesial 🎂</h3>
+    <div id="countdown">
+      <div><span id="days">0</span><small>hari</small></div>
+      <div><span id="hours">0</span><small>jam</small></div>
+      <div><span id="minutes">0</span><small>menit</small></div>
+      <div><span id="seconds">0</span><small>detik</small></div>
     </div>
-  </div>
+  </section>
 
-  <div class="letters">
-    <!-- Contoh 2 letter, bisa ditambahkan semua -->
-    <blockquote class="letter center" id="1" tabindex="0">
-      <button class="closeLetter" title="Close Amelia's letter">Close</button>
-      <p>From the moment our paths intertwined, you filled my days with laughter and my nights with sweet dreams...</p>
-      <cite>Amelia Rose</cite>
-    </blockquote>
-    <blockquote class="letter center" id="2" tabindex="0">
-      <button class="closeLetter" title="Close Oliver's letter">Close</button>
-      <p>Every shared glance and whispered secret adds another verse to our endless love song...</p>
-      <cite>Oliver James</cite>
-    </blockquote>
-  </div>
-</section>
+  <!-- MESSAGE SECTIONS -->
+  <section class="section fade-up">
+    <p>
+      Naura,<br><br>
+      kamu itu lucu tanpa sadar,<br>
+      nyebelin tanpa niat,<br>
+      tapi selalu berhasil bikin aku nyaman.<br><br>
+      Dan entah gimana caranya,<br>
+      semua hal tentang kamu<br>
+      selalu aku suka.
+    </p>
+  </section>
 
-<!-- GALLERY -->
-<section class="section gallery-section">
-  <h3>Memories</h3>
-  <div class="gallery">
-    <img src="https://via.placeholder.com/300x200" alt="gallery 1">
-    <img src="https://via.placeholder.com/300x200" alt="gallery 2">
-  </div>
-</section>
+  <section class="section fade-up">
+    <h3>our little story</h3>
+    <p>
+      Kita punya cerita yang nggak selalu sempurna,<br>
+      tapi selalu jujur.<br><br>
+      Dari hal kecil,<br>
+      sampai momen yang bikin aku sadar:<br>
+      <i>“oh, aku sayang orang ini.”</i>
+    </p>
+  </section>
 
-<!-- COUNTDOWN -->
-<section class="section countdown-section">
-  <h3>Countdown</h3>
-  <div id="countdown">
-    <div><span id="days">0</span><small>Days</small></div>
-    <div><span id="hours">0</span><small>Hours</small></div>
-    <div><span id="minutes">0</span><small>Minutes</small></div>
-    <div><span id="seconds">0</span><small>Seconds</small></div>
-  </div>
-</section>
+  <section class="section fade-up">
+    <h3>some memories 🤍</h3>
+    <div class="gallery">
+      <img src="assets/photos/1.jpg" alt="">
+      <img src="assets/photos/2.jpg" alt="">
+      <img src="assets/photos/3.jpg" alt="">
+      <img src="assets/photos/4.jpg" alt="">
+    </div>
+    <small>*aku senyum sendiri tiap lihat ini</small>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <a href="https://frills.dev" target="_blank">
-    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 25" width="100" height="33" aria-hidden="true">
-      <path class="logo-tx" d="..."></path>
-      <g>
-        <path class="logo-x" d="..."></path>
-      </g>
-    </svg>
-  </a>
-</footer>
+  <section class="section fade-up">
+    <p>
+      Di ulang tahun kamu ini,<br>
+      aku cuma mau bilang:<br><br>
+      aku bangga sama kamu.<br>
+      sama caramu bertahan,<br>
+      sama caramu tumbuh.<br><br>
+      semoga hari-hari kamu lebih ringan,<br>
+      dan aku masih boleh ada di samping kamu.<br><br>
+      Selamat ulang tahun, sayang 🤍
+    </p>
+  </section>
 
-<script src="script.js"></script>
+  <!-- SURPRISE -->
+  <section class="section fade-up">
+    <button class="surprise" onclick="showSurprise()">
+      jangan klik kalau belum senyum 😜
+    </button>
+    <p id="surpriseText">
+      Kalau suatu hari kamu capek,<br>
+      buka website ini lagi ya.<br><br>
+      Ini bukti kecil,<br>
+      kalau ada seseorang yang selalu milih kamu 🤍
+    </p>
+  </section>
+
+  <!-- AUDIO -->
+  <audio id="music" loop>
+    <source src="assets/music/sempurna.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- SCRIPT -->
+  <script src="script.js"></script>
 </body>
 </html>
