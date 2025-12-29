@@ -171,6 +171,7 @@ body.dark .heart { opacity:0.25; }
   .floating-hearts .heart{ font-size:10px; }
 }
 
+/* FLOATING BUBBLES */
 .floating-bubbles {
   position: fixed;
   inset: 0;
@@ -182,17 +183,18 @@ body.dark .heart { opacity:0.25; }
 .bubble {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.3;
+  opacity: 0.25;
   background: rgba(173,216,230,0.4);
   animation: floatUp linear infinite;
 }
 
 @keyframes floatUp {
   from { transform: translateY(100vh) scale(1); opacity: 0; }
-  10% { opacity: 0.3; }
+  10% { opacity: 0.25; }
   to { transform: translateY(-10vh) scale(1.5); opacity: 0; }
 }
 
+/* HERO TEXT SLIDE */
 .fade-slide {
   opacity: 0;
   transform: translateY(30px);
@@ -200,6 +202,18 @@ body.dark .heart { opacity:0.25; }
 }
 
 .fade-slide.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SCROLL FADE + SLIDE */
+.section.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.section.fade-up.show {
   opacity: 1;
   transform: translateY(0);
 }

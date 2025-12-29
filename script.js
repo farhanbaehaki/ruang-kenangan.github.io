@@ -104,9 +104,8 @@ window.addEventListener("scroll", () => {
   body.style.background = `linear-gradient(${angle}deg, #dceeff, #ffffff, #e0f0ff, #a4d4f2)`;
 });
 
-const bubblesContainer = document.createElement("div");
-bubblesContainer.className = "floating-bubbles";
-document.body.appendChild(bubblesContainer);
+/* ===== FLOATING BUBBLES ===== */
+const bubblesContainer = document.querySelector(".floating-bubbles");
 
 setInterval(() => {
   const bubble = document.createElement("div");
@@ -120,7 +119,17 @@ setInterval(() => {
   setTimeout(() => bubble.remove(), 14000);
 }, 600);
 
+/* ===== HERO SLIDE ANIMATION ===== */
 window.addEventListener("load", () => {
-  const heroText = document.querySelector(".hero h1, .hero h2");
-  heroText.forEach(el => el.classList.add("show"));
+  const heroTexts = document.querySelectorAll(".fade-slide");
+  heroTexts.forEach(el => el.classList.add("show"));
 });
+
+/* ===== SCROLL REVEAL ===== */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) entry.target.classList.add("show");
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".section.fade-up").forEach(el => revealObserver.observe(el));
