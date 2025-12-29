@@ -9,9 +9,10 @@ body {
   text-align: center;
   position: relative;
   overflow-x: hidden;
-  background: linear-gradient(-45deg, #dceeff, #ffffff, #e0f0ff, #a4d4f2);
+  background: linear-gradient(45deg, #dceeff, #ffffff, #e0f0ff, #a4d4f2);
   background-size: 400% 400%;
   animation: gradientMove 20s ease infinite;
+  transition: background 0.8s ease;
 }
 
 @keyframes gradientMove {
@@ -19,6 +20,7 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
 /* SECTION */
 .section {
   min-height: 100vh;

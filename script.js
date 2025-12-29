@@ -94,3 +94,12 @@ if(heartsContainer){
     setTimeout(()=>heart.remove(),14000);
   },900);
 }
+
+window.addEventListener("scroll", () => {
+  const scrollPos = window.scrollY;
+  const body = document.body;
+
+  // ubah arah gradient berdasarkan scroll
+  const angle = 45 + scrollPos * 0.1; // perlahan berubah
+  body.style.background = `linear-gradient(${angle}deg, #dceeff, #ffffff, #e0f0ff, #a4d4f2)`;
+});
