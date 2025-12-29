@@ -26,19 +26,43 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(()=>{if(started)return; started=true; typeWriter();},900);
     });
 
-    function typeWriter(){
-      if(index>=fullText.length){letterText.classList.remove("type-caret"); return;}
-      letterText.classList.add("type-caret");
-      if(fullText[index]==="<"){const tagEnd=fullText.indexOf(">",index);const tag=fullText.substring(index,tagEnd+1);
-        letterText.innerHTML+=tag; index=tagEnd+1;
-        if(tag==="<br>" && fullText.substring(index,index+4)==="<br>"){letterText.innerHTML+="<br"; index+=4; setTimeout(typeWriter,800); return;}
-        setTimeout(typeWriter,0); return;
-      }
-      const char=fullText.charAt(index); letterText.innerHTML+=char; index++;
-      let delay=35; if(char===",") delay=120; if(char===".") delay=240;
-      setTimeout(typeWriter,delay);
-    }
+ function typeWriter(){
+  if(index >= fullText.length){
+    letterText.classList.remove("type-caret");
+    return;
   }
+  
+  letterText.classList.add("type-caret");
+
+  // HANDLE TAG HTML
+  if(fullText[index] === "<"){
+    const tagEnd = fullText.indexOf(">", index);
+    const tag = fullText.substring(index, tagEnd + 1);
+    letterText.innerHTML += tag;
+    index = tagEnd + 1;
+
+    // Pause lebih lama untuk <br><br>
+    if(tag === "<br>" && fullText.substring(index, index + 4) === "<br>"){
+      letterText.innerHTML += "<br>";
+      index += 4;
+      setTimeout(typeWriter, 800); // 💗 pause paragraf
+      return;
+    }
+
+    setTimeout(typeWriter, 0);
+    return;
+  }
+
+  const char = fullText.charAt(index);
+  letterText.innerHTML += char;
+  index++;
+
+  let delay = 35;
+  if(char === ",") delay = 120;
+  if(char === ".") delay = 240;
+
+  setTimeout(typeWriter, delay);
+}
 
   /* SCROLL REVEAL */
   const revealObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add("show");});},{threshold:0.15});
@@ -88,3 +112,4 @@ setInterval(()=>{
   bubble.style.left=Math.random()*100+"vw"; bubble.style.animationDuration=8+Math.random()*6+"s";
   bubblesContainer.appendChild(bubble); setTimeout(()=>bubble.remove(),14000);
 },600);
+
