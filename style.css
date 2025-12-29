@@ -9,20 +9,28 @@ body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at t
 .section > * { position:relative; z-index:1; }
 
 /* HERO */
-.hero h1 { font-family:'Playfair Display', serif; font-size:48px; }
-.hero h2 { font-size:18px; margin:12px 0 40px; color:#555; }
+.hero {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
 
-/* HERO GRADIENT HALUS */
-.hero { position: relative; overflow: hidden; z-index: 1; }
+.hero h1, .hero h2 {
+  position: relative;  /* pastikan di atas background */
+  z-index: 2;
+  color: #1E1E1E;      /* teks gelap agar terlihat di gradient */
+}
+
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(120deg, #dceeff, #a0d8ff, #ffffff, #c4e0ff, #dceeff);
   background-size: 200% 200%;
-  z-index: -1;
+  z-index: 1;           /* lebih rendah dari teks */
   animation: smoothGradient 30s ease infinite;
 }
+
 @keyframes smoothGradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
