@@ -211,3 +211,64 @@ body.dark .gallery img {
 body.dark .heart {
   opacity: 0.25;
 }
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .hero h2 {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .section {
+    padding: 60px 16px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  #countdown {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  #countdown div {
+    min-width: 60px;
+    padding: 12px 14px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .envelope-wrapper {
+    width: 200px;
+    height: 260px;
+  }
+
+  .letter {
+    width: 95%;
+    padding: 18px;
+  }
+
+  button {
+    padding: 12px 24px;
+    font-size: 13px;
+  }
+
+  .floating-hearts .heart {
+    font-size: 10px;
+  }
+}
