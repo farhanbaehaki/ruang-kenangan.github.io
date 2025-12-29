@@ -8,13 +8,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- Floating bubbles -->
+  <!-- FLOATING BACKGROUND ANIMATIONS -->
   <div class="floating-bubbles"></div>
-
-  <!-- Floating hearts tetap di bawah -->
   <div class="floating-hearts"></div>
+
+  <!-- DARK MODE BUTTON -->
+  <button id="themeToggle" aria-label="Toggle Dark Mode">🌙</button>
 
   <!-- HERO SECTION -->
   <section class="section hero fade-up">
@@ -23,23 +25,8 @@
     <button id="startBtn">klik pelan-pelan yaa 👉</button>
   </section>
 
-  <!-- MUSIC -->
-  <audio id="music" loop>
-    <source src="assets/music/sempurna.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- DARK MODE BUTTON -->
-  <button id="themeToggle" aria-label="Toggle Dark Mode">🌙</button>
-
-  <!-- OPENING -->
-  <section class="section hero">
-    <h1>Happy Birthday</h1>
-    <h2>my favorite person 🎂</h2>
-    <button id="startBtn">klik pelan-pelan yaa 👉</button>
-  </section>
-
   <!-- COUNTDOWN -->
-  <section class="section fade">
+  <section class="section fade-up">
     <h3>menuju hari spesial 🎂</h3>
     <div id="countdown">
       <div><span id="days">0</span><small>hari</small></div>
@@ -49,8 +36,8 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="section fade">
+  <!-- MESSAGE SECTIONS -->
+  <section class="section fade-up">
     <p>
       Naura,<br><br>
       kamu itu lucu tanpa sadar,<br>
@@ -62,8 +49,7 @@
     </p>
   </section>
 
-  <!-- STORY -->
-  <section class="section fade">
+  <section class="section fade-up">
     <h3>our little story</h3>
     <p>
       Kita punya cerita yang nggak selalu sempurna,<br>
@@ -74,20 +60,18 @@
     </p>
   </section>
 
-  <!-- GALLERY -->
-  <section class="section fade">
+  <section class="section fade-up">
     <h3>some memories 🤍</h3>
     <div class="gallery">
-      <img src="assets/photos/1.jpg" alt="foto 1">
-      <img src="assets/photos/2.jpg" alt="foto 2">
-      <img src="assets/photos/3.jpg" alt="foto 3">
-      <img src="assets/photos/4.jpg" alt="foto 4">
+      <img src="assets/photos/1.jpg" alt="">
+      <img src="assets/photos/2.jpg" alt="">
+      <img src="assets/photos/3.jpg" alt="">
+      <img src="assets/photos/4.jpg" alt="">
     </div>
     <small>*aku senyum sendiri tiap lihat ini</small>
   </section>
 
-  <!-- MESSAGE -->
-  <section class="section fade">
+  <section class="section fade-up">
     <p>
       Di ulang tahun kamu ini,<br>
       aku cuma mau bilang:<br><br>
@@ -101,8 +85,10 @@
   </section>
 
   <!-- SURPRISE -->
-  <section class="section fade">
-    <button class="surprise" onclick="showSurprise()">jangan klik kalau belum senyum 😜</button>
+  <section class="section fade-up">
+    <button class="surprise" onclick="showSurprise()">
+      jangan klik kalau belum senyum 😜
+    </button>
     <p id="surpriseText">
       Kalau suatu hari kamu capek,<br>
       buka website ini lagi ya.<br><br>
@@ -111,8 +97,8 @@
     </p>
   </section>
 
-  <!-- LETTER / ENVELOPE -->
-  <section class="section fade secret">
+  <!-- SECRET LETTER -->
+  <section class="section fade-up secret">
     <div class="envelope-wrapper" id="envelope">
       <div class="envelope">
         <div class="envelope-top"></div>
@@ -124,22 +110,22 @@
         <p id="letterText">
           Kalau kamu baca ini,<br>
           berarti aku cukup berani buat jujur sepenuhnya.<br><br>
-
           Aku sayang kamu bukan karena hal besar,<br>
           tapi karena hal kecil yang kamu lakukan tanpa sadar.<br><br>
-
           Terima kasih sudah jadi rumah yang hangat.<br>
           Aku harap aku bisa terus belajar jadi tempat pulang yang baik buat kamu.<br><br>
-
           — aku, yang selalu milih kamu
         </p>
       </div>
+
+      <small>*klik amplopnya yaa 💌</small>
     </div>
-    <small>*klik amplopnya yaa 💌</small>
   </section>
 
-  <!-- FLOATING HEARTS -->
-  <div class="floating-hearts"></div>
+  <!-- AUDIO -->
+  <audio id="music" loop>
+    <source src="assets/music/sempurna.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- SCRIPT -->
   <script src="script.js"></script>
