@@ -77,8 +77,16 @@ body.dark .heart { opacity:0.25; }
 .bubble { position:absolute; border-radius:50%; opacity:0.25; background: rgba(173,216,230,0.4); animation:floatUp linear infinite; }
 
 /* HERO SLIDE */
-.fade-slide { opacity:0; transform:translateY(30px); transition:opacity 1s ease, transform 1s ease; }
-.fade-slide.show { opacity:1; transform:translateY(0); }
+.fade-slide {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-slide.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* SCROLL FADE-UP */
 .section.fade-up { opacity:0; transform:translateY(40px); transition:opacity 1s ease, transform 1s ease; }
