@@ -1,0 +1,138 @@
+<!-- INI HTML !!! -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Naura 🤍</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- MUSIC -->
+  <audio id="music" loop>
+    <source src="assets/music/sempurna.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- DARK MODE BUTTON -->
+  <button id="themeToggle" aria-label="Toggle Dark Mode">🌙</button>
+
+  <!-- OPENING -->
+  <section class="section hero">
+    <h1>Happy Birthday</h1>
+    <h2>my favorite person 🎂</h2>
+    <button id="startBtn">klik pelan-pelan yaa 👉</button>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="section fade">
+    <h3>menuju hari spesial 🎂</h3>
+    <div id="countdown">
+      <div><span id="days">0</span><small>hari</small></div>
+      <div><span id="hours">0</span><small>jam</small></div>
+      <div><span id="minutes">0</span><small>menit</small></div>
+      <div><span id="seconds">0</span><small>detik</small></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section fade">
+    <p>
+      Naura,<br><br>
+      kamu itu lucu tanpa sadar,<br>
+      nyebelin tanpa niat,<br>
+      tapi selalu berhasil bikin aku nyaman.<br><br>
+      Dan entah gimana caranya,<br>
+      semua hal tentang kamu<br>
+      selalu aku suka.
+    </p>
+  </section>
+
+  <!-- STORY -->
+  <section class="section fade">
+    <h3>our little story</h3>
+    <p>
+      Kita punya cerita yang nggak selalu sempurna,<br>
+      tapi selalu jujur.<br><br>
+      Dari hal kecil,<br>
+      sampai momen yang bikin aku sadar:<br>
+      <i>“oh, aku sayang orang ini.”</i>
+    </p>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="section fade">
+    <h3>some memories 🤍</h3>
+    <div class="gallery">
+      <img src="assets/photos/1.jpg">
+      <img src="assets/photos/2.jpg">
+      <img src="assets/photos/3.jpg">
+      <img src="assets/photos/4.jpg">
+    </div>
+    <small>*aku senyum sendiri tiap lihat ini</small>
+  </section>
+
+  <!-- MESSAGE -->
+  <section class="section fade">
+    <p>
+      Di ulang tahun kamu ini,<br>
+      aku cuma mau bilang:<br><br>
+      aku bangga sama kamu.<br>
+      sama caramu bertahan,<br>
+      sama caramu tumbuh.<br><br>
+      semoga hari-hari kamu lebih ringan,<br>
+      dan aku masih boleh ada di samping kamu.<br><br>
+      Selamat ulang tahun, sayang 🤍
+    </p>
+  </section>
+
+  <!-- SURPRISE -->
+  <section class="section fade">
+    <button class="surprise" onclick="showSurprise()">
+      jangan klik kalau belum senyum 😜
+    </button>
+    <p id="surpriseText">
+      Kalau suatu hari kamu capek,<br>
+      buka website ini lagi ya.<br><br>
+      Ini bukti kecil,<br>
+      kalau ada seseorang yang selalu milih kamu 🤍
+    </p>
+  </section>
+
+  <section class="section fade secret">
+
+  <div class="envelope-wrapper" id="envelope">
+    <div class="envelope">
+      <div class="envelope-top"></div>
+      <div class="envelope-body"></div>
+    </div>
+
+<div class="letter">
+  <h3>buat Naura 🤍</h3>
+  <p id="letterText">
+    Kalau kamu baca ini,<br>
+    berarti aku cukup berani buat jujur sepenuhnya.<br><br>
+
+    Aku sayang kamu bukan karena hal besar,<br>
+    tapi karena hal kecil yang kamu lakukan tanpa sadar.<br><br>
+
+    Terima kasih sudah jadi rumah yang hangat.<br>
+    Aku harap aku bisa terus belajar jadi tempat pulang yang baik buat kamu.<br><br>
+
+    — aku, yang selalu milih kamu
+  </p>
+</div>
+
+
+
+  <small>*klik amplopnya yaa 💌</small>
+</section>
+   
+  <!-- SCRIPT PALING BAWAH -->
+  <script src="script.js"></script>
+
+</body>
+</html>
