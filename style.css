@@ -117,3 +117,15 @@ body.dark .hero::before {
   button{padding:12px 24px;font-size:13px;}
   .floating-hearts .heart{font-size:10px;}
 }
+
+/* TEXT LETTER */
+.letter p, .letter h3 {
+  color: #1E1E1E; /* default untuk mode terang */
+  transition: color 0.4s ease;
+}
+
+/* MODE GELAP */
+body.dark .letter p,
+body.dark .letter h3 {
+  color: #000000; /* teks letter jadi hitam saat mode gelap */
+}
