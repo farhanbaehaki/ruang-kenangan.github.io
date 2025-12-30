@@ -66,19 +66,25 @@ body.dark .hero h2 { color: #F1ECE7; }
 
 /* ================= BUTTONS ================= */
 button {
-display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin: 0 auto;
-  padding: 14px 28px;
-
+padding: 14px 28px;
   border: none;
   border-radius: 999px;
-  background: #b0b0b0;
-  color: #1e1e1e;
-
+  background: #e8cfcf;
   cursor: pointer;
+
+  /* FIX CENTER */
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.3s ease,
+              background 0.3s ease,
+              color 0.3s ease;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: #B0B0B0;
+  color: #1E1E1E;
 }
 body.dark button {
   background: #2A2A2A;
@@ -282,15 +288,3 @@ body.dark .hero::before {
     max-width: 320px;
   }
 }
-
-@media (max-width: 480px) {
-  button {
-    width: 80%;
-    max-width: 300px;
-  }
-}
-
-button {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
