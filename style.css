@@ -233,9 +233,12 @@ body.dark .hero::before {
 
 .confess {
   min-height: 100vh;
-  padding: 80px 20px;
+  padding: clamp(40px, 8vh, 80px) 20px;
   text-align: center;
-  background: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .confess h3 {
@@ -258,4 +261,8 @@ body.dark .hero::before {
 @keyframes blink {
   0%,50%,100% { opacity: 1 }
   25%,75% { opacity: 0 }
+}
+
+.hero button {
+  margin-top: 20px;
 }
