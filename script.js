@@ -1,10 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+  /* ===== ELEMENTS ===== */
   const music = document.getElementById("music");
   const startBtn = document.getElementById("startBtn");
   const toggleBtn = document.getElementById("themeToggle");
+  const surpriseBtn = document.querySelector(".surprise");
+  const surpriseText = document.getElementById("surpriseText");
+  const confessSection = document.getElementById("confess");
+  const confessTexts = document.querySelectorAll(".confess-text");
 
-  /* ================= MUSIC ================= */
+  /* ======================================================
+     MUSIC
+  ====================================================== */
   if (music) music.volume = 0;
+
   startBtn?.addEventListener("click", async () => {
     try {
       await music.play();
@@ -13,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Musik diblokir browser 😢");
     }
   });
+
   function fadeInMusic(audio) {
     let vol = 0;
     const fade = setInterval(() => {
@@ -22,20 +31,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 120);
   }
 
-  /* ================= SCROLL REVEAL ================= */
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) e.target.classList.add("show");
-      });
-    },
-    { threshold: 0.15 }
-  );
-  document
-    .querySelectorAll(".fade-up, .fade-slide")
-    .forEach((el) => revealObserver.observe(el));
+  function lowerMusic(audio) {
+    if (!audio) return;
+    let vol = audio.volume;
+    const fade = setInterval(() => {
+      vol -= 0.02;
+      audio.volume = Math.max(vol, 0.2);
+      if (vol <= 0.2) clearInterval(fade);
+    }, 150);
+  }
 
-  /* ================= DARK MODE ================= */
+  /* ======================================================
+     DARK MODE
+  ====================================================== */
   toggleBtn?.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     toggleBtn.textContent = document.body.classList.contains("dark")
@@ -46,34 +54,123 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.contains("dark") ? "dark" : "light"
     );
   });
+
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
     toggleBtn.textContent = "☀️";
   }
 
-  /* ================= SURPRISE ================= */
-  const surpriseBtn = document.querySelector(".surprise");
-  const surpriseText = document.getElementById("surpriseText");
+  /* ======================================================
+     SCROLL REVEAL
+  ====================================================== */
+  const revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("show");
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  document
+    .querySelectorAll(".fade-up, .fade-slide")
+    .forEach(el => revealObserver.observe(el));
+
+  /* ======================================================
+     SURPRISE
+  ====================================================== */
   surpriseBtn?.addEventListener("click", () => {
-    if (!surpriseText) return;
-    surpriseText.classList.add("show");
+    surpriseText?.classList.add("show");
     surpriseBtn.style.display = "none";
   });
+
+  /* ======================================================
+     CONFESS TYPEWRITER (AMAN UNTUK <br>)
+  ====================================================== */
+  let confessStarted = false;
+
+  function typeText(element, html, speed = 35) {
+    element.innerHTML = "";
+    element.style.visibility = "visible";
+
+    let i = 0;
+    let isTag = false;
+    let buffer = "";
+
+    function typing() {
+      if (i < html.length) {
+        const char = html.charAt(i);
+        buffer += char;
+
+        if (char === "<") isTag = true;
+
+        if (char === ">") {
+          isTag = false;
+          element.innerHTML += buffer;
+          buffer = "";
+        }
+
+        if (!isTag && char !== "<" && char !== ">") {
+          element.innerHTML += char;
+          buffer = "";
+        }
+
+        i++;
+        setTimeout(typing, isTag ? 0 : speed);
+      }
+    }
+
+    typing();
+  }
+
+  if (confessSection) {
+    const confessObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !confessStarted) {
+            confessStarted = true;
+              confessSection.classList.add("active");
+              document.body.classList.add("calm");
+              lowerMusic(music);
+
+
+            let delay = 0;
+            confessTexts.forEach(text => {
+              const original = text.innerHTML;
+              setTimeout(() => {
+                typeText(text, original);
+              }, delay);
+              delay += original.length * 35 + 600;
+            });
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    confessObserver.observe(confessSection);
+  }
 });
 
-/* ================= COUNTDOWN ================= */
+/* ======================================================
+   COUNTDOWN
+====================================================== */
 const targetDate = new Date("January 13, 2026 00:00:00").getTime();
+
 setInterval(() => {
   const now = Date.now();
   const d = targetDate - now;
   if (d < 0) return;
+
   document.getElementById("days").textContent = Math.floor(d / 86400000);
   document.getElementById("hours").textContent = Math.floor(d / 3600000) % 24;
   document.getElementById("minutes").textContent = Math.floor(d / 60000) % 60;
   document.getElementById("seconds").textContent = Math.floor(d / 1000) % 60;
 }, 1000);
 
-/* ================= FLOATING HEARTS ================= */
+/* ======================================================
+   FLOATING HEARTS
+====================================================== */
 const heartsContainer = document.querySelector(".floating-hearts");
 if (heartsContainer) {
   setInterval(() => {
@@ -88,7 +185,9 @@ if (heartsContainer) {
   }, 900);
 }
 
-/* ================= FLOATING BUBBLES ================= */
+/* ======================================================
+   FLOATING BUBBLES
+====================================================== */
 const bubblesContainer = document.querySelector(".floating-bubbles");
 if (bubblesContainer) {
   setInterval(() => {
@@ -101,62 +200,4 @@ if (bubblesContainer) {
     bubblesContainer.appendChild(bubble);
     setTimeout(() => bubble.remove(), 14000);
   }, 600);
-}
-
-/* ================= CONFESS EFFECT ================= */
-const confessSection = document.getElementById("confess");
-const confessTexts = document.querySelectorAll(".confess-text");
-const music = document.getElementById("music");
-
-let confessStarted = false;
-
-function typeText(element, html, speed = 35) {
-  element.innerHTML = "";
-  element.style.visibility = "visible";
-  let i = 0;
-
-  function typing() {
-    if (i < html.length) {
-      element.innerHTML += html[i];
-      i++;
-      setTimeout(typing, speed);
-    }
-  }
-  typing();
-}
-
-function lowerMusic(audio) {
-  if (!audio) return;
-  let vol = audio.volume;
-
-  const fade = setInterval(() => {
-    vol -= 0.02;
-    audio.volume = Math.max(vol, 0.2);
-    if (vol <= 0.2) clearInterval(fade);
-  }, 150);
-}
-
-if (confessSection) {
-  const confessObserver = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !confessStarted) {
-          confessStarted = true;
-          lowerMusic(music);
-
-          let delay = 0;
-          confessTexts.forEach(p => {
-            const original = p.innerHTML;
-            setTimeout(() => {
-              typeText(p, original);
-            }, delay);
-            delay += original.length * 35 + 600;
-          });
-        }
-      });
-    },
-    { threshold: 0.4 }
-  );
-
-  confessObserver.observe(confessSection);
 }
