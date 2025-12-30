@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-
+  /* ================= ELEMENTS ================= */
   const confessSection = document.getElementById("confess");
   const confessTexts = document.querySelectorAll(".confess-text");
   const music = document.getElementById("music");
@@ -7,48 +7,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleBtn = document.getElementById("themeToggle");
   const surpriseBtn = document.querySelector(".surprise");
   const surpriseText = document.getElementById("surpriseText");
-
-/* ================= GALLERY INTERACTIVE FINAL ================= */
-const galleryImgs = document.querySelectorAll('.gallery img');
-
-const galleryObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-galleryImgs.forEach((img, i) => {
-  img.style.setProperty('--i', i); // untuk hover rotate
-
-  // Langsung muncul jika sudah visible saat load
-  if (img.getBoundingClientRect().top < window.innerHeight) {
-    img.classList.add('show');
-  }
-
-  // Lightbox fullscreen
-  img.addEventListener('click', () => {
-    const overlay = document.createElement('div');
-    overlay.className = 'lightbox';
-    overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
-    document.body.appendChild(overlay);
-    overlay.addEventListener('click', () => overlay.remove());
-  });
-
-  // Observe untuk fade-in saat scroll
-  galleryObserver.observe(img);
-});
-
+  const galleryImgs = document.querySelectorAll('.gallery img');
+  const heartsContainer = document.querySelector(".floating-hearts");
+  const bubblesContainer = document.querySelector(".floating-bubbles");
 
   /* ================= MUSIC ================= */
   if (music) music.volume = 0;
-
   startBtn?.addEventListener("click", async () => {
     try {
       await music.play();
-      fadeInMusic(music, 0.6, 120);
+      fadeInMusic(music, 0.6, 0.02);
     } catch {
       alert("Musik diblokir browser 😢");
     }
@@ -70,16 +38,14 @@ galleryImgs.forEach((img, i) => {
     requestAnimationFrame(tick);
   }
 
-  /* ================= TYPING EFFECT SUPPORT HTML ================= */
+  /* ================= TYPING EFFECT ================= */
   function typeTextHTML(element, html, speed = 35) {
     element.innerHTML = "";
     element.style.visibility = "visible";
-    element.classList.add("type"); // cursor effect
-
+    element.classList.add("type");
     const temp = document.createElement("div");
     temp.innerHTML = html;
     const chars = [];
-    
     function flattenNodes(node) {
       if (node.nodeType === Node.TEXT_NODE) {
         for (const char of node.textContent) chars.push(char);
@@ -90,7 +56,6 @@ galleryImgs.forEach((img, i) => {
       }
     }
     temp.childNodes.forEach(flattenNodes);
-
     let i = 0;
     function typing() {
       if (i < chars.length) {
@@ -116,6 +81,31 @@ galleryImgs.forEach((img, i) => {
     });
   }, appearOptions);
   faders.forEach(fader => appearOnScroll.observe(fader));
+
+  /* ================= GALLERY INTERACTIVE ================= */
+  const galleryObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  galleryImgs.forEach((img, i) => {
+    img.style.setProperty('--i', i);
+    img.classList.add('show'); // langsung muncul
+
+    img.addEventListener('click', () => {
+      const overlay = document.createElement('div');
+      overlay.className = 'lightbox';
+      overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', () => overlay.remove());
+    });
+
+    galleryObserver.observe(img);
+  });
 
   /* ================= CONFESS SECTION ================= */
   let confessStarted = false;
@@ -143,7 +133,7 @@ galleryImgs.forEach((img, i) => {
   }
 
   /* ================= DARK MODE ================= */
-  document.body.style.transition = "background 0.6s, color 0.6s"; // smooth transition
+  document.body.style.transition = "background 0.6s, color 0.6s";
   toggleBtn?.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
@@ -176,7 +166,6 @@ galleryImgs.forEach((img, i) => {
   countdown();
 
   /* ================= FLOATING HEARTS ================= */
-  const heartsContainer = document.querySelector(".floating-hearts");
   if (heartsContainer) {
     setInterval(() => {
       const heart = document.createElement("div");
@@ -191,7 +180,6 @@ galleryImgs.forEach((img, i) => {
   }
 
   /* ================= FLOATING BUBBLES ================= */
-  const bubblesContainer = document.querySelector(".floating-bubbles");
   if (bubblesContainer) {
     setInterval(() => {
       const bubble = document.createElement("div");
@@ -204,5 +192,4 @@ galleryImgs.forEach((img, i) => {
       bubble.addEventListener("animationend", () => bubble.remove());
     }, 600);
   }
-
 });
