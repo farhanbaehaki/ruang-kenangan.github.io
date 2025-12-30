@@ -100,10 +100,6 @@ button:active {
 /* ================= TEXT & CONTENT ================= */
 p { max-width: 600px; line-height: 1.8; font-size: 15px; }
 h3 { font-family: 'Playfair Display', serif; margin-bottom: 24px; }
-p {
-  max-width: 620px;
-  margin: 0 auto;
-}
 
 .confess-text {
   font-size: 17px;
