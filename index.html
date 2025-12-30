@@ -26,7 +26,7 @@
   <!-- COUNTDOWN -->
   <section class="section fade-up">
     <h3>menuju hari spesial 🎂</h3>
-    <div id="countdown">
+    <div id="countdown" aria-live="polite">
       <div><span id="days">0</span><small>hari</small></div>
       <div><span id="hours">0</span><small>jam</small></div>
       <div><span id="minutes">0</span><small>menit</small></div>
@@ -61,10 +61,10 @@
   <section class="section fade-up">
     <h3>some memories 🤍</h3>
     <div class="gallery">
-      <img src="assets/photos/1.jpg" alt="">
-      <img src="assets/photos/2.jpg" alt="">
-      <img src="assets/photos/3.jpg" alt="">
-      <img src="assets/photos/4.jpg" alt="">
+      <img src="assets/photos/1.jpg" alt="Foto kenangan pertama kita" loading="lazy">
+      <img src="assets/photos/2.jpg" alt="Foto kenangan kedua kita" loading="lazy">
+      <img src="assets/photos/3.jpg" alt="Foto kenangan ketiga kita" loading="lazy">
+      <img src="assets/photos/4.jpg" alt="Foto kenangan keempat kita" loading="lazy">
     </div>
     <small>*aku senyum sendiri tiap lihat ini</small>
   </section>
@@ -84,9 +84,7 @@
 
   <!-- SURPRISE -->
   <section class="section fade-up">
-    <button class="surprise" onclick="showSurprise()">
-      jangan di klik kalau belum senyum 😜
-    </button>
+    <button class="surprise">jangan di klik kalau belum senyum 😜</button>
     <p id="surpriseText">
       Kalau suatu hari kamu capek,<br>
       buka website ini lagi ya.<br><br>
@@ -95,33 +93,34 @@
     </p>
   </section>
 
+  <!-- CONFESS SECTION -->
   <section class="confess" id="confess">
-  <h3>sebentar ya… 😅</h3>
+    <h3>sebentar ya… 😅</h3>
 
-  <p class="confess-text">
-    Aku sempat mikir lama,
-    ini mau aku simpan aja,
-    atau aku jujur sekalian.
-  </p>
+    <p class="confess-text">
+      Aku sempat mikir lama,
+      ini mau aku simpan aja,
+      atau aku jujur sekalian.
+    </p>
 
-  <p class="confess-text">
-    Soalnya kita tuh lucu.
-    Udah saling sayang,
-    udah saling perhatian,
-    tapi statusnya masih kayak…
-    “ini kita apa sih sebenernya?” 😂
-  </p>
+    <p class="confess-text">
+      Soalnya kita tuh lucu.
+      Udah saling sayang,
+      udah saling perhatian,
+      tapi statusnya masih kayak…<br>
+      “ini kita apa sih sebenernya?” 😂
+    </p>
 
-  <p class="confess-text">
-    Aku nyaman sama kamu. Beneran.
-    Dan itu bukan perasaan yang pengin aku pura-purain.
-  </p>
+    <p class="confess-text">
+      Aku nyaman sama kamu. Beneran.
+      Dan itu bukan perasaan yang pengin aku pura-purain.
+    </p>
 
-  <p class="confess-text">
-    Jadi aku cuma mau bilang: aku sayang kamu, Naura 🤍
-  </p>
+    <p class="confess-text">
+      Jadi aku cuma mau bilang: aku sayang kamu, Naura 🤍
+    </p>
 
-      <p class="confess-text">
+    <p class="confess-text">
       Kalau kamu ngerasa hal yang sama, mungkin kita bisa jalanin ini
       lebih jelas. Pelan-pelan aja, nggak usah buru-buru.
     </p>
@@ -130,11 +129,10 @@
       Kalau belum, nggak apa-apa juga.
       Setidaknya sekarang aku jujur 😌
     </p>
-</section>
-
+  </section>
 
   <!-- AUDIO -->
-  <audio id="music" loop>
+  <audio id="music" loop preload="auto">
     <source src="assets/music/sempurna.mp3" type="audio/mpeg">
   </audio>
 

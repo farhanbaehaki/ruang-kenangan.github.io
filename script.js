@@ -14,53 +14,66 @@ document.addEventListener("DOMContentLoaded", () => {
   startBtn?.addEventListener("click", async () => {
     try {
       await music.play();
-      fadeInMusic(music);
+      fadeInMusic(music, 0.6, 120);
     } catch {
       alert("Musik diblokir browser 😢");
     }
   });
 
-  function fadeInMusic(audio) {
-    let vol = 0;
-    const fade = setInterval(() => {
-      vol += 0.02;
-      audio.volume = Math.min(vol, 0.6);
-      if (vol >= 0.6) clearInterval(fade);
-    }, 120);
+  function fadeInMusic(audio, target = 0.6, step = 0.02) {
+    function tick() {
+      audio.volume = Math.min(audio.volume + step, target);
+      if (audio.volume < target) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
-  function lowerMusic(audio) {
-    let vol = audio.volume;
-    const fade = setInterval(() => {
-      vol -= 0.02;
-      audio.volume = Math.max(vol, 0);
-      if (vol <= 0) clearInterval(fade);
-    }, 120);
+  function fadeOutMusic(audio, step = 0.02) {
+    function tick() {
+      audio.volume = Math.max(audio.volume - step, 0);
+      if (audio.volume > 0) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
-  /* ================= TYPING EFFECT ================= */
-  function typeText(element, text, speed = 35) {
-    element.textContent = "";
+  /* ================= TYPING EFFECT SUPPORT HTML ================= */
+  function typeTextHTML(element, html, speed = 35) {
+    element.innerHTML = "";
     element.style.visibility = "visible";
     element.classList.add("type"); // cursor effect
 
+    const temp = document.createElement("div");
+    temp.innerHTML = html;
+    const chars = [];
+    
+    function flattenNodes(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        for (const char of node.textContent) chars.push(char);
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        chars.push({ openTag: `<${node.tagName.toLowerCase()}>` });
+        node.childNodes.forEach(flattenNodes);
+        chars.push({ closeTag: `</${node.tagName.toLowerCase()}>` });
+      }
+    }
+    temp.childNodes.forEach(flattenNodes);
+
     let i = 0;
     function typing() {
-      if (i < text.length) {
-        element.textContent += text[i];
+      if (i < chars.length) {
+        const c = chars[i];
+        if (typeof c === "string") element.innerHTML += c;
+        else if (c.openTag) element.innerHTML += c.openTag;
+        else if (c.closeTag) element.innerHTML += c.closeTag;
         i++;
         setTimeout(typing, speed);
-      } else {
-        element.classList.remove("type");
-      }
+      } else element.classList.remove("type");
     }
     typing();
   }
 
-  /* ================= SCROLL FADE-UP FOR ALL SECTIONS ================= */
+  /* ================= SCROLL FADE-UP ================= */
   const faders = document.querySelectorAll('.fade-up, .fade-slide');
   const appearOptions = { threshold: 0.5 };
-
   const appearOnScroll = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -68,47 +81,40 @@ document.addEventListener("DOMContentLoaded", () => {
       observer.unobserve(entry.target);
     });
   }, appearOptions);
-
   faders.forEach(fader => appearOnScroll.observe(fader));
 
   /* ================= CONFESS SECTION ================= */
   let confessStarted = false;
-
   if (confessSection) {
     const confessObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting && !confessStarted) {
             confessStarted = true;
-
             confessSection.classList.add("active");
             document.body.classList.add("calm");
-            lowerMusic(music);
+            fadeOutMusic(music);
 
             let delay = 0;
             confessTexts.forEach(text => {
               const original = text.innerHTML;
-              setTimeout(() => {
-                typeText(text, original);
-              }, delay);
-              delay += original.length * 35 + 600;
+              setTimeout(() => typeTextHTML(text, original), delay);
+              delay += original.replace(/<[^>]*>/g,"").length * 35 + 600;
             });
           }
         });
-      },
-      { threshold: 0.7 }
+      }, { threshold: 0.7 }
     );
-
     confessObserver.observe(confessSection);
   }
 
   /* ================= DARK MODE ================= */
+  document.body.style.transition = "background 0.6s, color 0.6s"; // smooth transition
   toggleBtn?.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
     localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
   });
-
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
     toggleBtn.textContent = "☀️";
@@ -118,12 +124,12 @@ document.addEventListener("DOMContentLoaded", () => {
   surpriseBtn?.addEventListener("click", () => {
     if (!surpriseText) return;
     surpriseText.classList.add("show");
-    surpriseBtn.style.display = "none";
+    surpriseBtn.classList.add("hidden");
   });
 
   /* ================= COUNTDOWN ================= */
   const targetDate = new Date("January 13, 2026 00:00:00").getTime();
-  setInterval(() => {
+  const countdown = () => {
     const now = Date.now();
     const d = targetDate - now;
     if (d < 0) return;
@@ -131,7 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("hours").textContent = String(Math.floor(d / 3600000) % 24).padStart(2,'0');
     document.getElementById("minutes").textContent = String(Math.floor(d / 60000) % 60).padStart(2,'0');
     document.getElementById("seconds").textContent = String(Math.floor(d / 1000) % 60).padStart(2,'0');
-  }, 1000);
+  };
+  setInterval(countdown, 1000);
+  countdown();
 
   /* ================= FLOATING HEARTS ================= */
   const heartsContainer = document.querySelector(".floating-hearts");
@@ -144,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
       heart.style.animationDuration = 8 + Math.random() * 6 + "s";
       heart.style.fontSize = 12 + Math.random() * 10 + "px";
       heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 14000);
+      heart.addEventListener("animationend", () => heart.remove());
     }, 900);
   }
 
@@ -159,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
       bubble.style.left = Math.random() * 100 + "vw";
       bubble.style.animationDuration = 8 + Math.random() * 6 + "s";
       bubblesContainer.appendChild(bubble);
-      setTimeout(() => bubble.remove(), 14000);
+      bubble.addEventListener("animationend", () => bubble.remove());
     }, 600);
   }
 
