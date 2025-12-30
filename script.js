@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  const confessSection = document.getElementById("confess");
+  const confessTexts = document.querySelectorAll(".confess-text");
   const music = document.getElementById("music");
   const startBtn = document.getElementById("startBtn");
   const toggleBtn = document.getElementById("themeToggle");
@@ -22,18 +25,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 120);
   }
 
-  /* ================= SCROLL REVEAL ================= */
-  const revealObserver = new IntersectionObserver(
+/* ================= SCROLL REVEAL ================= */
+ let confessStarted = false;
+
+if (confessSection) {
+  const confessObserver = new IntersectionObserver(
     (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) e.target.classList.add("show");
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !confessStarted) {
+          confessStarted = true;
+
+          confessSection.classList.add("active");
+          document.body.classList.add("calm");
+          lowerMusic(music);
+
+          let delay = 0;
+          confessTexts.forEach(text => {
+            const original = text.innerHTML;
+            setTimeout(() => {
+              typeText(text, original);
+            }, delay);
+            delay += original.length * 35 + 600;
+          });
+        }
       });
     },
-    { threshold: 0.15 }
+    {
+      threshold: 0.7
+    }
   );
-  document
-    .querySelectorAll(".fade-up, .fade-slide")
-    .forEach((el) => revealObserver.observe(el));
+
+  confessObserver.observe(confessSection);
+}
+
 
   /* ================= DARK MODE ================= */
   toggleBtn?.addEventListener("click", () => {
