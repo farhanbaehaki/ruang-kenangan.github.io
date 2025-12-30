@@ -162,7 +162,8 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;       /* Jarak antar foto dipersempit agar muat di HP */
+  align-items: flex-start;
+  gap: 10px;       /* Jarak antar foto dipersempit agar muat di HP */
   padding: 20px 5px;
   max-width: 100%; /* WAJIB 100% agar memenuhi lebar layar HP */
   margin: 0 auto;
@@ -170,14 +171,15 @@ h3 {
 
 /* Kertas Polaroid */
 .polaroid {
-  width: 45%;           /* Angka ini kunci supaya bisa muat 2 foto bersandingan */
+width: 44%;           /* UBAH DARI 90% KE 44% agar muat 2 foto bersandingan */
   min-width: 140px; 
   background: #ffffff;
-  padding: 8px 8px 30px 8px; /* Ruang bawah sedikit lebih lega untuk caption */
+  padding: 8px;         /* Padding seragam di semua sisi */
+  padding-bottom: 25px; /* Ruang extra di bawah untuk teks span */
   border-radius: 2px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   cursor: pointer;
-  
+  box-sizing: border-box; /* PENTING: Supaya padding tidak merusak lebar */
   /* Supaya posisi antar polaroid tidak saling tabrak saat miring */
   display: flex;
   flex-direction: column;
@@ -189,14 +191,35 @@ h3 {
 }
 
 /* Supaya foto di dalamnya tidak terpotong */
+/* --- Aturan Dasar Gambar di Polaroid --- */
 .polaroid img {
   width: 100%;
-  height: auto;        /* Biar tinggi ngikutin aslinya */
-  aspect-ratio: 2 / 3; /* Ratio portrait yang lebih panjang agar cocok dengan foto Naura */
-  object-fit: cover;   /* Tetap rapi di dalam bingkai */
-  object-position: top; /* Prioritaskan bagian atas (teks & wajah) agar tidak terpotong */
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
 
+/* --- KHUSUS FOTO 1-5 (Rasio 4:3) --- */
+/* Secara default, semua polaroid akan pakai rasio ini */
+.polaroid img {
+  aspect-ratio: 4 / 3; 
+}
+
+/* --- KHUSUS FOTO 6-12 (Rasio 9:16) --- */
+/* Jika ada class .portrait, maka rasionya jadi panjang */
+.polaroid.portrait img {
+  aspect-ratio: 9 / 16; 
+  object-position: top; /* Agar teks di atas kepala Naura tidak terpotong */
+}
+
+/* --- Penyesuaian Kertas Polaroid agar Rapi di HP --- */
+.polaroid {
+  width: 44%; /* Biar bisa 2 kolom di HP */
+  background: #ffffff;
+  padding: 8px 8px 25px 8px;
+  box-sizing: border-box;
+  /* ... sisa kode animasi kamu ... */
+}
 /* Teks di bawah foto */
 .polaroid span {
   display: block;
