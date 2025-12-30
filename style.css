@@ -159,61 +159,57 @@ h3 {
    GALLERY POLAROID (VERSI FIX)
    ========================================================================== */
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 20px 10px;
-  width: 100%;
-  box-sizing: border-box;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  padding: 20px 10px !important;
+  width: 100% !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
+/* --- KERTAS POLAROID --- */
 .polaroid {
-  width: 45%; /* Menampilkan 2 kolom di HP agar estetik */
-  min-width: 140px; 
-  background: #ffffff;
-  padding: 8px 8px 25px 8px;
-  border-radius: 2px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  cursor: pointer;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  width: 45% !important; 
+  background: #ffffff !important;
+  padding: 8px 8px 30px 8px !important;
+  border-radius: 2px !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  opacity: 1 !important; /* Memastikan tidak transparan */
+  visibility: visible !important;
+  transform: none !important; /* Matikan animasi sementara */
+}
   
-  /* Memastikan foto terlihat */
-  opacity: 1 !important; 
-  transform: translateY(0) rotate(var(--rotation, 0deg));
-  transition: transform 0.4s ease, opacity 0.6s ease;
-}
 
+
+/* --- GAMBAR DI DALAM --- */
 .polaroid img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  background-color: #f0f0f0;
-  min-height: 120px;
-  /* Default rasio untuk foto 1-5 */
-  aspect-ratio: 4 / 3; 
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  object-fit: cover !important;
+  background-color: #f0f0f0 !important;
+  
+  /* Settingan Rasio Default (Foto 1-5) */
+  aspect-ratio: 4 / 3 !important; 
 }
 
-/* KHUSUS FOTO 6-12 (Portrait 9:16) */
-/* CSS ini akan bekerja jika di HTML tertulis class="polaroid portrait" */
+/* --- KHUSUS FOTO PANJANG (6-12) --- */
+/* Hanya jalan jika di HTML tertulis: class="polaroid portrait" */
 .polaroid.portrait img {
   aspect-ratio: 9 / 16 !important; 
   object-position: top !important; 
 }
 
 .polaroid span {
-  display: block;
+  display: block !important;
   font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 11px;
-  margin-top: 10px;
-  color: #444;
-  text-align: center;
-  word-wrap: break-word;
+  font-size: 11px !important;
+  margin-top: 10px !important;
+  color: #444 !important;
 }
 
 .polaroid:hover {
