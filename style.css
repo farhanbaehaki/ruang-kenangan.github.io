@@ -171,52 +171,60 @@ h3 {
 
 /* --- KERTAS POLAROID --- */
 .polaroid {
-  width: 45% !important; 
-  background: #ffffff !important;
-  padding: 8px 8px 30px 8px !important;
-  border-radius: 2px !important;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  opacity: 1 !important; /* Memastikan tidak transparan */
-  visibility: visible !important;
-  transform: none !important; /* Matikan animasi sementara */
-}
-  
+  width: 45%; 
+  min-width: 140px;
+  background: #ffffff;
+  padding: 8px 8px 25px 8px;
+  border-radius: 2px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  box-sizing: border-box;
 
+  /* Efek Awal (Muncul perlahan) */
+  opacity: 0; 
+  transform: translateY(20px) rotate(var(--rotation, 0deg));
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
+}
+
+/* Class ini akan dipicu JavaScript agar foto muncul */
+.polaroid.show {
+  opacity: 1;
+  transform: translateY(0) rotate(var(--rotation, 0deg));
+}
 
 /* --- GAMBAR DI DALAM --- */
 .polaroid img {
-  width: 100% !important;
-  height: auto !important;
-  display: block !important;
-  object-fit: cover !important;
-  background-color: #f0f0f0 !important;
-  
-  /* Settingan Rasio Default (Foto 1-5) */
-  aspect-ratio: 4 / 3 !important; 
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  background-color: #f5f5f5;
+  aspect-ratio: 4 / 3; /* Foto 1-5 */
 }
 
-/* --- KHUSUS FOTO PANJANG (6-12) --- */
-/* Hanya jalan jika di HTML tertulis: class="polaroid portrait" */
 .polaroid.portrait img {
-  aspect-ratio: 9 / 16 !important; 
-  object-position: top !important; 
+  aspect-ratio: 9 / 16; /* Foto 6-12 */
+  object-position: top;
 }
 
+/* Teks di bawah */
 .polaroid span {
-  display: block !important;
+  display: block;
   font-family: 'Playfair Display', serif;
-  font-size: 11px !important;
-  margin-top: 10px !important;
-  color: #444 !important;
+  font-size: 11px;
+  margin-top: 10px;
+  color: #444;
+  text-align: center;
 }
 
+/* Efek Hover (Memperbesar saat disentuh) */
 .polaroid:hover {
-  transform: scale(1.05) rotate(0deg) !important;
-  z-index: 10;
+  transform: scale(1.08) rotate(0deg) !important;
+  z-index: 100;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
-
 /* ==========================================================================
    DARK MODE POLAROID
    ========================================================================== */
