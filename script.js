@@ -83,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }, appearOptions);
   faders.forEach(fader => appearOnScroll.observe(fader));
 
- /* ================= GALLERY INTERACTIVE ================= */
 /* ================= GALLERY INTERACTIVE FINAL ================= */
 const galleryImgs = document.querySelectorAll('.gallery img');
 
@@ -99,7 +98,11 @@ const galleryObserver = new IntersectionObserver((entries, observer) => {
 }, { threshold: 0.1 });
 
 galleryImgs.forEach((img, i) => {
-  img.style.setProperty('--i', i); // untuk hover rotate
+  img.style.setProperty('--i', i); // hover rotate
+  // jika gambar sudah terlihat di layar, langsung tampil
+  if (img.getBoundingClientRect().top < window.innerHeight) {
+    img.classList.add('show');
+  }
 
   // Lightbox fullscreen
   img.addEventListener('click', () => {
