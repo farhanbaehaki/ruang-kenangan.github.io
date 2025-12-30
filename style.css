@@ -248,3 +248,39 @@ body.dark button { background: #2A2A2A; color: #F1ECE7; }
 @media (max-width:480px) {
   button { width: 80%; max-width: 300px; }
 }
+
+/* highlight text */
+.highlight {
+  background: linear-gradient(90deg, #ff9de0, #ffc6ff);
+  color: #fff;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+/* confetti */
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+
+/* typing cursor */
+.type::after {
+  content: "|";
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  0%,50%,100% { opacity: 1; }
+  25%,75% { opacity: 0; }
+}
