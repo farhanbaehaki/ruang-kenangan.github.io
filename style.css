@@ -274,6 +274,14 @@ body.dark .hero::before {
   25%,75% { opacity: 0 }
 }
 
+button {
+  display: block;
+  margin: 0 auto;
+}
+.section {
+  width: 100%;
+}
+
 @media (max-width: 480px) {
   .hero h1 {
     font-size: 38px;
