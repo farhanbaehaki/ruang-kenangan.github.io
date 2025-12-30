@@ -12,21 +12,21 @@ document.addEventListener("DOMContentLoaded", () => {
      =================================================== */
   const galleryImgs = document.querySelectorAll(".gallery img");
 
-  const galleryObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        // Perbaikan HP: threshold 0 & check isIntersecting
-        if (entry.isIntersecting || entry.intersectionRatio > 0) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { 
-      threshold: 0, // Lebih sensitif untuk layar HP
-      rootMargin: "50px" 
-    }
-  );
+ const galleryObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      // isIntersecting sering telat di mobile, kita tambah cek intersectionRatio
+      if (entry.isIntersecting || entry.intersectionRatio > 0) {
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { 
+    threshold: 0, // 0 berarti asal tersentuh 1 pixel pun langsung muncul
+    rootMargin: "200px 0px" // "Panggil" gambar saat user masih 200px di atasnya
+  }
+);
 
   galleryImgs.forEach((img, i) => {
     img.style.setProperty("--i", i);
@@ -242,3 +242,12 @@ document.addEventListener("DOMContentLoaded", () => {
     galleryImgs.forEach(img => img.classList.add("show"));
   }, 4000);
 });
+
+// Paksa semua gambar muncul jika user menggunakan HP (deteksi layar kecil)
+if (window.innerWidth < 768) {
+  setTimeout(() => {
+    document.querySelectorAll(".gallery img").forEach(img => {
+      img.classList.add("show");
+    });
+  }, 1000); // Munculkan semua gambar setelah 1 detik halaman dimuat
+}
