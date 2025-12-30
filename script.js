@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.unobserve(entry.target);
       }
     });
-  }, {threshold:0.1});
+  }, {threshold:0});
 
   galleryImgs.forEach((img,i)=>{
     img.style.setProperty('--i',i);
