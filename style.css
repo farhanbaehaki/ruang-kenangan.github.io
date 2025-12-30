@@ -156,94 +156,74 @@ h3 {
 }
 
 /* ==========================================================================
-   GALLERY POLAROID STACK (FINAL VERSION)
+   GALLERY POLAROID (VERSI FIX)
    ========================================================================== */
-/* Pastikan Gallery tidak tertutup background */
 .gallery {
-  display: flex !important;
-  flex-wrap: wrap !important;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
   gap: 12px;
   padding: 20px 10px;
-  width: 100% !important;
-  position: relative;
-  z-index: 100; /* Menaikkan lapisan galeri ke atas background */
-  visibility: visible !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .polaroid {
-  width: 44% !important; 
-  background: #ffffff !important;
+  width: 45%; /* Menampilkan 2 kolom di HP agar estetik */
+  min-width: 140px; 
+  background: #ffffff;
   padding: 8px 8px 25px 8px;
   border-radius: 2px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  display: flex !important;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
   flex-direction: column;
-  opacity: 1 !important; /* Paksa muncul */
-  visibility: visible !important; /* Paksa terlihat */
-  transform: none !important; /* Matikan animasi sementara untuk tes */
+  
+  /* Memastikan foto terlihat */
+  opacity: 1 !important; 
+  transform: translateY(0) rotate(var(--rotation, 0deg));
+  transition: transform 0.4s ease, opacity 0.6s ease;
 }
 
-.polaroid img {
-  width: 100% !important;
-  height: auto !important;
-  min-height: 150px; 
-  display: block !important;
-  object-fit: cover;
-  opacity: 1 !important;
-}
-
-/* --- Aturan Dasar Gambar di Polaroid --- */
 .polaroid img {
   width: 100%;
-  height: auto;         /* Tambahkan ini agar browser menghitung tinggi otomatis */
+  height: auto;
   display: block;
   object-fit: cover;
-  object-position: center;
-  background-color: #f0f0f0; /* Warna dasar jika foto lambat loading */
-  
-  /* Tambahkan min-height agar elemen tidak menjadi 0px saat loading */
-  min-height: 150px; 
-}
-
-/* --- KHUSUS FOTO 1-5 (Rasio 4:3) --- */
-.polaroid img {
+  background-color: #f0f0f0;
+  min-height: 120px;
+  /* Default rasio untuk foto 1-5 */
   aspect-ratio: 4 / 3; 
 }
 
-/* --- KHUSUS FOTO 6-12 (Rasio 9:16) --- */
+/* KHUSUS FOTO 6-12 (Portrait 9:16) */
+/* CSS ini akan bekerja jika di HTML tertulis class="polaroid portrait" */
 .polaroid.portrait img {
-  aspect-ratio: 9 / 16; 
-  object-position: top; /* Biar tulisan di atas kepala Naura tetap aman */
+  aspect-ratio: 9 / 16 !important; 
+  object-position: top !important; 
 }
 
-/* --- Penyesuaian Kertas Polaroid agar Rapi di HP --- */
-.polaroid {
-  width: 90%; /* Biar bisa 2 kolom di HP */
-  background: #ffffff;
-  padding: 8px 8px 25px 8px;
-  box-sizing: border-box;
-  /* ... sisa kode animasi kamu ... */
-}
-/* Teks di bawah foto */
 .polaroid span {
   display: block;
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 12px;  /* Ukuran teks dikecilkan untuk HP */
+  font-size: 11px;
   margin-top: 10px;
   color: #444;
   text-align: center;
+  word-wrap: break-word;
 }
 
-/* Efek Hover (Tetap ada untuk interaksi sentuhan) */
 .polaroid:hover {
   transform: scale(1.05) rotate(0deg) !important;
   z-index: 10;
 }
 
-/* Mode Gelap */
+/* ==========================================================================
+   DARK MODE POLAROID
+   ========================================================================== */
 body.dark .polaroid {
   background: #f1ece7;
 }
@@ -251,7 +231,6 @@ body.dark .polaroid {
 body.dark .polaroid span {
   color: #121212;
 }
-
 /* ==========================================================================
    COUNTDOWN & SURPRISE
    ========================================================================== */
