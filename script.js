@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ================= TYPING EFFECT SUPPORT HTML ================= */
-  function typeTextHTML(element, html, speed = 50) {
+  function typeTextHTML(element, html, speed = 20) {
     element.innerHTML = "";
     element.style.visibility = "visible";
     element.classList.add("type"); // cursor effect
