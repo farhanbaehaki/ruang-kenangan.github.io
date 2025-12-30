@@ -230,3 +230,32 @@ body.dark .hero::before {
   button { padding: 12px 24px; font-size: 13px; }
   .floating-hearts .heart { font-size: 10px; }
 }
+
+.confess {
+  min-height: 100vh;
+  padding: 80px 20px;
+  text-align: center;
+  background: #fff;
+}
+
+.confess h3 {
+  margin-bottom: 40px;
+}
+
+.confess-text {
+  visibility: hidden;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+/* cursor ketik */
+.type::after {
+  content: "|";
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,50%,100% { opacity: 1 }
+  25%,75% { opacity: 0 }
+}

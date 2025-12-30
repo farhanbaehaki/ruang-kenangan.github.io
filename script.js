@@ -102,3 +102,37 @@ if (bubblesContainer) {
     setTimeout(() => bubble.remove(), 14000);
   }, 600);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const texts = document.querySelectorAll(".confess-text");
+  let index = 0;
+
+  function typeText(el, text, speed = 35) {
+    el.textContent = "";
+    el.style.visibility = "visible";
+    el.classList.add("type");
+
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        el.textContent += text[i];
+        i++;
+        setTimeout(typing, speed);
+      } else {
+        el.classList.remove("type");
+      }
+    }
+    typing();
+  }
+
+  function startConfess() {
+    if (index >= texts.length) return;
+    const el = texts[index];
+    const text = el.textContent;
+    typeText(el, text);
+    index++;
+    setTimeout(startConfess, text.length * 35 + 400);
+  }
+
+  startConfess();
+});
