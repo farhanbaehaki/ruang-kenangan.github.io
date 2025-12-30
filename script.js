@@ -1,16 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* ===== ELEMENTS ===== */
-  const music = document.getElementById("music");
-  const startBtn = document.getElementById("startBtn");
-  const toggleBtn = document.getElementById("themeToggle");
-  const surpriseBtn = document.querySelector(".surprise");
-  const surpriseText = document.getElementById("surpriseText");
-  const confessSection = document.getElementById("confess");
-  const confessTexts = document.querySelectorAll(".confess-text");
 
-  /* ======================================================
-     MUSIC
-  ====================================================== */
+  /* ================= ELEMENTS ================= */
+  const music          = document.getElementById("music");
+  const startBtn       = document.getElementById("startBtn");
+  const toggleBtn      = document.getElementById("themeToggle");
+  const surpriseBtn    = document.querySelector(".surprise");
+  const surpriseText   = document.getElementById("surpriseText");
+  const confessSection = document.getElementById("confess");
+  const confessTexts   = document.querySelectorAll(".confess-text");
+
+  /* ================= MUSIC ================= */
   if (music) music.volume = 0;
 
   startBtn?.addEventListener("click", async () => {
@@ -41,14 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 150);
   }
 
-  /* ======================================================
-     DARK MODE
-  ====================================================== */
+  /* ================= DARK MODE ================= */
   toggleBtn?.addEventListener("click", () => {
     document.body.classList.toggle("dark");
-    toggleBtn.textContent = document.body.classList.contains("dark")
-      ? "☀️"
-      : "🌙";
+    toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
     localStorage.setItem(
       "theme",
       document.body.classList.contains("dark") ? "dark" : "light"
@@ -60,9 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleBtn.textContent = "☀️";
   }
 
-  /* ======================================================
-     SCROLL REVEAL
-  ====================================================== */
+  /* ================= SCROLL REVEAL ================= */
   const revealObserver = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
@@ -76,69 +69,63 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelectorAll(".fade-up, .fade-slide")
     .forEach(el => revealObserver.observe(el));
 
-  /* ======================================================
-     SURPRISE
-  ====================================================== */
+  /* ================= SURPRISE ================= */
   surpriseBtn?.addEventListener("click", () => {
     surpriseText?.classList.add("show");
     surpriseBtn.style.display = "none";
   });
 
-  /* ======================================================
-     CONFESS TYPEWRITER (AMAN UNTUK <br>)
-  ====================================================== */
+  /* ================= TYPEWRITER (AMAN <br>) ================= */
   let confessStarted = false;
 
   function typeText(element, html, speed = 35) {
-  element.innerHTML = "";
-  element.style.visibility = "visible";
-  element.classList.add("type-cursor");
+    element.innerHTML = "";
+    element.style.visibility = "visible";
+    element.classList.add("type-cursor");
 
-  let i = 0;
+    let i = 0;
 
-  function typing() {
-    if (i < html.length) {
+    function typing() {
+      if (i < html.length) {
 
-      // JIKA TAG HTML
-      if (html[i] === "<") {
-        const tagEnd = html.indexOf(">", i);
-        element.innerHTML += html.slice(i, tagEnd + 1);
-        i = tagEnd + 1;
-        setTimeout(typing, 0);
-      } 
-      // JIKA TEXT BIASA
-      else {
-        element.innerHTML += html[i];
-        i++;
-        setTimeout(typing, speed);
+        // jika ketemu tag HTML (misal <br>)
+        if (html[i] === "<") {
+          const end = html.indexOf(">", i);
+          element.innerHTML += html.slice(i, end + 1);
+          i = end + 1;
+          setTimeout(typing, 0);
+        } 
+        // text biasa
+        else {
+          element.innerHTML += html[i];
+          i++;
+          setTimeout(typing, speed);
+        }
+
+      } else {
+        element.classList.remove("type-cursor");
       }
-
-    } else {
-      element.classList.remove("type-cursor");
     }
+
+    typing();
   }
 
-  typing();
-}
-
-
+  /* ================= CONFESS OBSERVER ================= */
   if (confessSection) {
     const confessObserver = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting && !confessStarted) {
             confessStarted = true;
-              confessSection.classList.add("active");
-              document.body.classList.add("calm");
-              lowerMusic(music);
 
+            confessSection.classList.add("active");
+            document.body.classList.add("calm");
+            lowerMusic(music);
 
             let delay = 0;
             confessTexts.forEach(text => {
               const original = text.innerHTML;
-              setTimeout(() => {
-                typeText(text, original);
-              }, delay);
+              setTimeout(() => typeText(text, original), delay);
               delay += original.length * 35 + 600;
             });
           }
@@ -149,11 +136,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     confessObserver.observe(confessSection);
   }
+
 });
 
-/* ======================================================
-   COUNTDOWN
-====================================================== */
+/* ================= COUNTDOWN ================= */
 const targetDate = new Date("January 13, 2026 00:00:00").getTime();
 
 setInterval(() => {
@@ -161,15 +147,13 @@ setInterval(() => {
   const d = targetDate - now;
   if (d < 0) return;
 
-  document.getElementById("days").textContent = Math.floor(d / 86400000);
-  document.getElementById("hours").textContent = Math.floor(d / 3600000) % 24;
+  document.getElementById("days").textContent    = Math.floor(d / 86400000);
+  document.getElementById("hours").textContent   = Math.floor(d / 3600000) % 24;
   document.getElementById("minutes").textContent = Math.floor(d / 60000) % 60;
   document.getElementById("seconds").textContent = Math.floor(d / 1000) % 60;
 }, 1000);
 
-/* ======================================================
-   FLOATING HEARTS
-====================================================== */
+/* ================= FLOATING HEARTS ================= */
 const heartsContainer = document.querySelector(".floating-hearts");
 if (heartsContainer) {
   setInterval(() => {
@@ -184,9 +168,7 @@ if (heartsContainer) {
   }, 900);
 }
 
-/* ======================================================
-   FLOATING BUBBLES
-====================================================== */
+/* ================= FLOATING BUBBLES ================= */
 const bubblesContainer = document.querySelector(".floating-bubbles");
 if (bubblesContainer) {
   setInterval(() => {
