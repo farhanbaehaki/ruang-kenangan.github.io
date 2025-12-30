@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const confessSection = document.getElementById("confess");
   const confessTexts = document.querySelectorAll(".confess-text");
+  const music = document.getElementById("music");
   const startBtn = document.getElementById("startBtn");
   const toggleBtn = document.getElementById("themeToggle");
   const surpriseBtn = document.querySelector(".surprise");
   const surpriseText = document.getElementById("surpriseText");
-  const music = document.getElementById("music");
 
   /* ================= MUSIC ================= */
   if (music) music.volume = 0;
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startBtn?.addEventListener("click", async () => {
     try {
       await music.play();
-      fadeInMusic(music, 0.6);
+      fadeInMusic(music, 0.6, 120);
     } catch {
       alert("Musik diblokir browser 😢");
     }
@@ -36,16 +36,16 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(tick);
   }
 
-  /* ================= TYPING EFFECT + HIGHLIGHT ================= */
+  /* ================= TYPING EFFECT SUPPORT HTML ================= */
   function typeTextHTML(element, html, speed = 35) {
     element.innerHTML = "";
     element.style.visibility = "visible";
-    element.classList.add("type"); // cursor
+    element.classList.add("type"); // cursor effect
 
     const temp = document.createElement("div");
     temp.innerHTML = html;
     const chars = [];
-
+    
     function flattenNodes(node) {
       if (node.nodeType === Node.TEXT_NODE) {
         for (const char of node.textContent) chars.push(char);
@@ -58,19 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
     temp.childNodes.forEach(flattenNodes);
 
     let i = 0;
-    const highlightWords = ["aku sayang kamu", "Naura"]; // kata yang di-highlight
-
     function typing() {
       if (i < chars.length) {
         const c = chars[i];
-        if (typeof c === "string") {
-          let newHTML = element.innerHTML + c;
-          highlightWords.forEach(word => {
-            const regex = new RegExp(word, "g");
-            newHTML = newHTML.replace(regex, `<span class="highlight">${word}</span>`);
-          });
-          element.innerHTML = newHTML;
-        } else if (c.openTag) element.innerHTML += c.openTag;
+        if (typeof c === "string") element.innerHTML += c;
+        else if (c.openTag) element.innerHTML += c.openTag;
         else if (c.closeTag) element.innerHTML += c.closeTag;
         i++;
         setTimeout(typing, speed);
@@ -90,6 +82,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }, appearOptions);
   faders.forEach(fader => appearOnScroll.observe(fader));
+
+  /* ================= GALLERY INTERACTIVE ================= */
+const galleryImgs = document.querySelectorAll('.gallery img');
+galleryImgs.forEach((img, i) => {
+  img.style.setProperty('--i', i); // untuk rotate di hover
+  appearOnScroll.observe(img); // fade-in saat scroll
+
+  // Lightbox fullscreen saat klik
+  img.addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    overlay.innerHTML = `<img src="${img.src}" alt="">`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', () => overlay.remove());
+  });
+});
+
 
   /* ================= CONFESS SECTION ================= */
   let confessStarted = false;
@@ -117,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ================= DARK MODE ================= */
-  document.body.style.transition = "background 0.6s, color 0.6s";
+  document.body.style.transition = "background 0.6s, color 0.6s"; // smooth transition
   toggleBtn?.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
@@ -128,21 +137,11 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleBtn.textContent = "☀️";
   }
 
-  /* ================= SURPRISE + CONFETTI ================= */
+  /* ================= SURPRISE ================= */
   surpriseBtn?.addEventListener("click", () => {
     if (!surpriseText) return;
     surpriseText.classList.add("show");
     surpriseBtn.classList.add("hidden");
-
-    for (let i = 0; i < 100; i++) {
-      const confetti = document.createElement("div");
-      confetti.className = "confetti";
-      confetti.style.left = Math.random() * 100 + "vw";
-      confetti.style.background = `hsl(${Math.random()*360}, 80%, 60%)`;
-      confetti.style.animationDuration = 2 + Math.random()*2 + "s";
-      document.body.appendChild(confetti);
-      confetti.addEventListener("animationend", () => confetti.remove());
-    }
   });
 
   /* ================= COUNTDOWN ================= */
@@ -159,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(countdown, 1000);
   countdown();
 
-  /* ================= FLOATING HEARTS DREAMY ================= */
+  /* ================= FLOATING HEARTS ================= */
   const heartsContainer = document.querySelector(".floating-hearts");
   if (heartsContainer) {
     setInterval(() => {
@@ -167,9 +166,8 @@ document.addEventListener("DOMContentLoaded", () => {
       heart.className = "heart";
       heart.textContent = Math.random() > 0.5 ? "🤍" : "💗";
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.opacity = 0.3 + Math.random()*0.5;
-      heart.style.fontSize = 12 + Math.random() * 12 + "px";
-      heart.style.animationDuration = 8 + Math.random()*6 + "s";
+      heart.style.animationDuration = 8 + Math.random() * 6 + "s";
+      heart.style.fontSize = 12 + Math.random() * 10 + "px";
       heartsContainer.appendChild(heart);
       heart.addEventListener("animationend", () => heart.remove());
     }, 900);
