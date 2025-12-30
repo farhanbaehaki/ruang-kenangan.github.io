@@ -84,10 +84,22 @@ document.addEventListener("DOMContentLoaded", () => {
   faders.forEach(fader => appearOnScroll.observe(fader));
 
  /* ================= GALLERY INTERACTIVE ================= */
+/* ================= GALLERY INTERACTIVE FINAL ================= */
 const galleryImgs = document.querySelectorAll('.gallery img');
 
+const galleryObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const imgs = Array.from(galleryImgs);
+      const index = imgs.indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('show'), index * 150);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
 galleryImgs.forEach((img, i) => {
-  img.style.setProperty('--i', i);
+  img.style.setProperty('--i', i); // untuk hover rotate
 
   // Lightbox fullscreen
   img.addEventListener('click', () => {
@@ -98,14 +110,11 @@ galleryImgs.forEach((img, i) => {
     overlay.addEventListener('click', () => overlay.remove());
   });
 
-  // Fade-in bertahap
-  setTimeout(() => {
-    img.classList.add('show');
-  }, i * 200); // tiap foto delay 200ms
-
-  // Tetap bisa muncul saat scroll
-  appearOnScroll.observe(img);
+  // Observe untuk fade-in
+  galleryObserver.observe(img);
 });
+
+
 
   /* ================= CONFESS SECTION ================= */
   let confessStarted = false;
