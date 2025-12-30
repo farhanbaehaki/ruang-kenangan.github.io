@@ -1,3 +1,7 @@
+/* ==========================================================================
+   RESET & GLOBAL
+   ========================================================================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -17,9 +21,10 @@ body {
   transition: background 0.6s, color 0.6s;
 }
 
-/* ===================================================
-                  SECTIONS & LAYOUT
-   =================================================== */
+/* ==========================================================================
+   SECTIONS & LAYOUT
+   ========================================================================== */
+
 .section {
   min-height: 100vh;
   padding: 80px 20px;
@@ -35,16 +40,9 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-      circle at 15% 20%,
-      rgba(173, 216, 230, 0.25),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 85% 80%,
-      rgba(135, 206, 250, 0.2),
-      transparent 50%
-    );
+  background: 
+    radial-gradient(circle at 15% 20%, rgba(173, 216, 230, 0.25), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(135, 206, 250, 0.2), transparent 50%);
   z-index: 0;
 }
 
@@ -53,9 +51,10 @@ body {
   z-index: 1;
 }
 
-/* ===================================================
-                      HERO SECTION
-   =================================================== */
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
 .hero::before {
   content: "";
   position: absolute;
@@ -67,8 +66,8 @@ body {
 }
 
 @keyframes smoothGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
@@ -84,9 +83,10 @@ body {
   color: #555;
 }
 
-/* ===================================================
-                          BUTTONS
-   =================================================== */
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
 button {
   display: flex;
   align-items: center;
@@ -98,7 +98,8 @@ button {
   background: #b0b0b0;
   color: #1e1e1e;
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+  transition: 
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
     box-shadow 0.3s ease, 
     background 0.3s ease, 
     color 0.3s ease;
@@ -113,7 +114,7 @@ button:active {
   transform: scale(0.96);
 }
 
-/* Theme toggle button */
+/* Theme Toggle Specific */
 #themeToggle {
   position: fixed;
   top: 20px;
@@ -131,14 +132,10 @@ button:active {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-body.dark #themeToggle {
-  background: #2a2a2a;
-  color: #f1ece7;
-}
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
 
-/* ===================================================
-                    CONTENT & TEXT
-   =================================================== */
 p {
   max-width: 620px;
   margin: 0 auto;
@@ -158,9 +155,10 @@ h3 {
   margin-bottom: 24px;
 }
 
-/* ===================================================
-                      GALLERY
-   =================================================== */
+/* ==========================================================================
+   GALLERY & LIGHTBOX
+   ========================================================================== */
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -170,18 +168,14 @@ h3 {
 
 .gallery img {
   width: 100%;
-  aspect-ratio: 1 / 1; 
-  object-fit: cover;
-  min-height: 200px; /* Tambahkan ini agar HP mendeteksi ruang gambar */
-  background-color: rgba(0,0,0,0.05); /* Warna dasar tipis saat loading */
   border-radius: 16px;
   cursor: pointer;
   opacity: 0;
   transform: translateY(30px);
-  
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.8s ease,
-    filter 0.8s ease,
+  transition: 
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
+    box-shadow 0.8s ease, 
+    filter 0.8s ease, 
     opacity 0.8s ease;
 }
 
@@ -196,7 +190,6 @@ h3 {
   filter: brightness(1.05);
 }
 
-/* Lightbox Fullscreen */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -221,9 +214,10 @@ h3 {
   to { transform: scale(1); }
 }
 
-/* ===================================================
-                        COUNTDOWN
-   =================================================== */
+/* ==========================================================================
+   COUNTDOWN & SURPRISE
+   ========================================================================== */
+
 #countdown {
   display: flex;
   gap: 20px;
@@ -250,10 +244,25 @@ h3 {
   margin-top: 4px;
 }
 
-/* ===================================================
-            ANIMATIONS (Hearts & Bubbles)
-   =================================================== */
-.floating-hearts,
+#surpriseText {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+  margin-top: 16px;
+  pointer-events: none;
+}
+
+#surpriseText.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   ANIMATIONS & DECORATIONS
+   ========================================================================== */
+
+.floating-hearts, 
 .floating-bubbles {
   position: fixed;
   inset: 0;
@@ -292,23 +301,6 @@ h3 {
   }
 }
 
-/* ===================================================
-              SURPRISE & FADE EFFECTS
-   =================================================== */
-#surpriseText {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease;
-  margin-top: 16px;
-  pointer-events: none;
-}
-
-#surpriseText.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
 .section.fade-up {
   opacity: 0;
   transform: translateY(40px);
@@ -331,11 +323,17 @@ h3 {
   transform: translateY(0);
 }
 
-/* ===================================================
-                        DARK MODE
-   =================================================== */
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
 body.dark {
   background: #121212;
+  color: #f1ece7;
+}
+
+body.dark #themeToggle {
+  background: #2a2a2a;
   color: #f1ece7;
 }
 
@@ -343,9 +341,9 @@ body.dark .section {
   background: transparent;
 }
 
-body.dark p,
-body.dark h1,
-body.dark h2,
+body.dark p, 
+body.dark h1, 
+body.dark h2, 
 body.dark h3 {
   color: #f1ece7;
 }
