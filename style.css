@@ -273,3 +273,26 @@ body.dark .hero::before {
   0%,50%,100% { opacity: 1 }
   25%,75% { opacity: 0 }
 }
+
+button {
+  display: block;
+  margin: 0 auto;
+}
+.section {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero h2 {
+    font-size: 18px;
+  }
+
+  button {
+    width: 85%;
+    max-width: 320px;
+  }
+}
