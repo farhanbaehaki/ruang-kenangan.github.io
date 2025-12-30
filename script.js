@@ -83,17 +83,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }, appearOptions);
   faders.forEach(fader => appearOnScroll.observe(fader));
 
-  /* ================= GALLERY INTERACTIVE ================= */
+ /* ================= GALLERY INTERACTIVE ================= */
 const galleryImgs = document.querySelectorAll('.gallery img');
 galleryImgs.forEach((img, i) => {
-  img.style.setProperty('--i', i); // untuk rotate di hover
-  appearOnScroll.observe(img); // fade-in saat scroll
+  img.style.setProperty('--i', i);
 
-  // Lightbox fullscreen saat klik
+  // Fade-in saat scroll
+  appearOnScroll.observe(img);
+
+  // Langsung show jika sudah di viewport saat load
+  const rect = img.getBoundingClientRect();
+  if (rect.top < window.innerHeight) {
+    img.classList.add('show');
+  }
+
+  // Lightbox fullscreen
   img.addEventListener('click', () => {
     const overlay = document.createElement('div');
     overlay.className = 'lightbox';
-    overlay.innerHTML = `<img src="${img.src}" alt="">`;
+    overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
     document.body.appendChild(overlay);
     overlay.addEventListener('click', () => overlay.remove());
   });
