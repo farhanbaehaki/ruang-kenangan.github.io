@@ -1,254 +1,76 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- DOM Elements ---
-  const confessSection = document.getElementById("confess");
-  const confessTexts = document.querySelectorAll(".confess-text");
   const music = document.getElementById("music");
   const startBtn = document.getElementById("startBtn");
   const toggleBtn = document.getElementById("themeToggle");
   const surpriseBtn = document.querySelector(".surprise");
   const surpriseText = document.getElementById("surpriseText");
 
-  /* ==========================================================================
-     GALLERY & LIGHTBOX
-     ========================================================================== */
-  const galleryImgs = document.querySelectorAll(".gallery img");
-
-  const galleryObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  galleryImgs.forEach((img, i) => {
-    img.style.setProperty("--i", i);
-
-    img.addEventListener("click", () => {
-      const overlay = document.createElement("div");
-      overlay.className = "lightbox";
-      overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
-      document.body.appendChild(overlay);
-
-      overlay.addEventListener("click", () => overlay.remove());
-    });
-
-    galleryObserver.observe(img);
-  });
-
-  /* ==========================================================================
-     MUSIC CONTROL (Fade In/Out)
-     ========================================================================== */
-  if (music) music.volume = 0;
-
-  startBtn?.addEventListener("click", async () => {
-    try {
-      await music.play();
-      fadeInMusic(music, 0.6, 0.02);
-    } catch (err) {
-      alert("Musik diblokir browser 😢");
-    }
-  });
-
-  function fadeInMusic(audio, target = 0.6, step = 0.02) {
-    function tick() {
-      audio.volume = Math.min(audio.volume + step, target);
-      if (audio.volume < target) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  function fadeOutMusic(audio, step = 0.02) {
-    function tick() {
-      audio.volume = Math.max(audio.volume - step, 0);
-      if (audio.volume > 0) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  /* ==========================================================================
-     TYPING EFFECT ENGINE
-     ========================================================================== */
-  function typeTextHTML(element, html, speed = 35) {
-    element.innerHTML = "";
-    element.style.visibility = "visible";
-    element.classList.add("type");
-
-    const temp = document.createElement("div");
-    temp.innerHTML = html;
-    const chars = [];
-
-    // Mengurai HTML menjadi array karakter dan tag
-    function flattenNodes(node) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        for (const c of node.textContent) chars.push(c);
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        chars.push({ openTag: `<${node.tagName.toLowerCase()}>` });
-        node.childNodes.forEach(flattenNodes);
-        chars.push({ closeTag: `</${node.tagName.toLowerCase()}>` });
-      }
-    }
-
-    temp.childNodes.forEach(flattenNodes);
-
-    let i = 0;
-    function typing() {
-      if (i < chars.length) {
-        const c = chars[i];
-        if (typeof c === "string") {
-          element.innerHTML += c;
-        } else if (c.openTag) {
-          element.innerHTML += c.openTag;
-        } else if (c.closeTag) {
-          element.innerHTML += c.closeTag;
-        }
+  /* --- TYPING EFFECT ENGINE --- */
+  function typeText(element, html, speed = 35) {
+    element.innerHTML = ""; element.style.visibility = "visible";
+    let i = 0; 
+    const typing = setInterval(() => {
+      if (i < html.length) {
+        element.innerHTML = html.substring(0, i + 1);
         i++;
-        setTimeout(typing, speed);
-      } else {
-        element.classList.remove("type");
-      }
-    }
-    typing();
+      } else { clearInterval(typing); }
+    }, speed);
   }
 
-  /* ==========================================================================
-     SCROLL ANIMATIONS (Fade Up & Slide)
-     ========================================================================== */
-  const faders = document.querySelectorAll(".fade-up, .fade-slide");
+  /* --- POLAROID & SCROLL LOGIC --- */
+  const polaroids = document.querySelectorAll('.polaroid');
+  const sections = document.querySelectorAll('.fade-up');
 
-  const appearOnScroll = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        if (entry.target.id === "confess") {
+          const texts = entry.target.querySelectorAll(".confess-text");
+          texts.forEach((t, idx) => setTimeout(() => typeText(t, t.innerHTML), idx * 3000));
         }
-      });
-    },
-    { threshold: 0.5 }
-  );
+      }
+    });
+  }, { threshold: 0.3 });
 
-  faders.forEach((f) => appearOnScroll.observe(f));
+  sections.forEach(s => observer.observe(s));
+  polaroids.forEach(p => {
+    p.style.setProperty('--rotation', `${(Math.random() * 12 - 6)}deg`);
+    p.addEventListener('click', () => {
+      const overlay = document.createElement('div');
+      overlay.className = 'lightbox';
+      overlay.innerHTML = `<img src="${p.querySelector('img').src}">`;
+      document.body.appendChild(overlay);
+      overlay.onclick = () => overlay.remove();
+    });
+    observer.observe(p);
+  });
 
-  /* ==========================================================================
-     CONFESSION TRIGGER
-     ========================================================================== */
-  let confessStarted = false;
+  /* --- MUSIC & THEME --- */
+  startBtn?.addEventListener("click", () => {
+    music.play().then(() => {
+      let v = 0; const f = setInterval(() => { if(v<0.6){v+=0.05; music.volume=v;} else clearInterval(f); }, 200);
+    });
+  });
 
-  if (confessSection) {
-    const confessObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !confessStarted) {
-            confessStarted = true;
-            confessSection.classList.add("active");
-            document.body.classList.add("calm");
-            fadeOutMusic(music);
-
-            let delay = 0;
-            confessTexts.forEach((text) => {
-              const original = text.innerHTML;
-              setTimeout(() => typeTextHTML(text, original), delay);
-              // Kalkulasi delay berdasarkan panjang teks (tanpa tag HTML)
-              delay += original.replace(/<[^>]*>/g, "").length * 35 + 600;
-            });
-          }
-        });
-      },
-      { threshold: 0.7 }
-    );
-    confessObserver.observe(confessSection);
-  }
-
-  /* ==========================================================================
-     DARK MODE TOGGLE
-     ========================================================================== */
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    toggleBtn.textContent = "☀️";
-  } else {
-    toggleBtn.textContent = "🌙";
-  }
-
-  toggleBtn.addEventListener("click", () => {
+  toggleBtn.onclick = () => {
     document.body.classList.toggle("dark");
     const isDark = document.body.classList.contains("dark");
     toggleBtn.textContent = isDark ? "☀️" : "🌙";
     localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
+  };
 
-  /* ==========================================================================
-     SURPRISE BUTTON
-     ========================================================================== */
-  surpriseBtn?.addEventListener("click", () => {
-    if (!surpriseText) return;
-    surpriseText.classList.add("show");
-    surpriseBtn.classList.add("hidden");
-  });
-
-  /* ==========================================================================
-     COUNTDOWN TIMER
-     ========================================================================== */
-  const targetDate = new Date("January 13, 2026 00:00:00").getTime();
-
-  const updateCountdown = () => {
-    const now = Date.now();
-    const diff = targetDate - now;
-
+  /* --- COUNTDOWN --- */
+  const target = new Date("January 13, 2026 00:00:00").getTime();
+  setInterval(() => {
+    const diff = target - Date.now();
     if (diff < 0) return;
+    document.getElementById("days").textContent = Math.floor(diff / 86400000);
+    document.getElementById("hours").textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById("minutes").textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById("seconds").textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+  }, 1000);
 
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-
-    document.getElementById("days").textContent = d;
-    document.getElementById("hours").textContent = String(h).padStart(2, "0");
-    document.getElementById("minutes").textContent = String(m).padStart(2, "0");
-    document.getElementById("seconds").textContent = String(s).padStart(2, "0");
-  };
-
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
-
-  /* ==========================================================================
-     FLOATING ELEMENTS (Hearts & Bubbles)
-     ========================================================================== */
-  const createFloatingItem = (container, className, content = null) => {
-    if (!container) return;
-    
-    const item = document.createElement("div");
-    item.className = className;
-    if (content) item.textContent = content;
-
-    item.style.left = Math.random() * 100 + "vw";
-    item.style.animationDuration = 8 + Math.random() * 6 + "s";
-    
-    if (className === "heart") {
-      item.style.fontSize = 12 + Math.random() * 10 + "px";
-    } else {
-      const size = Math.random() * 20 + 10;
-      item.style.width = item.style.height = size + "px";
-    }
-
-    container.appendChild(item);
-    item.addEventListener("animationend", () => item.remove());
-  };
-
-  // Trigger Hearts
-  const heartsContainer = document.querySelector(".floating-hearts");
-  setInterval(() => {
-    const emoji = Math.random() > 0.5 ? "🤍" : "💗";
-    createFloatingItem(heartsContainer, "heart", emoji);
-  }, 900);
-
-  // Trigger Bubbles
-  const bubblesContainer = document.querySelector(".floating-bubbles");
-  setInterval(() => {
-    createFloatingItem(bubblesContainer, "bubble");
-  }, 600);
+  /* --- SURPRISE --- */
+  surpriseBtn.onclick = () => { surpriseText.classList.add("show"); surpriseBtn.style.display = "none"; };
 });
