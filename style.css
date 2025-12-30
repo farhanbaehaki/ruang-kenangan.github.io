@@ -158,34 +158,40 @@ h3 {
 /* ==========================================================================
    GALLERY POLAROID STACK (FINAL VERSION)
    ========================================================================== */
+/* Pastikan Gallery tidak tertutup background */
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
+  display: flex !important;
+  flex-wrap: wrap !important;
   justify-content: center;
   align-items: flex-start;
-  gap: 12px;       /* Jarak antar foto dipersempit agar muat di HP */
-  padding: 20px 5px;
-  max-width: 100%; /* WAJIB 100% agar memenuhi lebar layar HP */
-  margin: 0 auto;
+  gap: 12px;
+  padding: 20px 10px;
+  width: 100% !important;
+  position: relative;
+  z-index: 100; /* Menaikkan lapisan galeri ke atas background */
+  visibility: visible !important;
 }
 
-/* Kertas Polaroid */
 .polaroid {
-width: 44%;           /* UBAH DARI 90% KE 44% agar muat 2 foto bersandingan */
-  min-width: 140px; 
-  background: #ffffff;
-  padding: 8px 8px 30px 8px;         /* Padding seragam di semua sisi */
+  width: 44% !important; 
+  background: #ffffff !important;
+  padding: 8px 8px 25px 8px;
+  border-radius: 2px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  cursor: pointer;
-  box-sizing: border-box; /* PENTING: Supaya padding tidak merusak lebar */
-  /* Supaya posisi antar polaroid tidak saling tabrak saat miring */
-  display: flex;
+  display: flex !important;
   flex-direction: column;
+  opacity: 1 !important; /* Paksa muncul */
+  visibility: visible !important; /* Paksa terlihat */
+  transform: none !important; /* Matikan animasi sementara untuk tes */
+}
 
-  /* Animasi muncul & rotasi */
-  opacity: 1;
-  transform: translateY(30px) rotate(var(--rotation, 0deg));
-  transition: transform 0.4s ease, opacity 0.6s ease;
+.polaroid img {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 150px; 
+  display: block !important;
+  object-fit: cover;
+  opacity: 1 !important;
 }
 
 /* --- Aturan Dasar Gambar di Polaroid --- */
