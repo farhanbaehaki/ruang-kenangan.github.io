@@ -214,7 +214,7 @@ width: 44%;           /* UBAH DARI 90% KE 44% agar muat 2 foto bersandingan */
 
 /* --- Penyesuaian Kertas Polaroid agar Rapi di HP --- */
 .polaroid {
-  width: 44%; /* Biar bisa 2 kolom di HP */
+  width: 90%; /* Biar bisa 2 kolom di HP */
   background: #ffffff;
   padding: 8px 8px 25px 8px;
   box-sizing: border-box;
