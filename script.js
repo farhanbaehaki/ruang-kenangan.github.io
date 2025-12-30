@@ -8,6 +8,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const surpriseBtn = document.querySelector(".surprise");
   const surpriseText = document.getElementById("surpriseText");
 
+/* ================= GALLERY INTERACTIVE FINAL ================= */
+const galleryImgs = document.querySelectorAll('.gallery img');
+
+const galleryObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+galleryImgs.forEach((img, i) => {
+  img.style.setProperty('--i', i); // untuk hover rotate
+
+  // Langsung muncul jika sudah visible saat load
+  if (img.getBoundingClientRect().top < window.innerHeight) {
+    img.classList.add('show');
+  }
+
+  // Lightbox fullscreen
+  img.addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', () => overlay.remove());
+  });
+
+  // Observe untuk fade-in saat scroll
+  galleryObserver.observe(img);
+});
+
+
   /* ================= MUSIC ================= */
   if (music) music.volume = 0;
 
@@ -82,42 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }, appearOptions);
   faders.forEach(fader => appearOnScroll.observe(fader));
-
-/* ================= GALLERY INTERACTIVE FINAL ================= */
-const galleryImgs = document.querySelectorAll('.gallery img');
-
-const galleryObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const imgs = Array.from(galleryImgs);
-      const index = imgs.indexOf(entry.target);
-      setTimeout(() => entry.target.classList.add('show'), index * 150);
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-galleryImgs.forEach((img, i) => {
-  img.style.setProperty('--i', i); // hover rotate
-  // jika gambar sudah terlihat di layar, langsung tampil
-  if (img.getBoundingClientRect().top < window.innerHeight) {
-    img.classList.add('show');
-  }
-
-  // Lightbox fullscreen
-  img.addEventListener('click', () => {
-    const overlay = document.createElement('div');
-    overlay.className = 'lightbox';
-    overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
-    document.body.appendChild(overlay);
-    overlay.addEventListener('click', () => overlay.remove());
-  });
-
-  // Observe untuk fade-in
-  galleryObserver.observe(img);
-});
-
-
 
   /* ================= CONFESS SECTION ================= */
   let confessStarted = false;
