@@ -230,3 +230,30 @@ body.dark .hero::before {
   button { padding: 12px 24px; font-size: 13px; }
   .floating-hearts .heart { font-size: 10px; }
 }
+
+/* CONFESS MODE */
+.confess {
+  transition: background 1.5s ease;
+}
+
+.confess.active {
+  background: radial-gradient(
+    circle at top,
+    #f1f5ff 0%,
+    #ffffff 60%
+  );
+}
+
+/* dark mode */
+body.dark .confess.active {
+  background: radial-gradient(
+    circle at top,
+    #1a1a1a 0%,
+    #121212 70%
+  );
+}
+
+/* text awalnya kosong */
+.confess-text {
+  visibility: hidden;
+}
