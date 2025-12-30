@@ -85,17 +85,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
  /* ================= GALLERY INTERACTIVE ================= */
 const galleryImgs = document.querySelectorAll('.gallery img');
+
 galleryImgs.forEach((img, i) => {
   img.style.setProperty('--i', i);
-
-  // Fade-in saat scroll
-  appearOnScroll.observe(img);
-
-  // Langsung show jika sudah di viewport saat load
-  const rect = img.getBoundingClientRect();
-  if (rect.top < window.innerHeight) {
-    img.classList.add('show');
-  }
 
   // Lightbox fullscreen
   img.addEventListener('click', () => {
@@ -105,8 +97,15 @@ galleryImgs.forEach((img, i) => {
     document.body.appendChild(overlay);
     overlay.addEventListener('click', () => overlay.remove());
   });
-});
 
+  // Fade-in bertahap
+  setTimeout(() => {
+    img.classList.add('show');
+  }, i * 200); // tiap foto delay 200ms
+
+  // Tetap bisa muncul saat scroll
+  appearOnScroll.observe(img);
+});
 
   /* ================= CONFESS SECTION ================= */
   let confessStarted = false;
