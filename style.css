@@ -194,9 +194,12 @@ h3 {
 
 .polaroid img {
   width: 100%;
-  height: 160px;   /* Tinggi dikurangi sedikit agar tidak terlalu panjang di HP */
+  height: auto; 
+  aspect-ratio: 3 / 4; /* Ini yang bikin foto panjang jadi rapi */
   object-fit: cover;
+  object-position: center; 
   display: block;
+  border-bottom: 1px solid #f0f0f0; /* Opsional: garis tipis pembatas foto & kertas */
 }
 
 /* Teks di bawah foto */
@@ -371,4 +374,26 @@ body.dark .hero::before {
 
 body.dark .gallery img {
   filter: brightness(0.9);
+}
+
+.lightbox img {
+  max-width: 90%; 
+  max-height: 85vh; /* Biar foto panjang gak kepotong di bawah layar HP */
+  object-fit: contain; /* Biar seluruh foto Naura kelihatan utuh */
+  border: 4px solid white; /* Frame putih biar makin estetik */
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  border-radius: 4px; /* Sudut foto sedikit halus */
+}
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9); /* Latar belakang hitam transparan */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999; /* Biar di depan semua elemen hati/gelembung */
 }
