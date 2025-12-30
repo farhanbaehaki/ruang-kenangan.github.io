@@ -103,20 +103,21 @@ if (bubblesContainer) {
   }, 600);
 }
 
+/* ================= CONFESS EFFECT ================= */
 const confessSection = document.getElementById("confess");
 const confessTexts = document.querySelectorAll(".confess-text");
 const music = document.getElementById("music");
 
 let confessStarted = false;
 
-function typeText(element, text, speed = 35) {
+function typeText(element, html, speed = 35) {
   element.innerHTML = "";
   element.style.visibility = "visible";
   let i = 0;
 
   function typing() {
-    if (i < text.length) {
-      element.innerHTML += text.charAt(i);
+    if (i < html.length) {
+      element.innerHTML += html[i];
       i++;
       setTimeout(typing, speed);
     }
@@ -135,24 +136,27 @@ function lowerMusic(audio) {
   }, 150);
 }
 
-/* DETEKSI SAAT CONFESS MASUK VIEW */
-const confessObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !confessStarted) {
-      confessStarted = true;
-      confessSection.classList.add("active");
-      lowerMusic(music);
+if (confessSection) {
+  const confessObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !confessStarted) {
+          confessStarted = true;
+          lowerMusic(music);
 
-      let delay = 0;
-      confessTexts.forEach(p => {
-        const original = p.innerHTML;
-        setTimeout(() => {
-          typeText(p, original);
-        }, delay);
-        delay += original.length * 35 + 500;
+          let delay = 0;
+          confessTexts.forEach(p => {
+            const original = p.innerHTML;
+            setTimeout(() => {
+              typeText(p, original);
+            }, delay);
+            delay += original.length * 35 + 600;
+          });
+        }
       });
-    }
-  });
-}, { threshold: 0.4 });
+    },
+    { threshold: 0.4 }
+  );
 
-confessObserver.observe(confessSection);
+  confessObserver.observe(confessSection);
+}
