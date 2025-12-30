@@ -170,36 +170,31 @@ h3 {
 
 /* Kertas Polaroid */
 .polaroid {
-  width: 45%;      /* Supaya muat 2 foto bersandingan ke samping di HP */
-  min-width: 150px; 
+  width: 45%;           /* Angka ini kunci supaya bisa muat 2 foto bersandingan */
+  min-width: 140px; 
   background: #ffffff;
-  padding: 8px 8px 25px 8px; /* Padding lebih tipis agar foto lebih besar */
+  padding: 8px 8px 30px 8px; /* Ruang bawah sedikit lebih lega untuk caption */
   border-radius: 2px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   cursor: pointer;
   
+  /* Supaya posisi antar polaroid tidak saling tabrak saat miring */
+  display: flex;
+  flex-direction: column;
+
   /* Animasi muncul & rotasi */
   opacity: 0;
   transform: translateY(30px) rotate(var(--rotation, 0deg));
-  transition: 
-    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-    box-shadow 0.3s ease, 
-    opacity 0.6s ease;
+  transition: transform 0.4s ease, opacity 0.6s ease;
 }
 
-.polaroid.show {
-  opacity: 1;
-  transform: translateY(0) rotate(var(--rotation, 0deg));
-}
-
+/* Supaya foto di dalamnya tidak terpotong */
 .polaroid img {
   width: 100%;
-  height: auto; 
-  aspect-ratio: 3 / 4; /* Ini yang bikin foto panjang jadi rapi */
-  object-fit: cover;
-  object-position: center; 
-  display: block;
-  border-bottom: 1px solid #f0f0f0; /* Opsional: garis tipis pembatas foto & kertas */
+  height: auto;        /* Biar tinggi ngikutin aslinya */
+  aspect-ratio: 2 / 3; /* Ratio portrait yang lebih panjang agar cocok dengan foto Naura */
+  object-fit: cover;   /* Tetap rapi di dalam bingkai */
+  object-position: top; /* Prioritaskan bagian atas (teks & wajah) agar tidak terpotong */
 }
 
 /* Teks di bawah foto */
