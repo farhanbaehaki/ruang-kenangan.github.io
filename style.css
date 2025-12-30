@@ -1,149 +1,120 @@
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html { scroll-behavior: smooth; }
 
 body {
-  font-family:'Inter',sans-serif;
-  background:radial-gradient(circle at top,#dceeff,#fff);
-  color:#1e1e1e;
-  text-align:center;
-  overflow-x:hidden;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #dceeff, #ffffff);
+  color: #1e1e1e;
+  text-align: center;
+  overflow-x: hidden;
 }
 
-/* SECTION */
-.section{
-  min-height:100vh;
-  padding:80px 20px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+body.dark {
+  background: radial-gradient(circle at top, #1f1f1f, #121212);
+  color: #f1f1f1;
 }
 
-/* HERO */
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:48px;
-}
-.hero h2{ margin:12px 0 40px; }
-
-/* BUTTON */
-button{
-  padding:14px 28px;
-  border:none;
-  border-radius:999px;
-  background:#e8cfcf;
-  cursor:pointer;
+.section {
+  min-height: 100svh;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* FADE */
-.fade-up{
-  opacity:0;
-  transform:translateY(40px);
-  transition:1s ease;
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
 }
-.fade-up.show{
-  opacity:1;
-  transform:none;
-}
-.fade-slide{
-  opacity:0;
-  transform:translateY(30px);
-  transition:1s ease;
-}
-.fade-slide.show{
-  opacity:1;
-  transform:none;
+.hero h2 { margin: 12px 0 40px; }
+
+button {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 999px;
+  background: #e8cfcf;
+  cursor: pointer;
 }
 
-/* SURPRISE */
-#surpriseText{
-  opacity:0;
-  transform:translateY(20px);
-  transition:.8s;
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1s ease;
 }
-#surpriseText.show{
-  opacity:1;
-  transform:none;
+.fade-up.show { opacity: 1; transform: none; }
+
+.fade-slide {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s ease;
+}
+.fade-slide.show { opacity: 1; transform: none; }
+
+#surpriseText {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.8s ease;
+}
+#surpriseText.show {
+  opacity: 1;
+  transform: none;
 }
 
-/* CONFESS */
-.confess{
-  transition:background 2s ease;
-}
-.confess.active{
-  background:radial-gradient(circle at top,#f5f7ff,#fff);
-}
-
-.confess-text{
-  visibility:hidden;
-  margin-bottom:20px;
-  font-size:16px;
-  line-height:1.8;
+.confess-text {
+  visibility: hidden;
+  margin-bottom: 22px;
+  font-size: 16px;
+  line-height: 1.8;
 }
 
-/* TYPE CURSOR */
-.type-cursor::after{
-  content:"|";
-  animation:blink 1s infinite;
-}
-@keyframes blink{
-  0%,50%,100%{opacity:1}
-  25%,75%{opacity:0}
-}
-
-/* FLOAT */
-.floating-hearts,.floating-bubbles{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-}
-.heart,.bubble{
-  position:absolute;
-  animation:floatUp linear infinite;
-}
-.heart{ font-size:14px; opacity:.3 }
-.bubble{
-  width:14px;height:14px;
-  background:rgba(173,216,230,.4);
-  border-radius:50%;
-}
-
-@keyframes floatUp{
-  from{ transform:translateY(110vh); opacity:0 }
-  10%{ opacity:.3 }
-  to{ transform:translateY(-10vh); opacity:0 }
-}
-
-/* ================= CALM CONFESS MODE ================= */
-#confess.active::before {
-  background:
-    radial-gradient(circle at top, rgba(255,255,255,0.9), transparent 60%);
-  transition: background 2s ease;
-}
-
-/* calm background overlay */
 #confess.active {
-  background: radial-gradient(
-    circle at top,
-    #f6f8ff 0%,
-    #ffffff 70%
-  );
-  transition: background 2s ease;
+  background: radial-gradient(circle at top, #f6f8ff, #ffffff);
 }
 
-/* dark mode calm */
 body.dark #confess.active {
-  background: radial-gradient(
-    circle at top,
-    #1c1c1c 0%,
-    #121212 70%
-  );
+  background: radial-gradient(circle at top, #1c1c1c, #121212);
 }
 
-/* floating jadi lebih pelan */
-body.calm .heart,
-body.calm .bubble {
-  animation-duration: 18s !important;
-  opacity: 0.15;
+.type-cursor::after {
+  content: "|";
+  margin-left: 3px;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.floating-hearts,
+.floating-bubbles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heart, .bubble {
+  position: absolute;
+  animation: floatUp linear infinite;
+}
+
+.heart { opacity: 0.3; }
+.bubble {
+  background: rgba(173,216,230,.4);
+  border-radius: 50%;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(110vh); opacity: 0; }
+  to   { transform: translateY(-10vh); opacity: .3; }
+}
+
+@media (max-width:768px){
+  .section { padding: 60px 16px; min-height:auto; }
+  .hero h1 { font-size: 32px; }
 }
