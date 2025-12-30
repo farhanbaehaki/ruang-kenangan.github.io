@@ -281,18 +281,3 @@ button {
 .section {
   width: 100%;
 }
-
-@media (max-width: 480px) {
-  .hero h1 {
-    font-size: 38px;
-  }
-
-  .hero h2 {
-    font-size: 18px;
-  }
-
-  button {
-    width: 85%;
-    max-width: 320px;
-  }
-}
