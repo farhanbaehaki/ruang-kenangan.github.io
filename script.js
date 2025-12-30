@@ -27,7 +27,7 @@ const galleryObserver = new IntersectionObserver((entries) => {
 
 polaroids.forEach((item) => {
   // Pastikan rotasi acak tetap ada
-  const randomRot = (Math.random() * 10 - 5).toFixed(2);
+  const randomRot = (Math.random() * 14 - 7).toFixed(2);
   item.style.setProperty('--rotation', `${randomRot}deg`);
   
   galleryObserver.observe(item);
