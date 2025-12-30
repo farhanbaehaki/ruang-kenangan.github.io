@@ -90,38 +90,37 @@ document.addEventListener("DOMContentLoaded", () => {
   let confessStarted = false;
 
   function typeText(element, html, speed = 35) {
-    element.innerHTML = "";
-    element.style.visibility = "visible";
+  element.innerHTML = "";
+  element.style.visibility = "visible";
+  element.classList.add("type-cursor");
 
-    let i = 0;
-    let isTag = false;
-    let buffer = "";
+  let i = 0;
 
-    function typing() {
-      if (i < html.length) {
-        const char = html.charAt(i);
-        buffer += char;
+  function typing() {
+    if (i < html.length) {
 
-        if (char === "<") isTag = true;
-
-        if (char === ">") {
-          isTag = false;
-          element.innerHTML += buffer;
-          buffer = "";
-        }
-
-        if (!isTag && char !== "<" && char !== ">") {
-          element.innerHTML += char;
-          buffer = "";
-        }
-
+      // JIKA TAG HTML
+      if (html[i] === "<") {
+        const tagEnd = html.indexOf(">", i);
+        element.innerHTML += html.slice(i, tagEnd + 1);
+        i = tagEnd + 1;
+        setTimeout(typing, 0);
+      } 
+      // JIKA TEXT BIASA
+      else {
+        element.innerHTML += html[i];
         i++;
-        setTimeout(typing, isTag ? 0 : speed);
+        setTimeout(typing, speed);
       }
-    }
 
-    typing();
+    } else {
+      element.classList.remove("type-cursor");
+    }
   }
+
+  typing();
+}
+
 
   if (confessSection) {
     const confessObserver = new IntersectionObserver(
