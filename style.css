@@ -158,24 +158,24 @@ h3 {
 /* ==========================================================================
    GALLERY POLAROID STACK (FINAL VERSION)
    ========================================================================== */
-
 .gallery {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 40px;
-  padding: 40px 20px;
-  max-width: 1000px;
+  gap: 15px;       /* Jarak antar foto dipersempit agar muat di HP */
+  padding: 20px 5px;
+  max-width: 100%; /* WAJIB 100% agar memenuhi lebar layar HP */
   margin: 0 auto;
 }
 
-/* Kertas Polaroid (Sekarang pembungkusnya yang jadi kertas) */
+/* Kertas Polaroid */
 .polaroid {
-  width: 240px; 
+  width: 45%;      /* Supaya muat 2 foto bersandingan ke samping di HP */
+  min-width: 150px; 
   background: #ffffff;
-  padding: 12px 12px 35px 12px; /* Ruang bawah lebih luas untuk teks */
+  padding: 8px 8px 25px 8px; /* Padding lebih tipis agar foto lebih besar */
   border-radius: 2px;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   cursor: pointer;
   
   /* Animasi muncul & rotasi */
@@ -194,8 +194,8 @@ h3 {
 
 .polaroid img {
   width: 100%;
-  height: 200px;
-  object-fit: cover; /* Agar foto tidak gepeng */
+  height: 160px;   /* Tinggi dikurangi sedikit agar tidak terlalu panjang di HP */
+  object-fit: cover;
   display: block;
 }
 
@@ -204,22 +204,21 @@ h3 {
   display: block;
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 14px;
-  margin-top: 15px;
+  font-size: 12px;  /* Ukuran teks dikecilkan untuk HP */
+  margin-top: 10px;
   color: #444;
   text-align: center;
 }
 
-/* Efek Hover */
+/* Efek Hover (Tetap ada untuk interaksi sentuhan) */
 .polaroid:hover {
-  transform: scale(1.1) rotate(0deg) !important;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  transform: scale(1.05) rotate(0deg) !important;
   z-index: 10;
 }
 
 /* Mode Gelap */
 body.dark .polaroid {
-  background: #f1ece7; /* Warna krem agar estetik di mode gelap */
+  background: #f1ece7;
 }
 
 body.dark .polaroid span {
