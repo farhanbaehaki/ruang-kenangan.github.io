@@ -641,3 +641,25 @@ body.dark .gallery img {
     position: relative;
     z-index: 100; /* Lebih tinggi dari floating elements */
 }
+
+/* ==========================================================================
+   LOADER & MISC FIXES
+   ========================================================================== */
+
+/* Efek Menghilang untuk Loader */
+#loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+/* Pastikan polaroid benar-benar muncul saat class .show aktif */
+.polaroid.show {
+  opacity: 1 !important;
+  transform: translateY(0) rotate(var(--rotation, 0deg)) !important;
+}
+
+/* Memastikan elemen lightbox berada di lapisan paling atas */
+.lightbox {
+  z-index: 100000;
+}
