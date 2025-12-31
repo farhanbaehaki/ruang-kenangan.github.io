@@ -238,3 +238,13 @@ document.addEventListener("DOMContentLoaded", () => {
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 };
+
+
+window.addEventListener('load', function() {
+  const loader = document.getElementById('loader');
+  
+  // Berikan jeda sedikit (misal 1 detik) agar tidak terlalu cepat hilang
+  setTimeout(() => {
+    loader.classList.add('fade-out');
+  }, 1000);
+});
