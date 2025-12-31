@@ -1,31 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    /* ==========================================================================
-       1. LOADING SCREEN LOGIC
-       ========================================================================== */
-    const loader = document.getElementById("loader");
-    const loaderText = document.getElementById("loaderText");
-    const messages = ["Menyiapkan kejutan...", "Mengumpulkan momen indah...", "Sedikit lagi...", "Siap!"];
-    
-    let msgIndex = 0;
-    const msgInterval = setInterval(() => {
-        if (msgIndex < messages.length) {
-            if(loaderText) loaderText.textContent = messages[msgIndex];
-            msgIndex++;
-        }
-    }, 800);
-
-    // Menghilangkan loader setelah semua asset termuat
-    window.addEventListener("load", () => {
-        setTimeout(() => {
-            clearInterval(msgInterval);
-            if(loader) {
-                loader.classList.add("fade-out");
-                setTimeout(() => {
-                    loader.style.display = "none";
-                }, 800);
-            }
-        }, 2000); 
-    });
 
     /* ==========================================================================
        2. MUSIC & START BUTTON

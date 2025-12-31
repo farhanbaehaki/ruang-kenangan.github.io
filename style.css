@@ -129,17 +129,35 @@ body {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 999;
-  font-size: 24px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: #b0b0b0;
+  z-index: 9999; /* Pastikan di atas segalanya */
+  
+  /* Ukuran & Bentuk */
+  width: 45px;
+  height: 45px;
+  border-radius: 50%; /* Membuat bulat sempurna */
+  
+  /* Tampilan */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px; /* Ukuran icon dikecilkan sedikit */
+  border: none;
+  cursor: pointer;
+  
+  /* Warna */
+  background: rgba(255, 255, 255, 0.8);
   color: #1e1e1e;
+  backdrop-filter: blur(5px); /* Efek kaca */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+  /* Animasi */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #themeToggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1) rotate(15deg);
+  background: #ffffff;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* ==========================================================================
@@ -393,10 +411,10 @@ body.dark {
 }
 
 body.dark #themeToggle {
-  background: #2a2a2a;
+  background: rgba(42, 42, 42, 0.8);
   color: #f1ece7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
-
 body.dark .section {
   background: transparent;
 }
@@ -662,70 +680,4 @@ body.dark .gallery img {
 /* Memastikan elemen lightbox berada di lapisan paling atas */
 .lightbox {
   z-index: 100000;
-}
-
-/* ==========================================================================
-   LOADER SYSTEM (FIX)
-   ========================================================================== */
-#loader {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: #ffffff; /* Warna background loader */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999999; /* Pastikan paling atas */
-  transition: opacity 0.8s ease, visibility 0.8s;
-}
-
-.loader-content {
-  text-align: center;
-}
-
-.heart-loader {
-  width: 50px;
-  height: 50px;
-  background-color: #ff4d6d;
-  margin: 20px auto;
-  position: relative;
-  transform: rotate(45deg);
-  animation: heartBeat 1.2s infinite;
-}
-
-.heart-loader::before,
-.heart-loader::after {
-  content: "";
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background-color: #ff4d6d;
-  border-radius: 50%;
-}
-
-.heart-loader::before {
-  top: -25px;
-  left: 0;
-}
-
-.heart-loader::after {
-  top: 0;
-  left: -25px;
-}
-
-@keyframes heartBeat {
-  0% { transform: rotate(45deg) scale(0.8); }
-  5% { transform: rotate(45deg) scale(0.9); }
-  10% { transform: rotate(45deg) scale(0.8); }
-  15% { transform: rotate(45deg) scale(1); }
-  50% { transform: rotate(45deg) scale(0.8); }
-  100% { transform: rotate(45deg) scale(0.8); }
-}
-
-#loaderText {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  color: #555;
-  margin-top: 20px;
-  font-size: 14px;
 }
