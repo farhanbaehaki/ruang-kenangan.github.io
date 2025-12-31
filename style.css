@@ -247,6 +247,14 @@ h3 {
   transform: translateY(0) rotate(var(--rotation, 0deg));
 }
 
+.polaroid:hover {
+  /* Kita tambahkan !important agar mengalahkan rotasi dari .show */
+  transform: scale(1.08) rotate(0deg) translateY(-10px) !important;
+  z-index: 500; /* Agar foto yang di-hover berada di depan foto lainnya */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
 .polaroid img {
   width: 100%;
   height: auto;
@@ -277,13 +285,7 @@ h3 {
   padding: 0 5px; 
 }
 
-.polaroid:hover {
-  /* Kita tambahkan !important agar mengalahkan rotasi dari .show */
-  transform: scale(1.08) rotate(0deg) translateY(-10px) !important;
-  z-index: 500; /* Agar foto yang di-hover berada di depan foto lainnya */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-}
+
 /* ==========================================================================
    DARK MODE POLAROID
    ========================================================================== */
