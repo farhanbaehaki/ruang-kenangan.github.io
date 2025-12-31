@@ -278,11 +278,11 @@ h3 {
 }
 
 /* 2. Hover tetap miring (DIBERI SPASI) */
-.polaroid:hover {
+/* .polaroid:hover {
   transform: scale(1.05) rotate(var(--rotation, 0deg)) !important;
   z-index: 100;
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-}
+} */
 /* Efek saat ditekan/diklik (mirip contoh hover kamu, tapi untuk klik) */
 .polaroid:active {
   /* scale(0.92): memberikan efek seolah-olah ditekan ke bawah */
