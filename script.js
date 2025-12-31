@@ -115,12 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-       5 & 6. OBSERVERS & GALLERY LOGIC (FIXED)
-       ========================================================================== */
+       5 & 6. OBSERVERS & GALLERY LOGIC (FIXED & CLEAN)
+     ========================================================================== */
   
-  // 1. Inisialisasi awal untuk semua polaroid agar siap miring
+  // 1. Berikan angka miring ke semua polaroid segera
   document.querySelectorAll(".polaroid").forEach((item) => {
-    // Berikan angka miring SEKARANG juga sebelum muncul
     const randomRotation = (Math.random() * 12 - 6).toFixed(2);
     item.style.setProperty("--rotation", `${randomRotation}deg`);
 
@@ -152,51 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   faders.forEach((f) => appearOnScroll.observe(f));
-
-  // --- Bagian Confess Section (Tetap Sama) ---
-  const confessSection = document.getElementById("confess");
-  const confessTexts = document.querySelectorAll(".confess-text");
-  let confessStarted = false;
-
-  if (confessSection) {
-    const confessObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !confessStarted) {
-            confessStarted = true;
-            let delay = 0;
-            confessTexts.forEach((text) => {
-              const original = text.innerHTML;
-              text.innerHTML = "";
-              setTimeout(() => typeTextHTML(text, original), delay);
-              delay += original.replace(/<[^>]*>/g, "").length * 35 + 1000;
-            });
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-    confessObserver.observe(confessSection);
-  }
-
-  // --- Bagian Countdown (Tetap Sama) ---
-  const targetDate = new Date("January 13, 2026 00:00:00").getTime();
-  function updateCountdown() {
-    const diff = targetDate - Date.now();
-    if (diff < 0) return;
-    document.getElementById("days").textContent = Math.floor(diff / 86400000);
-    document.getElementById("hours").textContent = String(
-      Math.floor((diff % 86400000) / 3600000)
-    ).padStart(2, "0");
-    document.getElementById("minutes").textContent = String(
-      Math.floor((diff % 3600000) / 60000)
-    ).padStart(2, "0");
-    document.getElementById("seconds").textContent = String(
-      Math.floor((diff % 60000) / 1000)
-    ).padStart(2, "0");
-  }
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
   /* ==========================================================================
        7. DECORATIONS & THEME
        ========================================================================== */
