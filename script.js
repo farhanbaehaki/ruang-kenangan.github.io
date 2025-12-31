@@ -9,86 +9,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const surpriseText = document.getElementById("surpriseText");
   const absurdEmojis = ["🗿", "🦖", "👽", "🐸", "🤡", "👺", "🍄", "💩", "🦕", "💨"];
 
-  /* ==========================================================================
-      SURPRISE LOGIC
-     ========================================================================== */
-  if (surpriseBtn) {
-    surpriseBtn.addEventListener("click", () => {
-      surpriseBtn.style.opacity = "0";
-      setTimeout(() => {
-        surpriseBtn.style.display = "none";
-      }, 300);
-
-      if (surpriseText) {
-        surpriseText.style.display = "block";
-        setTimeout(() => {
-          surpriseText.classList.add("reveal");
-          surpriseText.classList.add("show");
-          surpriseText.style.opacity = "1";
-        }, 50);
-      }
-
-      for (let i = 0; i < 50; i++) {
-        setTimeout(createFallingEmoji, i * 100);
-      }
-    });
-  }
-
-  function createFallingEmoji() {
-    const emoji = document.createElement("div");
-    emoji.className = "falling-emoji";
-    emoji.textContent = absurdEmojis[Math.floor(Math.random() * absurdEmojis.length)];
-    emoji.style.left = Math.random() * 100 + "vw";
-    emoji.style.position = "fixed";
-    emoji.style.top = "-50px";
-    emoji.style.zIndex = "9999";
-    emoji.style.fontSize = Math.random() * 20 + 20 + "px";
-    emoji.style.pointerEvents = "none";
-    const duration = Math.random() * 3 + 2;
-    emoji.style.animation = `fall ${duration}s linear forwards`;
-    document.body.appendChild(emoji);
-    setTimeout(() => emoji.remove(), duration * 1000);
-  }
-
-  /* ==========================================================================
-      POLAROID & LIGHTBOX
-     ========================================================================== */
-  const polaroids = document.querySelectorAll('.polaroid');
-  const galleryObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  polaroids.forEach((item) => {
-    const randomRot = (Math.random() * 12 - 6).toFixed(2);
-    item.style.setProperty('--rotation', `${randomRot}deg`);
-    
-    item.addEventListener('click', () => {
-      const img = item.querySelector('img');
-      const overlay = document.createElement('div');
-      overlay.className = 'lightbox';
-      overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
-      document.body.appendChild(overlay);
-      overlay.addEventListener('click', () => overlay.remove());
-    });
-    galleryObserver.observe(item);
-  });
-
-  /* ==========================================================================
-      MUSIC & TYPING ENGINE
-     ========================================================================== */
+  // Set volume awal
   if (music) music.volume = 0;
 
+  /* ==========================================================================
+      MUSIC & START
+     ========================================================================== */
   startBtn?.addEventListener("click", async () => {
     try {
       await music.play();
       fadeInMusic(music, 0.6, 0.02);
       window.scrollBy(0, 500);
     } catch (err) {
-      console.log("Autoplay diblokir");
+      console.log("Autoplay diblokir browser");
     }
   });
 
@@ -104,18 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 50);
   }
 
-  // Fungsi fadeOut tetap ada tapi tidak dipanggil saat Confess agar lagu tidak berhenti
-  function fadeOutMusic(audio, step = 0.02) {
-    const interval = setInterval(() => {
-      if (audio.volume > 0.02) {
-        audio.volume -= step;
-      } else {
-        audio.volume = 0;
-        clearInterval(interval);
-      }
-    }, 50);
-  }
-
+  /* ==========================================================================
+      TYPING EFFECT ENGINE
+     ========================================================================== */
   function typeTextHTML(element, html, speed = 35) {
     element.innerHTML = "";
     element.style.visibility = "visible";
@@ -170,8 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (entry.isIntersecting && !confessStarted) {
           confessStarted = true;
           
-          // --- FIX: Baris fadeOutMusic(music) di bawah ini dihapus agar lagu tetap jalan ---
-          // fadeOutMusic(music); 
+          // --- SUDAH DIHAPUS: fadeOutMusic(music) ---
+          console.log("Musik tetap jalan mengiringi kata hatimu...");
 
           let delay = 0;
           confessTexts.forEach((text) => {
@@ -187,7 +111,64 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-      DARK MODE, COUNTDOWN, & FLOATING ITEMS
+      SURPRISE & EMOJI
+     ========================================================================== */
+  if (surpriseBtn) {
+    surpriseBtn.addEventListener("click", () => {
+      surpriseBtn.style.opacity = "0";
+      setTimeout(() => (surpriseBtn.style.display = "none"), 300);
+      if (surpriseText) {
+        surpriseText.style.display = "block";
+        setTimeout(() => {
+          surpriseText.classList.add("reveal");
+          surpriseText.style.opacity = "1";
+        }, 50);
+      }
+      for (let i = 0; i < 50; i++) setTimeout(createFallingEmoji, i * 100);
+    });
+  }
+
+  function createFallingEmoji() {
+    const emoji = document.createElement("div");
+    emoji.className = "falling-emoji";
+    emoji.textContent = absurdEmojis[Math.floor(Math.random() * absurdEmojis.length)];
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.position = "fixed";
+    emoji.style.top = "-50px";
+    emoji.style.zIndex = "9999";
+    emoji.style.fontSize = Math.random() * 20 + 20 + "px";
+    emoji.style.pointerEvents = "none";
+    const duration = Math.random() * 3 + 2;
+    emoji.style.animation = `fall ${duration}s linear forwards`;
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), duration * 1000);
+  }
+
+  /* ==========================================================================
+      POLAROID & GALLERY
+     ========================================================================== */
+  const polaroids = document.querySelectorAll('.polaroid');
+  const galleryObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.1 });
+
+  polaroids.forEach((item) => {
+    item.style.setProperty('--rotation', `${(Math.random() * 12 - 6).toFixed(2)}deg`);
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      const overlay = document.createElement('div');
+      overlay.className = 'lightbox';
+      overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', () => overlay.remove());
+    });
+    galleryObserver.observe(item);
+  });
+
+  /* ==========================================================================
+      DARK MODE & COUNTDOWN
      ========================================================================== */
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
@@ -214,6 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateCountdown, 1000);
   updateCountdown();
 
+  /* ==========================================================================
+      FLOATING ITEMS
+     ========================================================================== */
   const createFloatingItem = (container, className, content = null) => {
     if (!container) return;
     const item = document.createElement("div");
