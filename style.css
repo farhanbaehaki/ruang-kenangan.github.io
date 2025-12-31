@@ -453,29 +453,92 @@ body.dark .gallery img {
     animation: fall linear forwards;
 }
 
+/* ==========================================================================
+   SURPRISE SECTION POLISH (RATING & LIST)
+   ========================================================================== */
+
 #surpriseText {
     display: none; 
     opacity: 0;
-    transition: opacity 1.5s ease; /* Fokus ke opacity agar transisinya halus */
-    padding: 20px;
-    max-width: 500px;
-    margin: 40px auto; /* Tambah margin atas agar tidak nempel ke section confess */
-    box-sizing: border-box; /* Biar padding tidak merusak lebar */
+    transition: opacity 1.5s ease;
+    padding: 30px 20px;
+    max-width: 450px; /* Sedikit lebih ramping agar estetik */
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 133, 161, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
-/* Tambahan styling agar List tidak ada bulatan bullet-nya */
+.surprise-title {
+    font-family: 'Playfair Display', serif;
+    color: #ff4d6d;
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+}
+
+/* Container Rating Progres Bar */
+.rating-card {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.rating-item {
+    margin-bottom: 18px;
+}
+
+.rating-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.rating-bar {
+    background: #eee;
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.rating-fill {
+    background: linear-gradient(to right, #a0d8ff, #ff85a1);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 2s ease-out; /* Animasi bar jalan */
+}
+
+/* List Dosa / Hal Lucu */
 .funny-list {
     padding: 0;
     list-style-type: none;
-    text-align: left; /* List biasanya lebih enak dibaca rata kiri */
+    text-align: left;
 }
 
 .funny-list li {
     margin-bottom: 12px;
-    padding: 12px 15px;
-    background: #fff0f3; /* Pink sangat muda */
-    border-radius: 12px;
-    border-left: 5px solid #ff85a1; /* Garis vertikal pemanis di kiri */
-    font-size: 0.95rem;
-    color: #444;
+    padding: 14px 18px;
+    background: white;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    border: 1px solid #fef0f2;
+}
+
+.funny-list li span {
+    font-size: 1.2rem;
+}
+
+.footer-note {
+    font-size: 0.8rem;
+    color: #999;
+    font-style: italic;
+    margin-top: 25px;
 }
