@@ -110,11 +110,13 @@ if (startBtn) {
   /* ==========================================================================
        4. TYPING EFFECT ENGINE
        ========================================================================== */
-  function typeTextHTML(element, html, speed = 35) {
+function typeTextHTML(element, html, speed = 35) {
+  return new Promise((resolve) => {
     element.innerHTML = "";
     element.style.visibility = "visible";
     element.style.opacity = "1";
     element.classList.add("type");
+    
     const temp = document.createElement("div");
     temp.innerHTML = html;
     const chars = [];
@@ -131,6 +133,7 @@ if (startBtn) {
 
     temp.childNodes.forEach(flattenNodes);
     let i = 0;
+    
     function typing() {
       if (i < chars.length) {
         const c = chars[i];
@@ -141,10 +144,12 @@ if (startBtn) {
         setTimeout(typing, speed);
       } else {
         element.classList.remove("type");
+        resolve(); // Memberitahu sistem bahwa ngetik sudah selesai
       }
     }
     typing();
-  }
+  });
+}
 
   /* ==========================================================================
        5. OBSERVERS (PHOTO & TEXT)
@@ -169,32 +174,33 @@ if (startBtn) {
   let confessStarted = false;
 
 if (confessSection) {
-    const confessObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !confessStarted) {
-            confessStarted = true;
-            let delay = 0;
-            confessTexts.forEach((text) => {
-              const original = text.innerHTML;
-              // Jangan pakai innerHTML = "", tapi sembunyikan saja dulu
-              text.style.opacity = "0"; 
-              
-              setTimeout(() => {
-                text.style.opacity = "1"; // Munculkan kembali saat mulai ngetik
-                typeTextHTML(text, original);
-              }, delay);
+  const confessObserver = new IntersectionObserver(
+    async (entries) => { // Perhatikan tambahan 'async' di sini
+      for (const entry of entries) {
+        if (entry.isIntersecting && !confessStarted) {
+          confessStarted = true;
+          
+          // Gunakan for...of agar bisa menggunakan 'await'
+          for (const text of confessTexts) {
+            const original = text.innerHTML;
+            
+            // Sembunyikan teks asli
+            text.style.opacity = "0";
+            text.style.visibility = "visible";
 
-              // Kurangi pengali delay agar tidak terlalu lama menunggu
-              delay += original.replace(/<[^>]*>/g, "").length * 25 + 600; 
-            });
+            // Tunggu sampai fungsi pengetik selesai sepenuhnya
+            await typeTextHTML(text, original);
+            
+            // Beri jeda 1 detik (1000ms) sebelum paragraf berikutnya mulai diketik
+            await new Promise(resolve => setTimeout(resolve, 1000));
           }
-        });
-      },
-      { threshold: 0.2 } // Lebih sensitif agar cepat mulai
-    );
-    confessObserver.observe(confessSection);
-  }
+        }
+      }
+    },
+    { threshold: 0.2 }
+  );
+  confessObserver.observe(confessSection);
+}
 
   /* ==========================================================================
        6. GALLERY LIGHTBOX & COUNTDOWN
