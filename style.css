@@ -441,7 +441,28 @@ body.dark .gallery img {
 }
 
 #surpriseText {
-    display: none; /* Awalnya sembunyi */
+    display: none; 
     opacity: 0;
-    transition: opacity 1.5s ease;
+    transition: opacity 1.5s ease; /* Fokus ke opacity agar transisinya halus */
+    padding: 20px;
+    max-width: 500px;
+    margin: 40px auto; /* Tambah margin atas agar tidak nempel ke section confess */
+    box-sizing: border-box; /* Biar padding tidak merusak lebar */
+}
+
+/* Tambahan styling agar List tidak ada bulatan bullet-nya */
+.funny-list {
+    padding: 0;
+    list-style-type: none;
+    text-align: left; /* List biasanya lebih enak dibaca rata kiri */
+}
+
+.funny-list li {
+    margin-bottom: 12px;
+    padding: 12px 15px;
+    background: #fff0f3; /* Pink sangat muda */
+    border-radius: 12px;
+    border-left: 5px solid #ff85a1; /* Garis vertikal pemanis di kiri */
+    font-size: 0.95rem;
+    color: #444;
 }
