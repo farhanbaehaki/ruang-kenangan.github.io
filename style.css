@@ -132,37 +132,6 @@ button:active {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Gabungkan keduanya agar tampilannya identik */
-#startBtn, .surprise {
-  background: #ff4d6d; /* Warna pink seragam */
-  color: white;
-  font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto;
-  box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-  animation: pulse 2s infinite; /* Efek berdenyut yang sama */
-  transition: transform 0.3s ease;
-  font-family: "Plus Jakarta Sans", sans-serif;
-}
-
-/* Tambahkan efek hover agar keduanya juga sama saat disentuh */
-#startBtn:hover, .surprise:hover {
-  transform: scale(1.1);
-  background: #ff335c;
-  box-shadow: 0 6px 20px rgba(255, 77, 109, 0.5);
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
-  50% { transform: scale(1.05); box-shadow: 0 4px 25px rgba(255, 77, 109, 0.5); }
-  100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
-}
 /* ==========================================================================
    TYPOGRAPHY
    ========================================================================== */
@@ -246,9 +215,8 @@ h3 {
 
 /* Muncul dengan Miring & Pop-up */
 .polaroid.show {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: translateY(0) rotate(var(--rotation, 0deg)) !important;
+  opacity: 1;
+  transform: translateY(0) rotate(var(--rotation, 0deg));
 }
 
 .polaroid img {
@@ -664,61 +632,3 @@ body.dark .gallery img {
     z-index: 100; /* Lebih tinggi dari floating elements */
 }
 
-/* Container Utama Loader */
-#loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #1a1a1a; /* Warna gelap agar elegan */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000; /* Pastikan di atas segalanya */
-  transition: opacity 0.8s ease, visibility 0.8s;
-}
-
-.loader-content {
-  text-align: center;
-  color: white;
-  font-family: 'Playfair Display', serif;
-}
-
-/* Animasi Jantung Berdetak */
-.heart-loader {
-  width: 50px;
-  height: 50px;
-  background-color: #ff4d6d;
-  position: relative;
-  transform: rotate(-45deg);
-  margin: 0 auto 20px;
-  animation: beat 1s infinite;
-}
-
-.heart-loader::before,
-.heart-loader::after {
-  content: "";
-  width: 50px;
-  height: 50px;
-  background-color: #ff4d6d;
-  border-radius: 50%;
-  position: absolute;
-}
-
-.heart-loader::before { top: -25px; left: 0; }
-.heart-loader::after { left: 25px; top: 0; }
-
-@keyframes beat {
-  0% { transform: rotate(-45deg) scale(1); }
-  25% { transform: rotate(-45deg) scale(1.1); }
-  50% { transform: rotate(-45deg) scale(1); }
-  75% { transform: rotate(-45deg) scale(1.2); }
-  100% { transform: rotate(-45deg) scale(1); }
-}
-
-/* Efek Menghilang */
-#loader.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
