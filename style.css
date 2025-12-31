@@ -663,3 +663,69 @@ body.dark .gallery img {
 .lightbox {
   z-index: 100000;
 }
+
+/* ==========================================================================
+   LOADER SYSTEM (FIX)
+   ========================================================================== */
+#loader {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff; /* Warna background loader */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999; /* Pastikan paling atas */
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.heart-loader {
+  width: 50px;
+  height: 50px;
+  background-color: #ff4d6d;
+  margin: 20px auto;
+  position: relative;
+  transform: rotate(45deg);
+  animation: heartBeat 1.2s infinite;
+}
+
+.heart-loader::before,
+.heart-loader::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #ff4d6d;
+  border-radius: 50%;
+}
+
+.heart-loader::before {
+  top: -25px;
+  left: 0;
+}
+
+.heart-loader::after {
+  top: 0;
+  left: -25px;
+}
+
+@keyframes heartBeat {
+  0% { transform: rotate(45deg) scale(0.8); }
+  5% { transform: rotate(45deg) scale(0.9); }
+  10% { transform: rotate(45deg) scale(0.8); }
+  15% { transform: rotate(45deg) scale(1); }
+  50% { transform: rotate(45deg) scale(0.8); }
+  100% { transform: rotate(45deg) scale(0.8); }
+}
+
+#loaderText {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #555;
+  margin-top: 20px;
+  font-size: 14px;
+}
