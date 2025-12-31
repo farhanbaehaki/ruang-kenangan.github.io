@@ -278,9 +278,11 @@ h3 {
 }
 
 .polaroid:hover {
-  transform: scale(1.1) rotate(0deg) !important;
-  z-index: 100;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  /* Kita tambahkan !important agar mengalahkan rotasi dari .show */
+  transform: scale(1.08) rotate(0deg) translateY(-10px) !important;
+  z-index: 500; /* Agar foto yang di-hover berada di depan foto lainnya */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
 /* ==========================================================================
    DARK MODE POLAROID
