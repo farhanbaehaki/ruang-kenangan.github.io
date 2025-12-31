@@ -13,28 +13,34 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ==========================================================================
        SURPRISE BUTTON + HUJAN EMOJI
        ========================================================================== */
-    if (surpriseBtn) {
-        surpriseBtn.addEventListener("click", () => {
-            console.log("Tombol diklik!"); 
+if (surpriseBtn) {
+    surpriseBtn.addEventListener("click", () => {
+        console.log("Tombol diklik!"); 
 
-            // 1. Munculkan pesan rahasia
-            if (surpriseText) {
-                surpriseText.style.display = "block";
-                setTimeout(() => {
-                    surpriseText.style.opacity = "1";
-                }, 100);
-            }
+        // 1. Munculkan container utama
+        if (surpriseText) {
+            surpriseText.style.display = "block"; // Aktifkan display dulu
+            
+            // Beri jeda sangat singkat (50ms) agar browser sempat memproses 'display block'
+            // baru kemudian tambahkan class 'reveal' untuk memicu animasi staggered di CSS
+            setTimeout(() => {
+                surpriseText.classList.add("reveal");
+                surpriseText.style.opacity = "1";
+            }, 50);
+        }
 
-            // 2. Sembunyikan tombol
+        // 2. Sembunyikan tombol dengan efek halus
+        surpriseBtn.style.opacity = "0";
+        setTimeout(() => {
             surpriseBtn.style.display = "none";
+        }, 300);
 
-            // 3. Hujan Emoji
-            for (let i = 0; i < 50; i++) {
-                setTimeout(createFallingEmoji, i * 100);
-            }
-        });
-    }
-
+        // 3. Hujan Emoji
+        for (let i = 0; i < 50; i++) {
+            setTimeout(createFallingEmoji, i * 100);
+        }
+    });
+}
     function createFallingEmoji() {
         const emoji = document.createElement("div");
         emoji.className = "falling-emoji";
