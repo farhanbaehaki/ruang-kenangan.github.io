@@ -185,12 +185,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   faders.forEach((f) => appearOnScroll.observe(f));
 
-  /* ==========================================================================
-     CONFESSION TRIGGER
-     ========================================================================== */
-  let confessStarted = false;
+   let confessStarted = false;
 
   if (confessSection) {
+
+    confessTexts.forEach((text) => {
+      text.style.visibility = "hidden"; 
+    });
+
     const confessObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -203,6 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let delay = 0;
             confessTexts.forEach((text) => {
               const original = text.innerHTML;
+              text.innerHTML = "";
               setTimeout(() => typeTextHTML(text, original), delay);
               delay += original.replace(/<[^>]*>/g, "").length * 35 + 800;
             });
