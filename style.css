@@ -148,11 +148,23 @@ h3 {
   margin-bottom: 24px;
 }
 
+#confess {
+  padding: 150px 20px; /* Jarak atas bawah lebih lega */
+  background: linear-gradient(to bottom, transparent, #fffafa); /* Gradasi lembut */
+}
+
 .confess-text {
-  visibility: hidden;
-  font-size: 16px;
-  line-height: 1.8;
-  margin-bottom: 24px;
+  max-width: 550px; /* Batasi lebar teks agar mata tidak lelah membaca ke samping */
+  margin: 0 auto 30px auto; /* Memberi jarak antar paragraf */
+  line-height: 1.8; /* Jarak antar baris biar nggak rapat */
+  font-family: 'Poppins', sans-serif;
+  color: #555;
+}
+
+/* Biar teks "Sebenarnya kita ini apa sih?" makin ngena */
+.confess-text b {
+  color: #ff4d6d;
+  font-size: 1.15rem;
 }
 
 /* ==========================================================================
