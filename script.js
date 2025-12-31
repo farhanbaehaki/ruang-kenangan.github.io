@@ -110,7 +110,7 @@ if (startBtn) {
   /* ==========================================================================
        4. TYPING EFFECT ENGINE
        ========================================================================== */
-function typeTextHTML(element, html, speed = 35) {
+function typeTextHTML(element, html, speed = 60) {
   return new Promise((resolve) => {
     element.innerHTML = "";
     element.style.visibility = "visible";
@@ -142,27 +142,29 @@ function typeTextHTML(element, html, speed = 35) {
         else if (c.closeTag) element.innerHTML += c.closeTag;
         i++;
 
-// --- POLASAN: Kecepatan Random ---
-        // Kadang ngetik cepat (20ms), kadang lambat (70ms) agar terasa natural
-        let randomSpeed = speed + (Math.random() * 40 - 20); 
+        // --- POLASAN: Kecepatan Natural ---
+        let currentSpeed = speed + (Math.random() * 40 - 20); 
         
-        // Jika ketemu tanda koma atau titik, berhenti sejenak lebih lama
-        if (typeof c === "string" && (c === "," || c === ".")) {
-          randomSpeed = 500; 
+        // Logika Jeda Tanda Baca yang Lebih Detail
+        if (typeof c === "string") {
+          if (c === ".") {
+            currentSpeed = 800; // Berhenti lama di akhir kalimat (titik)
+          } else if (c === "," || c === "-" || c === ":") {
+            currentSpeed = 400; // Berhenti sejenak di koma atau jeda kalimat
+          }
         }
 
-        setTimeout(typing, randomSpeed);
+        setTimeout(typing, currentSpeed);
       } else {
         setTimeout(() => {
           element.classList.remove("type");
           resolve();
-          }, 500);
+        }, 800); // Beri jeda sedikit sebelum lanjut ke paragraf berikutnya
       }
     }
     typing();
   });
 }
-
   /* ==========================================================================
        5. OBSERVERS (PHOTO & TEXT)
        ========================================================================== */
