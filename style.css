@@ -283,11 +283,15 @@ h3 {
   z-index: 100;
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
-/* 3. Efek Klik (BALIK ARAH) */
+/* Efek saat ditekan/diklik (mirip contoh hover kamu, tapi untuk klik) */
 .polaroid:active {
-  /* Hilangkan translateY agar fokus ke scale dan rotate saja */
-  transform: scale(0.92) rotate(calc(var(--rotation, 0deg) * -1.5)) !important;
+  /* scale(0.92): memberikan efek seolah-olah ditekan ke bawah */
+  /* rotate: membalikkan nilai --rotation yang dibuat JS agar mental ke kanan */
+  transform: scale(0.92) rotate(calc(var(--rotation, 0deg) * -1.2)) !important;
+  
+  /* Transisi cepat agar terasa responsif seperti pegas */
   transition: transform 0.1s ease-out !important;
+  
   filter: brightness(0.9);
   z-index: 500;
 }
