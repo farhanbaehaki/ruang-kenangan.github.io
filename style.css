@@ -748,3 +748,22 @@ body.dark .gallery img {
   50% { transform: rotate(45deg) scale(1.1); }
   100% { transform: rotate(45deg) scale(0.8); }
 }
+
+/* Efek Cursor Berkedip */
+.type::after {
+  content: "|";
+  margin-left: 2px;
+  color: #ff4d6d;
+  font-weight: bold;
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Hilangkan cursor saat ngetik selesai */
+.confess-text:not(.type)::after {
+  display: none;
+}

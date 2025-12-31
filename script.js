@@ -141,10 +141,22 @@ function typeTextHTML(element, html, speed = 35) {
         else if (c.openTag) element.innerHTML += c.openTag;
         else if (c.closeTag) element.innerHTML += c.closeTag;
         i++;
-        setTimeout(typing, speed);
+
+// --- POLASAN: Kecepatan Random ---
+        // Kadang ngetik cepat (20ms), kadang lambat (70ms) agar terasa natural
+        let randomSpeed = speed + (Math.random() * 40 - 20); 
+        
+        // Jika ketemu tanda koma atau titik, berhenti sejenak lebih lama
+        if (typeof c === "string" && (c === "," || c === ".")) {
+          randomSpeed = 500; 
+        }
+
+        setTimeout(typing, randomSpeed);
       } else {
-        element.classList.remove("type");
-        resolve(); // Memberitahu sistem bahwa ngetik sudah selesai
+        setTimeout(() => {
+          element.classList.remove("type");
+          resolve();
+          }, 500);
       }
     }
     typing();
