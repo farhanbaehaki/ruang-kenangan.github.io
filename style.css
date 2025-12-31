@@ -87,31 +87,41 @@ body {
    BUTTONS
    ========================================================================== */
 
-button {
+/* Pastikan #startBtn dan .surprise memiliki gaya yang persis sama */
+#startBtn, .surprise {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 14px 28px;
   border: none;
   border-radius: 999px;
-  background: #b0b0b0;
-  color: #1e1e1e;
+  background: #ff4d6d; /* Warna Pink Cerah */
+  color: white;
+  font-weight: 600;
   cursor: pointer;
-  transition: 
-    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.3s ease, 
-    background 0.3s ease, 
-    color 0.3s ease;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+  animation: pulse 2s infinite; /* Efek berdenyut */
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease, 
+              background 0.3s ease;
 }
 
-button:hover {
+#startBtn:hover, .surprise:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  background: #ff335c;
+  box-shadow: 0 12px 30px rgba(255, 77, 109, 0.4);
 }
 
-button:active {
+#startBtn:active, .surprise:active {
   transform: scale(0.96);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
+  50% { transform: scale(1.05); box-shadow: 0 4px 25px rgba(255, 77, 109, 0.5); }
+  100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
 }
 
 /* Theme Toggle Specific */
