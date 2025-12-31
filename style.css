@@ -210,7 +210,7 @@ h3 {
 }
 
 /* ==========================================================================
-   GALERI & POLAROID (VERSI CLEAN & AMAN)
+   GALERI & POLAROID (STABLE VERSION)
    ========================================================================== */
 .gallery {
   display: flex;
@@ -234,28 +234,17 @@ h3 {
   flex-direction: column;
   cursor: pointer;
   box-sizing: border-box;
+
+  /* Fitur Animasi Awal */
   opacity: 0;
-  transform: translateY(30px);
-  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease;
+  transform: translateY(30px) rotate(0deg); 
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
 }
 
-/* Muncul dengan miring estetik */
+/* Muncul dengan Miring & Pop-up */
 .polaroid.show {
-  opacity: 1 !important;
-  transform: translateY(0) rotate(var(--rotation, 0deg)) !important;
-}
-
-/* Hover: Cukup membesar sedikit agar elegan */
-.polaroid:hover {
-  transform: scale(1.05) rotate(var(--rotation, 0deg)) !important;
-  z-index: 100;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-}
-
-/* Efek Klik: Mengecil sedikit (efek ditekan standar) */
-.polaroid:active {
-  transform: scale(0.95) rotate(var(--rotation, 0deg)) !important;
-  transition: transform 0.1s ease !important;
+  opacity: 1;
+  transform: translateY(0) rotate(var(--rotation, 0deg));
 }
 
 .polaroid img {
@@ -264,9 +253,10 @@ h3 {
   display: block;
   object-fit: cover;
   background-color: #f5f5f5;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 3; /* Default untuk foto 1-5 */
 }
 
+/* Khusus Foto 6-12 (Pastikan di HTML: class="polaroid portrait") */
 .polaroid.portrait img {
   aspect-ratio: 9 / 16;
   object-position: top;
@@ -274,6 +264,7 @@ h3 {
 
 .polaroid span {
   display: block;
+  /* Font puitis/tangan */
   font-family: 'Playfair Display', serif; 
   font-style: italic;
   font-weight: 500;
@@ -282,7 +273,14 @@ h3 {
   margin-top: 12px;
   color: #333;
   text-align: center;
+  /* Mencegah teks terlalu mepet ke pinggir kertas */
   padding: 0 5px; 
+}
+
+.polaroid:hover {
+  transform: scale(1.1) rotate(0deg) !important;
+  z-index: 100;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 /* ==========================================================================
    DARK MODE POLAROID

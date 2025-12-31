@@ -115,14 +115,56 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-       5 & 6. OBSERVERS (POLAROID & TYPING TEXT) - FINAL FIX
-     ========================================================================== */
-  
-  // 1. Inisialisasi awal Polaroid (Miringkan semua foto)
-  document.querySelectorAll(".polaroid").forEach((item) => {
-    const randomRotation = (Math.random() * 12 - 6).toFixed(2);
-    item.style.setProperty("--rotation", `${randomRotation}deg`);
+       5. OBSERVERS (PHOTO & TEXT)
+       ========================================================================== */
+  const faders = document.querySelectorAll(".fade-up, .fade-slide, .polaroid");
+  const appearOnScroll = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
 
+  faders.forEach((f) => appearOnScroll.observe(f));
+
+  const confessSection = document.getElementById("confess");
+  const confessTexts = document.querySelectorAll(".confess-text");
+  let confessStarted = false;
+
+  if (confessSection) {
+    const confessObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !confessStarted) {
+            confessStarted = true;
+            let delay = 0;
+            confessTexts.forEach((text) => {
+              const original = text.innerHTML;
+              text.innerHTML = "";
+              setTimeout(() => typeTextHTML(text, original), delay);
+              delay += original.replace(/<[^>]*>/g, "").length * 35 + 1000;
+            });
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    confessObserver.observe(confessSection);
+  }
+
+  /* ==========================================================================
+       6. GALLERY LIGHTBOX & COUNTDOWN
+       ========================================================================== */
+  document.querySelectorAll(".polaroid").forEach((item) => {
+    item.style.setProperty(
+      "--rotation",
+      `${(Math.random() * 12 - 6).toFixed(2)}deg`
+    );
     item.addEventListener("click", () => {
       const img = item.querySelector("img");
       if (img && img.src) {
@@ -135,49 +177,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 2. Observer Utama (Untuk Polaroid dan Fade-up)
-  const faders = document.querySelectorAll(".fade-up, .fade-slide, .polaroid");
-  const appearOnScroll = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  faders.forEach((f) => appearOnScroll.observe(f));
-
-  // 3. Observer Khusus Text Confess (Efek Ngetik)
-  const confessSection = document.getElementById("confess");
-  const confessTexts = document.querySelectorAll(".confess-text");
-  let confessStarted = false;
-
-  if (confessSection && confessTexts.length > 0) {
-    const confessObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        // Jika section confess terlihat 30% saja, mulai ngetik
-        if (entry.isIntersecting && !confessStarted) {
-          confessStarted = true;
-          let delay = 0;
-          
-          confessTexts.forEach((text) => {
-            const originalHTML = text.innerHTML;
-            text.innerHTML = ""; // Kosongkan dulu
-            
-            setTimeout(() => {
-              typeTextHTML(text, originalHTML);
-            }, delay);
-            
-            // Hitung jeda untuk baris berikutnya (35ms per karakter + 1 detik jeda)
-            delay += originalHTML.replace(/<[^>]*>/g, "").length * 35 + 1000;
-          });
-        }
-      });
-    }, { threshold: 0.3 }); // Turunkan threshold agar lebih sensitif
-
-    confessObserver.observe(confessSection);
+  const targetDate = new Date("January 13, 2026 00:00:00").getTime();
+  function updateCountdown() {
+    const diff = targetDate - Date.now();
+    if (diff < 0) return;
+    document.getElementById("days").textContent = Math.floor(diff / 86400000);
+    document.getElementById("hours").textContent = String(
+      Math.floor((diff % 86400000) / 3600000)
+    ).padStart(2, "0");
+    document.getElementById("minutes").textContent = String(
+      Math.floor((diff % 3600000) / 60000)
+    ).padStart(2, "0");
+    document.getElementById("seconds").textContent = String(
+      Math.floor((diff % 60000) / 1000)
+    ).padStart(2, "0");
   }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
   /* ==========================================================================
        7. DECORATIONS & THEME
        ========================================================================== */
