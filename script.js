@@ -214,3 +214,31 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(() => createFloatingItem(document.querySelector(".floating-hearts"), "heart", Math.random() > 0.5 ? "🤍" : "💗"), 1000);
   setInterval(() => createFloatingItem(document.querySelector(".floating-bubbles"), "bubble"), 800);
 });
+
+// --- Loading Screen Logic ---
+  const loader = document.getElementById("loader");
+  const loaderText = document.getElementById("loaderText");
+  
+  // Daftar pesan yang akan berganti saat loading
+  const messages = [
+    "Menyiapkan kejutan...",
+    "Mengumpulkan momen indah...",
+    "Sedikit lagi...",
+    "Siap!"
+  ];
+  
+  let msgIndex = 0;
+  const msgInterval = setInterval(() => {
+    if (msgIndex < messages.length) {
+      loaderText.textContent = messages[msgIndex];
+      msgIndex++;
+    }
+  }, 800);
+
+  // Hilangkan loader setelah halaman benar-benar dimuat
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      clearInterval(msgInterval);
+      loader.classList.add("fade-out");
+    }, 3000); // Loader akan muncul selama 3 detik
+  });
