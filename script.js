@@ -143,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
      ========================================================================== */
   if (surpriseBtn) {
     surpriseBtn.addEventListener("click", () => {
+      surpriseBtn.style.transform = "scale(0.9)";
       surpriseBtn.style.opacity = "0";
       setTimeout(() => {
         surpriseBtn.style.display = "none";
@@ -229,3 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("theme", isDark ? "dark" : "light");
   });
 });
+
+// Memaksa halaman kembali ke atas saat direfresh
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};

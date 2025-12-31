@@ -132,12 +132,30 @@ button:active {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-#startBtn {
-  background: #ff4d6d; /* Warna pink biar senada dengan hati */
+/* Gabungkan keduanya agar tampilannya identik */
+#startBtn, .surprise {
+  background: #ff4d6d; /* Warna pink seragam */
   color: white;
   font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
   box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-  animation: pulse 2s infinite;
+  animation: pulse 2s infinite; /* Efek berdenyut yang sama */
+  transition: transform 0.3s ease;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* Tambahkan efek hover agar keduanya juga sama saat disentuh */
+#startBtn:hover, .surprise:hover {
+  transform: scale(1.1);
+  background: #ff335c;
+  box-shadow: 0 6px 20px rgba(255, 77, 109, 0.5);
 }
 
 @keyframes pulse {
