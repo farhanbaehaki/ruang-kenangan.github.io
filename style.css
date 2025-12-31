@@ -278,9 +278,25 @@ h3 {
 }
 
 .polaroid:hover {
-  transform: scale(1.1) rotate(0deg) !important;
+  /* scale(1.05) saja, biarkan rotate tetap mengikuti var miring agar tidak kaku */
+  transform: scale(1.05) rotate(var(--rotation)) !important;
   z-index: 100;
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.polaroid:active {
+  /* scale(0.92): mengecil sedikit seolah ditekan */
+  /* rotate: membalikkan nilai --rotation (dikali -1) */
+  transform: translateY(0) scale(0.92) rotate(calc(var(--rotation) * -1)) !important;
+  
+  /* Transisi cepat saat ditekan */
+  transition: transform 0.1s ease-out !important;
+  
+  /* Bayangan menipis seolah mendekat ke kertas */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+  z-index: 500;
+
+  filter: brightness(0.9);
 }
 /* ==========================================================================
    DARK MODE POLAROID
