@@ -222,6 +222,7 @@ h3 {
   width: 100%;
   box-sizing: border-box;
 }
+
 .polaroid {
   width: 45%; 
   min-width: 140px;
@@ -234,30 +235,59 @@ h3 {
   cursor: pointer;
   box-sizing: border-box;
 
-  /* State awal: turun sedikit dan transparan */
+  /* Fitur Animasi Awal */
   opacity: 0;
   transform: translateY(30px);
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
 }
 
-/* Muncul dengan miring (tambahkan SPASI setelah 0) */
+/* 1. Muncul dengan miring (DIBERI SPASI) */
 .polaroid.show {
   opacity: 1 !important;
+  /* Perhatikan spasi antara (0) dan rotate */
   transform: translateY(0) rotate(var(--rotation, 0deg)) !important;
 }
+.polaroid img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  background-color: #f5f5f5;
+  aspect-ratio: 4 / 3; /* Default untuk foto 1-5 */
+}
 
+/* Khusus Foto 6-12 (Pastikan di HTML: class="polaroid portrait") */
+.polaroid.portrait img {
+  aspect-ratio: 9 / 16;
+  object-position: top;
+}
+
+.polaroid span {
+  display: block;
+  /* Font puitis/tangan */
+  font-family: 'Playfair Display', serif; 
+  font-style: italic;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.4;
+  margin-top: 12px;
+  color: #333;
+  text-align: center;
+  /* Mencegah teks terlalu mepet ke pinggir kertas */
+  padding: 0 5px; 
+}
+
+/* 2. Hover tetap miring (DIBERI SPASI) */
 .polaroid:hover {
-  /* Pastikan variabel --rotation tetap dipanggil di sini */
   transform: scale(1.05) rotate(var(--rotation, 0deg)) !important;
   z-index: 100;
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
-
+/* 3. Efek Klik (BALIK ARAH) */
 .polaroid:active {
-  /* Efek miring ke arah sebaliknya saat ditekan */
-  transform: scale(0.92) rotate(calc(var(--rotation, 0deg) * -1)) !important;
+  /* Hilangkan translateY agar fokus ke scale dan rotate saja */
+  transform: scale(0.92) rotate(calc(var(--rotation, 0deg) * -1.5)) !important;
   transition: transform 0.1s ease-out !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
   filter: brightness(0.9);
   z-index: 500;
 }
