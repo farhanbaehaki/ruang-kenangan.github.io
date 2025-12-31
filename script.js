@@ -115,8 +115,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-       5. OBSERVERS (PHOTO & TEXT)
+       5 & 6. OBSERVERS & GALLERY LOGIC (FIXED)
        ========================================================================== */
+  
+  // 1. Inisialisasi awal untuk semua polaroid agar siap miring
+  document.querySelectorAll(".polaroid").forEach((item) => {
+    // Berikan angka miring SEKARANG juga sebelum muncul
+    const randomRotation = (Math.random() * 12 - 6).toFixed(2);
+    item.style.setProperty("--rotation", `${randomRotation}deg`);
+
+    // Tambahkan efek klik Lightbox
+    item.addEventListener("click", () => {
+      const img = item.querySelector("img");
+      if (img && img.src) {
+        const overlay = document.createElement("div");
+        overlay.className = "lightbox";
+        overlay.innerHTML = `<img src="${img.src}" alt="Momen">`;
+        document.body.appendChild(overlay);
+        overlay.addEventListener("click", () => overlay.remove());
+      }
+    });
+  });
+
+  // 2. Observer untuk memunculkan elemen saat scroll
   const faders = document.querySelectorAll(".fade-up, .fade-slide, .polaroid");
   const appearOnScroll = new IntersectionObserver(
     (entries, observer) => {
@@ -132,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   faders.forEach((f) => appearOnScroll.observe(f));
 
+  // --- Bagian Confess Section (Tetap Sama) ---
   const confessSection = document.getElementById("confess");
   const confessTexts = document.querySelectorAll(".confess-text");
   let confessStarted = false;
@@ -157,28 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
     confessObserver.observe(confessSection);
   }
 
-  /* ==========================================================================
-       6. GALLERY LIGHTBOX & COUNTDOWN
-       ========================================================================== */
-document.querySelectorAll(".polaroid").forEach((item) => {
-  // Generate angka acak miring
-  const randomRotation = (Math.random() * 12 - 6).toFixed(2);
-  
-  // Suntikkan langsung ke element sebagai CSS Variable
-  item.style.setProperty("--rotation", `${randomRotation}deg`);
-
-  item.addEventListener("click", () => {
-    const img = item.querySelector("img");
-    if (img && img.src) {
-      const overlay = document.createElement("div");
-      overlay.className = "lightbox";
-      overlay.innerHTML = `<img src="${img.src}" alt="Momen">`;
-      document.body.appendChild(overlay);
-      overlay.addEventListener("click", () => overlay.remove());
-    }
-  });
-});
-
+  // --- Bagian Countdown (Tetap Sama) ---
   const targetDate = new Date("January 13, 2026 00:00:00").getTime();
   function updateCountdown() {
     const diff = targetDate - Date.now();
@@ -196,7 +197,6 @@ document.querySelectorAll(".polaroid").forEach((item) => {
   }
   setInterval(updateCountdown, 1000);
   updateCountdown();
-
   /* ==========================================================================
        7. DECORATIONS & THEME
        ========================================================================== */
