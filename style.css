@@ -246,8 +246,9 @@ h3 {
 
 /* Muncul dengan Miring & Pop-up */
 .polaroid.show {
-  opacity: 1;
-  transform: translateY(0) rotate(var(--rotation, 0deg));
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) rotate(var(--rotation, 0deg)) !important;
 }
 
 .polaroid img {

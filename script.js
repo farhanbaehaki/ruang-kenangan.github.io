@@ -105,17 +105,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-      5. SCROLL OBSERVERS (Animations & Confess)
+      5. SCROLL OBSERVERS (Memastikan Foto Muncul & Tidak Blank)
      ========================================================================== */
-  const faders = document.querySelectorAll(".fade-up, .fade-slide");
+  // Tambahkan ".polaroid" ke dalam selector faders agar dia ikut diawasi scroll-nya
+  const faders = document.querySelectorAll(".fade-up, .fade-slide, .polaroid");
+  
   const appearOnScroll = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
+        // Ini perintah yang akan mengubah opacity 0 menjadi 1 di CSS
         entry.target.classList.add("show");
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.1 }); // Threshold kecil agar lebih sensitif saat muncul di layar
+
   faders.forEach((f) => appearOnScroll.observe(f));
 
   let confessStarted = false;
@@ -129,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const original = text.innerHTML;
             text.innerHTML = "";
             setTimeout(() => typeTextHTML(text, original), delay);
-            // Kalkulasi delay agar teks muncul bergantian setelah yang sebelumnya selesai
             delay += original.replace(/<[^>]*>/g, "").length * 35 + 1000;
           });
         }
@@ -159,33 +162,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function createFallingEmoji() {
-    const emoji = document.createElement("div");
-    emoji.className = "falling-emoji";
-    emoji.textContent = absurdEmojis[Math.floor(Math.random() * absurdEmojis.length)];
-    emoji.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(emoji);
-    const duration = Math.random() * 3 + 2;
-    emoji.style.animation = `fall ${duration}s linear forwards`;
-    setTimeout(() => emoji.remove(), duration * 1000);
-  }
-
-  // Polaroid Gallery Logic
+  // Polaroid Gallery Logic - Memastikan Lightbox tetap jalan
   document.querySelectorAll('.polaroid').forEach((item) => {
-    // Set rotasi acak untuk estetika
     item.style.setProperty('--rotation', `${(Math.random() * 12 - 6).toFixed(2)}deg`);
     
-    // Lightbox klik foto
     item.addEventListener('click', () => {
       const img = item.querySelector('img');
-      const overlay = document.createElement('div');
-      overlay.className = 'lightbox';
-      overlay.innerHTML = `<img src="${img.src}" alt="Momen Naura">`;
-      document.body.appendChild(overlay);
-      overlay.addEventListener('click', () => overlay.remove());
+      // Pastikan gambar sudah memiliki src agar tidak blank saat fullscreen
+      if (img && img.getAttribute('src')) {
+        const overlay = document.createElement('div');
+        overlay.className = 'lightbox';
+        overlay.innerHTML = `<img src="${img.src}" alt="Momen Naura">`;
+        document.body.appendChild(overlay);
+        overlay.addEventListener('click', () => overlay.remove());
+      }
     });
   });
-
+  
   /* ==========================================================================
       7. COUNTDOWN & FLOATING DECORATIONS
      ========================================================================== */
