@@ -115,15 +115,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-       5 & 6. OBSERVERS & GALLERY LOGIC (FIXED & CLEAN)
+       5 & 6. OBSERVERS (POLAROID & TYPING TEXT) - FINAL FIX
      ========================================================================== */
   
-  // 1. Berikan angka miring ke semua polaroid segera
+  // 1. Inisialisasi awal Polaroid (Miringkan semua foto)
   document.querySelectorAll(".polaroid").forEach((item) => {
     const randomRotation = (Math.random() * 12 - 6).toFixed(2);
     item.style.setProperty("--rotation", `${randomRotation}deg`);
 
-    // Tambahkan efek klik Lightbox
     item.addEventListener("click", () => {
       const img = item.querySelector("img");
       if (img && img.src) {
@@ -136,21 +135,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 2. Observer untuk memunculkan elemen saat scroll
+  // 2. Observer Utama (Untuk Polaroid dan Fade-up)
   const faders = document.querySelectorAll(".fade-up, .fade-slide, .polaroid");
-  const appearOnScroll = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
 
   faders.forEach((f) => appearOnScroll.observe(f));
+
+  // 3. Observer Khusus Text Confess (Efek Ngetik)
+  const confessSection = document.getElementById("confess");
+  const confessTexts = document.querySelectorAll(".confess-text");
+  let confessStarted = false;
+
+  if (confessSection && confessTexts.length > 0) {
+    const confessObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        // Jika section confess terlihat 30% saja, mulai ngetik
+        if (entry.isIntersecting && !confessStarted) {
+          confessStarted = true;
+          let delay = 0;
+          
+          confessTexts.forEach((text) => {
+            const originalHTML = text.innerHTML;
+            text.innerHTML = ""; // Kosongkan dulu
+            
+            setTimeout(() => {
+              typeTextHTML(text, originalHTML);
+            }, delay);
+            
+            // Hitung jeda untuk baris berikutnya (35ms per karakter + 1 detik jeda)
+            delay += originalHTML.replace(/<[^>]*>/g, "").length * 35 + 1000;
+          });
+        }
+      });
+    }, { threshold: 0.3 }); // Turunkan threshold agar lebih sensitif
+
+    confessObserver.observe(confessSection);
+  }
   /* ==========================================================================
        7. DECORATIONS & THEME
        ========================================================================== */
