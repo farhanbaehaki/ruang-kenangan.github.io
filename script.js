@@ -1,5 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- DOM Elements ---
+  /* ==========================================================================
+      1. LOADING SCREEN LOGIC
+     ========================================================================== */
+  const loader = document.getElementById("loader");
+  const loaderText = document.getElementById("loaderText");
+  const messages = ["Menyiapkan kejutan...", "Mengumpulkan momen indah...", "Sedikit lagi...", "Siap!"];
+  
+  let msgIndex = 0;
+  const msgInterval = setInterval(() => {
+    if (msgIndex < messages.length) {
+      if(loaderText) loaderText.textContent = messages[msgIndex];
+      msgIndex++;
+    }
+  }, 800);
+
+  // Menghilangkan loader setelah semua asset (gambar/musik) termuat
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      clearInterval(msgInterval);
+      if(loader) {
+        loader.classList.add("fade-out");
+        // Hapus elemen dari DOM setelah animasi selesai agar tidak menghalangi klik
+        setTimeout(() => loader.style.display = "none", 800);
+      }
+    }, 2500); 
+  });
+
+  /* ==========================================================================
+      2. DOM ELEMENTS & INITIAL STATE
+     ========================================================================== */
   const confessSection = document.getElementById("confess");
   const confessTexts = document.querySelectorAll(".confess-text");
   const music = document.getElementById("music");
@@ -9,19 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const surpriseText = document.getElementById("surpriseText");
   const absurdEmojis = ["🗿", "🦖", "👽", "🐸", "🤡", "👺", "🍄", "💩", "🦕", "💨"];
 
-  // Set volume awal
   if (music) music.volume = 0;
 
   /* ==========================================================================
-      MUSIC & START
+      3. MUSIC & START BUTTON
      ========================================================================== */
   startBtn?.addEventListener("click", async () => {
     try {
       await music.play();
       fadeInMusic(music, 0.6, 0.02);
-      window.scrollBy(0, 500);
+      // Scroll halus ke bawah sedikit setelah klik mulai
+      window.scrollBy({ top: 400, behavior: 'smooth' });
     } catch (err) {
-      console.log("Autoplay diblokir browser");
+      console.log("Autoplay diblokir browser, butuh interaksi user.");
     }
   });
 
@@ -38,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-      TYPING EFFECT ENGINE
+      4. TYPING EFFECT ENGINE (Supports HTML Tags)
      ========================================================================== */
   function typeTextHTML(element, html, speed = 35) {
     element.innerHTML = "";
@@ -47,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const temp = document.createElement("div");
     temp.innerHTML = html;
     const chars = [];
+
     function flattenNodes(node) {
       if (node.nodeType === Node.TEXT_NODE) {
         for (const c of node.textContent) chars.push(c);
@@ -56,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chars.push({ closeTag: `</${node.tagName.toLowerCase()}>` });
       }
     }
+
     temp.childNodes.forEach(flattenNodes);
     let i = 0;
     function typing() {
@@ -74,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-      SCROLL & CONFESS OBSERVER (MUSIC FIX)
+      5. SCROLL OBSERVERS (Animations & Confess)
      ========================================================================== */
   const faders = document.querySelectorAll(".fade-up, .fade-slide");
   const appearOnScroll = new IntersectionObserver((entries, observer) => {
@@ -84,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.3 });
+  }, { threshold: 0.2 });
   faders.forEach((f) => appearOnScroll.observe(f));
 
   let confessStarted = false;
@@ -93,15 +124,12 @@ document.addEventListener("DOMContentLoaded", () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && !confessStarted) {
           confessStarted = true;
-          
-          // --- SUDAH DIHAPUS: fadeOutMusic(music) ---
-          console.log("Musik tetap jalan mengiringi kata hatimu...");
-
           let delay = 0;
           confessTexts.forEach((text) => {
             const original = text.innerHTML;
             text.innerHTML = "";
             setTimeout(() => typeTextHTML(text, original), delay);
+            // Kalkulasi delay agar teks muncul bergantian setelah yang sebelumnya selesai
             delay += original.replace(/<[^>]*>/g, "").length * 35 + 1000;
           });
         }
@@ -111,19 +139,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-      SURPRISE & EMOJI
+      6. SURPRISE, GALLERY, & THEME
      ========================================================================== */
   if (surpriseBtn) {
     surpriseBtn.addEventListener("click", () => {
       surpriseBtn.style.opacity = "0";
-      setTimeout(() => (surpriseBtn.style.display = "none"), 300);
-      if (surpriseText) {
-        surpriseText.style.display = "block";
-        setTimeout(() => {
-          surpriseText.classList.add("reveal");
-          surpriseText.style.opacity = "1";
-        }, 50);
-      }
+      setTimeout(() => {
+        surpriseBtn.style.display = "none";
+        if (surpriseText) {
+          surpriseText.style.display = "block";
+          setTimeout(() => {
+            surpriseText.classList.add("reveal");
+            surpriseText.style.opacity = "1";
+          }, 50);
+        }
+      }, 300);
       for (let i = 0; i < 50; i++) setTimeout(createFallingEmoji, i * 100);
     });
   }
@@ -133,55 +163,31 @@ document.addEventListener("DOMContentLoaded", () => {
     emoji.className = "falling-emoji";
     emoji.textContent = absurdEmojis[Math.floor(Math.random() * absurdEmojis.length)];
     emoji.style.left = Math.random() * 100 + "vw";
-    emoji.style.position = "fixed";
-    emoji.style.top = "-50px";
-    emoji.style.zIndex = "9999";
-    emoji.style.fontSize = Math.random() * 20 + 20 + "px";
-    emoji.style.pointerEvents = "none";
+    document.body.appendChild(emoji);
     const duration = Math.random() * 3 + 2;
     emoji.style.animation = `fall ${duration}s linear forwards`;
-    document.body.appendChild(emoji);
     setTimeout(() => emoji.remove(), duration * 1000);
   }
 
-  /* ==========================================================================
-      POLAROID & GALLERY
-     ========================================================================== */
-  const polaroids = document.querySelectorAll('.polaroid');
-  const galleryObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) entry.target.classList.add('show');
-    });
-  }, { threshold: 0.1 });
-
-  polaroids.forEach((item) => {
+  // Polaroid Gallery Logic
+  document.querySelectorAll('.polaroid').forEach((item) => {
+    // Set rotasi acak untuk estetika
     item.style.setProperty('--rotation', `${(Math.random() * 12 - 6).toFixed(2)}deg`);
+    
+    // Lightbox klik foto
     item.addEventListener('click', () => {
       const img = item.querySelector('img');
       const overlay = document.createElement('div');
       overlay.className = 'lightbox';
-      overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+      overlay.innerHTML = `<img src="${img.src}" alt="Momen Naura">`;
       document.body.appendChild(overlay);
       overlay.addEventListener('click', () => overlay.remove());
     });
-    galleryObserver.observe(item);
   });
 
   /* ==========================================================================
-      DARK MODE & COUNTDOWN
+      7. COUNTDOWN & FLOATING DECORATIONS
      ========================================================================== */
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    if(toggleBtn) toggleBtn.textContent = "☀️";
-  }
-
-  toggleBtn?.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    const isDark = document.body.classList.contains("dark");
-    toggleBtn.textContent = isDark ? "☀️" : "🌙";
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
-
   const targetDate = new Date("January 13, 2026 00:00:00").getTime();
   const updateCountdown = () => {
     const now = Date.now();
@@ -195,9 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateCountdown, 1000);
   updateCountdown();
 
-  /* ==========================================================================
-      FLOATING ITEMS
-     ========================================================================== */
+  // Floating Hearts & Bubbles
   const createFloatingItem = (container, className, content = null) => {
     if (!container) return;
     const item = document.createElement("div");
@@ -205,40 +209,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (content) item.textContent = content;
     item.style.left = Math.random() * 100 + "vw";
     item.style.animationDuration = 8 + Math.random() * 6 + "s";
-    if (className === "heart") item.style.fontSize = 12 + Math.random() * 10 + "px";
-    else item.style.width = item.style.height = (Math.random() * 20 + 10) + "px";
     container.appendChild(item);
     item.addEventListener("animationend", () => item.remove());
   };
 
   setInterval(() => createFloatingItem(document.querySelector(".floating-hearts"), "heart", Math.random() > 0.5 ? "🤍" : "💗"), 1000);
   setInterval(() => createFloatingItem(document.querySelector(".floating-bubbles"), "bubble"), 800);
-});
 
-// --- Loading Screen Logic ---
-  const loader = document.getElementById("loader");
-  const loaderText = document.getElementById("loaderText");
-  
-  // Daftar pesan yang akan berganti saat loading
-  const messages = [
-    "Menyiapkan kejutan...",
-    "Mengumpulkan momen indah...",
-    "Sedikit lagi...",
-    "Siap!"
-  ];
-  
-  let msgIndex = 0;
-  const msgInterval = setInterval(() => {
-    if (msgIndex < messages.length) {
-      loaderText.textContent = messages[msgIndex];
-      msgIndex++;
-    }
-  }, 800);
+  // Theme Toggle Logic
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    if(toggleBtn) toggleBtn.textContent = "☀️";
+  }
 
-  // Hilangkan loader setelah halaman benar-benar dimuat
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      clearInterval(msgInterval);
-      loader.classList.add("fade-out");
-    }, 3000); // Loader akan muncul selama 3 detik
+  toggleBtn?.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    const isDark = document.body.classList.contains("dark");
+    toggleBtn.textContent = isDark ? "☀️" : "🌙";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
   });
+});
