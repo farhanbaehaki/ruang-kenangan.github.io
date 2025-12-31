@@ -11,27 +11,33 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ==========================================================================
      GALLERY WITH RANDOM ROTATION (POLAROID VERSION)
      ========================================================================== */
-// --- Perbaikan Observer di script.js ---
-const galleryObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-      // Berikan sedikit jeda antar foto agar munculnya satu-satu (staggered)
-      console.log("Foto muncul!"); // Untuk cek di console
-    }
-  });
-}, { 
-  threshold: 0.05, // Lebih sensitif (1% terlihat langsung muncul)
-  rootMargin: "0px 0px -50px 0px" // Muncul sebelum benar-benar sampai di tengah layar
-});
-
-polaroids.forEach((item) => {
-  // Pastikan rotasi acak tetap ada
-  const randomRot = (Math.random() * 14 - 7).toFixed(2);
-  item.style.setProperty('--rotation', `${randomRot}deg`);
+  const polaroids = document.querySelectorAll('.polaroid');
   
-  galleryObserver.observe(item);
-});
+  const galleryObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  polaroids.forEach((item) => {
+    // Memberikan rotasi acak
+    const randomRot = (Math.random() * 12 - 6).toFixed(2);
+    item.style.setProperty('--rotation', `${randomRot}deg`);
+    
+    // Lightbox klik
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      const overlay = document.createElement('div');
+      overlay.className = 'lightbox';
+      overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', () => overlay.remove());
+    });
+
+    galleryObserver.observe(item);
+  });
 
   /* ==========================================================================
      MUSIC CONTROL (Fade In/Out)
