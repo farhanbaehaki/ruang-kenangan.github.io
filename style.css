@@ -237,14 +237,14 @@ h3 {
 
   /* Fitur Animasi Awal */
   opacity: 0;
-  transform: translateY(30px) rotate(0deg); 
+  transform: translateY(30px);
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
 }
 
 /* Muncul dengan Miring & Pop-up */
 .polaroid.show {
-  opacity: 1;
-  transform: translateY(0) rotate(var(--rotation, 0deg));
+  opacity: 1 !important;
+  transform: translateY(0)rotate(var(--rotation)) !important;
 }
 
 .polaroid img {
