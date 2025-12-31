@@ -687,44 +687,30 @@ body.dark .gallery img {
   inset: 0;
   width: 100%;
   height: 100vh;
-  background: #ffffff;
+  /* Background gradient lembut agar tidak kaku */
+  background: radial-gradient(circle, #ffffff, #fff5f7); 
   display: flex;
   justify-content: center;
   align-items: center;
-flex-direction: column; /* Agar hati dan teks tersusun atas-bawah */
-  z-index: 99999;
-  transition: opacity 0.8s ease, visibility 0.8s;
+  z-index: 999999;
+  /* Transisi menghilang yang lebih halus */
+  transition: all 1s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .loader-content {
-display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.loader-content p {
-  margin-top: 20px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.9rem;
-  color: #ff4d6d;
-  letter-spacing: 1px;
-  animation: fadeText 1.5s infinite;
-}
-
-@keyframes fadeText {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
-
-/* Animasi Hati Berdenyut */
 .heart-loader {
   width: 50px;
   height: 50px;
   background-color: #ff4d6d;
   position: relative;
   transform: rotate(45deg);
-  margin: 0 auto;
   animation: pulse-loader 1.2s infinite ease-in-out;
+  box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
 }
 
 .heart-loader::before,
@@ -740,14 +726,26 @@ display: flex;
 .heart-loader::before { top: -25px; left: 0; }
 .heart-loader::after { left: -25px; top: 0; }
 
-@keyframes pulse-loader {
-  0% { transform: rotate(45deg) scale(0.8); }
-  50% { transform: rotate(45deg) scale(1.2); }
-  100% { transform: rotate(45deg) scale(0.8); }
+#loader p {
+  margin-top: 30px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #ff4d6d;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  /* Efek transisi saat teks berganti */
+  transition: opacity 0.5s ease;
 }
 
-/* Class untuk menghilangkan loader */
+/* Efek zoom-out saat loading selesai */
 #loader.fade-out {
   opacity: 0;
+  transform: scale(1.1);
   visibility: hidden;
+}
+
+@keyframes pulse-loader {
+  0% { transform: rotate(45deg) scale(0.8); }
+  50% { transform: rotate(45deg) scale(1.1); }
+  100% { transform: rotate(45deg) scale(0.8); }
 }

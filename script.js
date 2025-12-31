@@ -235,16 +235,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-window.onbeforeunload = function () {
-  window.scrollTo(0, 0);
-};
-
-
 window.addEventListener('load', function() {
   const loader = document.getElementById('loader');
+  const loaderText = document.getElementById('loader-text');
   
-  // Ubah 1000 menjadi 3000 (3 detik) atau sesuai keinginanmu
+  // Pesan yang akan muncul bergantian
+  const messages = [
+    "Menyiapkan sesuatu yang manis...",
+    "Mengumpulkan kenangan indah...",
+    "Menyusun kejutan untukmu...",
+    "Hampir siap! ❤️"
+  ];
+  
+  let i = 0;
+  // Ganti teks setiap 1.1 detik
+  const textInterval = setInterval(() => {
+    i++;
+    if (messages[i]) {
+      loaderText.style.opacity = 0; // Memudar dulu
+      setTimeout(() => {
+        loaderText.textContent = messages[i];
+        loaderText.style.opacity = 1; // Muncul lagi dengan teks baru
+      }, 500);
+    }
+  }, 1100);
+
+  // Loader akan hilang total setelah 4.5 detik
   setTimeout(() => {
+    clearInterval(textInterval);
     loader.classList.add('fade-out');
-  }, 4000); 
+  }, 4500);
 });
