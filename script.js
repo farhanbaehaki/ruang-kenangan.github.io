@@ -243,8 +243,8 @@ window.onbeforeunload = function () {
 window.addEventListener('load', function() {
   const loader = document.getElementById('loader');
   
-  // Berikan jeda sedikit (misal 1 detik) agar tidak terlalu cepat hilang
+  // Ubah 1000 menjadi 3000 (3 detik) atau sesuai keinginanmu
   setTimeout(() => {
     loader.classList.add('fade-out');
-  }, 1000);
+  }, 4000); 
 });

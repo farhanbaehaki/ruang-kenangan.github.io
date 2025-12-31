@@ -708,6 +708,12 @@ display: flex;
   font-size: 0.9rem;
   color: #ff4d6d;
   letter-spacing: 1px;
+  animation: fadeText 1.5s infinite;
+}
+
+@keyframes fadeText {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
 
 /* Animasi Hati Berdenyut */
