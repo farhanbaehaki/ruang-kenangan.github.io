@@ -113,6 +113,7 @@ if (startBtn) {
   function typeTextHTML(element, html, speed = 35) {
     element.innerHTML = "";
     element.style.visibility = "visible";
+    element.style.opacity = "1";
     element.classList.add("type");
     const temp = document.createElement("div");
     temp.innerHTML = html;
@@ -167,7 +168,7 @@ if (startBtn) {
   const confessTexts = document.querySelectorAll(".confess-text");
   let confessStarted = false;
 
-  if (confessSection) {
+if (confessSection) {
     const confessObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -176,14 +177,21 @@ if (startBtn) {
             let delay = 0;
             confessTexts.forEach((text) => {
               const original = text.innerHTML;
-              text.innerHTML = "";
-              setTimeout(() => typeTextHTML(text, original), delay);
-              delay += original.replace(/<[^>]*>/g, "").length * 35 + 1000;
+              // Jangan pakai innerHTML = "", tapi sembunyikan saja dulu
+              text.style.opacity = "0"; 
+              
+              setTimeout(() => {
+                text.style.opacity = "1"; // Munculkan kembali saat mulai ngetik
+                typeTextHTML(text, original);
+              }, delay);
+
+              // Kurangi pengali delay agar tidak terlalu lama menunggu
+              delay += original.replace(/<[^>]*>/g, "").length * 25 + 600; 
             });
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.2 } // Lebih sensitif agar cepat mulai
     );
     confessObserver.observe(confessSection);
   }
