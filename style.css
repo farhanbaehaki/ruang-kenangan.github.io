@@ -407,3 +407,36 @@ body.dark .gallery img {
   align-items: center;
   z-index: 99999; /* Biar di depan semua elemen hati/gelembung */
 }
+
+/* Efek Emoji Jatuh */
+.falling-emoji {
+  position: fixed;
+  top: -50px;
+  z-index: 9999;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(105vh) rotate(360deg);
+  }
+}
+
+/* Memastikan teks surprise muncul dengan halus */
+#surpriseText {
+  display: none; /* Sembunyi dulu */
+  margin-top: 20px;
+  line-height: 1.8;
+  font-family: 'Playfair Display', serif;
+}
+
+#surpriseText.show {
+  display: block;
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

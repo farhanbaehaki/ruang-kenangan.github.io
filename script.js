@@ -240,3 +240,44 @@ document.addEventListener("DOMContentLoaded", () => {
   const bubblesContainer = document.querySelector(".floating-bubbles");
   setInterval(() => createFloatingItem(bubblesContainer, "bubble"), 600);
 });
+
+/* ==========================================================================
+   SURPRISE BUTTON + HUJAN EMOJI ABSURD
+   ========================================================================== */
+const surpriseBtn = document.querySelector(".surprise");
+const surpriseText = document.getElementById("surpriseText");
+const absurdEmojis = ["🗿", "🦖", "👽", "🐸", "🤡", "👺", "🍄", "💩", "🦕", "💨"];
+
+surpriseBtn?.addEventListener("click", () => {
+  // 1. Munculkan teks pesan rahasia
+  if (surpriseText) {
+    surpriseText.classList.add("show");
+  }
+
+  // 2. Sembunyikan tombolnya
+  surpriseBtn.style.display = "none";
+
+  // 3. Jalankan Hujan Emoji Absurd (40 buah)
+  for (let i = 0; i < 40; i++) {
+    setTimeout(() => {
+      createFallingEmoji();
+    }, i * 50); // Ada jeda sedikit antar emoji biar seru
+  }
+});
+
+function createFallingEmoji() {
+  const emoji = document.createElement("div");
+  emoji.className = "falling-emoji";
+  emoji.textContent = absurdEmojis[Math.floor(Math.random() * absurdEmojis.length)];
+  
+  emoji.style.left = Math.random() * 100 + "vw";
+  const duration = Math.random() * 3 + 2;
+  emoji.style.animationDuration = duration + "s";
+  emoji.style.fontSize = Math.random() * 20 + 20 + "px";
+
+  document.body.appendChild(emoji);
+
+  setTimeout(() => {
+    emoji.remove();
+  }, duration * 1000);
+}
