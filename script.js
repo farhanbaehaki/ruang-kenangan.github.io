@@ -1,25 +1,56 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+/* ==========================================================================
+     1. LOADER & TEXT CHANGER
+     ========================================================================== */
+  const loader = document.getElementById('loader');
+  const loaderText = document.getElementById('loader-text');
+  const messages = [
+    "Menyiapkan sesuatu yang manis...",
+    "Mengumpulkan kenangan indah...",
+    "Menyusun kejutan untukmu...",
+    "Hampir siap! ❤️"
+  ];
+  
+  let msgIndex = 0;
+  const textInterval = setInterval(() => {
+    msgIndex++;
+    if (messages[msgIndex] && loaderText) {
+      loaderText.style.opacity = 0;
+      setTimeout(() => {
+        loaderText.textContent = messages[msgIndex];
+        loaderText.style.opacity = 1;
+      }, 500);
+    }
+  }, 1100);
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      clearInterval(textInterval);
+      if(loader) loader.classList.add('fade-out');
+    }, 4500);
+  });
+
   /* ==========================================================================
        2. MUSIC & START BUTTON
        ========================================================================== */
   const startBtn = document.getElementById("startBtn");
   const music = document.getElementById("music");
 
-  if (startBtn) {
-    startBtn.addEventListener("click", async () => {
-      try {
-        if (music) {
-          music.volume = 0;
-          await music.play();
-          fadeInMusic(music, 0.6, 0.02);
-        }
-        // Scroll ke section berikutnya
-        window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-      } catch (err) {
-        console.log("Autoplay diblokir browser.");
+if (startBtn) {
+  startBtn.addEventListener("click", async () => {
+    try {
+      if (music && music.paused) { // Tambahkan pengecekan paused agar tidak main double
+        music.volume = 0;
+        await music.play();
+        fadeInMusic(music, 0.6, 0.02);
       }
-    });
-  }
+      window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+    } catch (err) {
+      console.log("Autoplay diblokir browser.");
+    }
+  });
+}
 
   function fadeInMusic(audio, target = 0.6, step = 0.02) {
     let vol = 0;
@@ -233,36 +264,4 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleBtn.textContent = isDark ? "☀️" : "🌙";
     localStorage.setItem("theme", isDark ? "dark" : "light");
   });
-});
-
-window.addEventListener('load', function() {
-  const loader = document.getElementById('loader');
-  const loaderText = document.getElementById('loader-text');
-  
-  // Pesan yang akan muncul bergantian
-  const messages = [
-    "Menyiapkan sesuatu yang manis...",
-    "Mengumpulkan kenangan indah...",
-    "Menyusun kejutan untukmu...",
-    "Hampir siap! ❤️"
-  ];
-  
-  let i = 0;
-  // Ganti teks setiap 1.1 detik
-  const textInterval = setInterval(() => {
-    i++;
-    if (messages[i]) {
-      loaderText.style.opacity = 0; // Memudar dulu
-      setTimeout(() => {
-        loaderText.textContent = messages[i];
-        loaderText.style.opacity = 1; // Muncul lagi dengan teks baru
-      }, 500);
-    }
-  }, 1100);
-
-  // Loader akan hilang total setelah 4.5 detik
-  setTimeout(() => {
-    clearInterval(textInterval);
-    loader.classList.add('fade-out');
-  }, 4500);
 });
