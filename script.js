@@ -10,27 +10,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const absurdEmojis = ["🗿", "🦖", "👽", "🐸", "🤡", "👺", "🍄", "💩", "🦕", "💨"];
 
   /* ==========================================================================
-      SURPRISE LOGIC (Combined & Cleaned)
+      SURPRISE LOGIC
      ========================================================================== */
   if (surpriseBtn) {
     surpriseBtn.addEventListener("click", () => {
-      // 1. Sembunyikan tombol
       surpriseBtn.style.opacity = "0";
       setTimeout(() => {
         surpriseBtn.style.display = "none";
       }, 300);
 
-      // 2. Munculkan container Review Jujur
       if (surpriseText) {
         surpriseText.style.display = "block";
         setTimeout(() => {
           surpriseText.classList.add("reveal");
-          surpriseText.classList.add("show"); // Memastikan opacity 1 dari CSS faders
+          surpriseText.classList.add("show");
           surpriseText.style.opacity = "1";
         }, 50);
       }
 
-      // 3. Hujan Emoji
       for (let i = 0; i < 50; i++) {
         setTimeout(createFallingEmoji, i * 100);
       }
@@ -81,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ==========================================================================
-      MUSIC & TYPING EFFECT
+      MUSIC & TYPING ENGINE
      ========================================================================== */
   if (music) music.volume = 0;
 
@@ -89,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await music.play();
       fadeInMusic(music, 0.6, 0.02);
-      // Optional: Scroll otomatis ke section berikutnya setelah klik start
       window.scrollBy(0, 500);
     } catch (err) {
       console.log("Autoplay diblokir");
@@ -108,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 50);
   }
 
+  // Fungsi fadeOut tetap ada tapi tidak dipanggil saat Confess agar lagu tidak berhenti
   function fadeOutMusic(audio, step = 0.02) {
     const interval = setInterval(() => {
       if (audio.volume > 0.02) {
@@ -153,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-      SCROLL OBSERVERS
+      SCROLL & CONFESS OBSERVER (MUSIC FIX)
      ========================================================================== */
   const faders = document.querySelectorAll(".fade-up, .fade-slide");
   const appearOnScroll = new IntersectionObserver((entries, observer) => {
@@ -172,7 +169,10 @@ document.addEventListener("DOMContentLoaded", () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && !confessStarted) {
           confessStarted = true;
-          fadeOutMusic(music);
+          
+          // --- FIX: Baris fadeOutMusic(music) di bawah ini dihapus agar lagu tetap jalan ---
+          // fadeOutMusic(music); 
+
           let delay = 0;
           confessTexts.forEach((text) => {
             const original = text.innerHTML;
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-      DARK MODE & COUNTDOWN
+      DARK MODE, COUNTDOWN, & FLOATING ITEMS
      ========================================================================== */
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
@@ -214,9 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateCountdown, 1000);
   updateCountdown();
 
-  /* ==========================================================================
-      FLOATING ITEMS
-     ========================================================================== */
   const createFloatingItem = (container, className, content = null) => {
     if (!container) return;
     const item = document.createElement("div");
