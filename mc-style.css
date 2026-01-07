@@ -3,20 +3,19 @@
   src: url("Minecraftia.ttf");
 }
 
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #000;
-  font-family: "Minecraftia", sans-serif;
-  color: white;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    font-family: "Minecraftia", sans-serif;
+    color: white;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* --- BACKGROUND VIDEO (LOGIKA FIX) --- */
+/* --- LAYER -2: BACKGROUND VIDEO --- */
 #mc-bg-video {
     position: fixed;
     top: 50%;
@@ -28,22 +27,22 @@ html {
     z-index: -2;
     transform: translate(-50%, -50%);
     object-fit: cover;
-    /* Tambahan agar video tetap di-render browser */
     display: block !important;
-    background-color: #000; 
-
-    visibility: visible !important;
-    display: block !important;
-    opacity: 1 !important;
+    /* Mencegah flickering saat transisi */
+    backface-visibility: hidden;
+    filter: brightness(0.8);
 }
+
+/* --- LAYER -1: VIGNETTE OVERLAY --- */
 .video-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: -1;
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+    z-index: -1;
+    pointer-events: none;
 }
 
-/* --- CONTAINER DUNIA --- */
+/* --- LAYER 1: MAIN UI CONTAINER --- */
 .mc-world {
     height: 100vh;
     width: 100vw;
@@ -52,13 +51,27 @@ html {
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity 1.5s ease; /* Hanya transisi opacity */
+    transition: opacity 1s ease-in-out;
     position: relative;
-    /* Hapus semua background agar video di bawah terlihat tembus */
-    background: transparent !important; 
+    z-index: 1;
+    /* PAKSA TRANSPARAN AGAR VIDEO TERLIHAT */
+    background: transparent !important;
 }
 
-/* --- HEADER & SPLASH --- */
+/* --- LAYER 9999: START OVERLAY --- */
+#start-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+/* --- LOGO & SPLASH --- */
 .mc-header {
   text-align: center;
   position: relative;
@@ -69,6 +82,7 @@ html {
   font-size: 26px;
   text-shadow: 3px 3px #373737;
   margin: 0;
+  color: #fff;
 }
 
 .mc-splash {
@@ -83,21 +97,15 @@ html {
 }
 
 @keyframes bounce {
-  from {
-    transform: scale(1) rotate(-15deg);
-  }
-  to {
-    transform: scale(1.1) rotate(-15deg);
-  }
+  from { transform: scale(1) rotate(-15deg); }
+  to { transform: scale(1.1) rotate(-15deg); }
 }
 
-/* --- MENU & TOMBOL (TENGAH POSISI) --- */
+/* --- MENU BUTTONS --- */
 .mc-menu {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
   gap: 12px;
 }
 
@@ -111,7 +119,6 @@ html {
   font-size: 10px;
   box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
   cursor: pointer;
-  text-align: center;
 }
 
 .mc-btn:active {
@@ -120,12 +127,12 @@ html {
 }
 
 .mc-btn.locked {
-  opacity: 0.6;
+  opacity: 0.5;
   filter: grayscale(1);
   cursor: not-allowed;
 }
 
-/* --- HOTBAR (TENGAH PRESIISI) --- */
+/* --- HOTBAR --- */
 .mc-hotbar {
   position: absolute;
   bottom: 35px;
@@ -155,68 +162,13 @@ html {
   image-rendering: pixelated;
 }
 
-/* --- START OVERLAY --- */
-#start-overlay {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  text-align: center;
-  transition: opacity 0.5s ease;
-}
-
-.pixel-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mc-font {
-  margin: 0;
-  font-size: 20px;
-  letter-spacing: 3px;
-}
-
-.blink {
-  animation: blinker 1s linear infinite;
-  font-size: 10px;
-  color: #aaa;
-  margin-top: 15px;
-}
-
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
-
-/* --- ADVANCEMENT & MODAL --- */
-.mc-adv {
-  position: fixed;
-  top: -100px;
-  right: 10px;
-  background: #212121;
-  border: 2px solid #555;
-  padding: 10px;
-  display: flex;
-  transition: 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  z-index: 2000;
-}
-
-.mc-adv.show {
-  top: 20px;
-}
-
+/* --- MODALS & ADVANCEMENTS --- */
 .mc-overlay {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.85);
-  z-index: 9999;
+  z-index: 10000;
   justify-content: center;
   align-items: center;
 }
@@ -231,3 +183,6 @@ html {
   color: #333;
   box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
 }
+
+/* Sembunyikan scrollbar untuk pengalaman full screen */
+::-webkit-scrollbar { display: none; }

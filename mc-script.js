@@ -10,42 +10,54 @@ const splashes = [
 ];
 
 function startQuest() {
-  const overlay = document.getElementById("start-overlay");
-  const world = document.querySelector(".mc-world");
-  const video = document.getElementById("mc-bg-video");
+    const overlay = document.getElementById("start-overlay");
+    const world = document.querySelector(".mc-world");
+    const video = document.getElementById("mc-bg-video");
+    const bgm = document.getElementById("bgm");
 
-// PAKSA VIDEO JALAN SEBELUM OVERLAY HILANG
-  if (video) {
-    video.muted = true;
-    video.play();
-  }
-
-  overlay.style.opacity = "0";
-  
-  setTimeout(() => {
-    overlay.style.display = "none";
-    world.style.opacity = "1";
-    
-    // TRIGGER KEDUA: Paksa lagi saat UI muncul
+    // 1. HIDUPKAN VIDEO DI BALIK LAYAR HITAM
     if (video) {
-        video.currentTime = video.currentTime; // Soft reset frame
-        video.play();
+        video.muted = true; 
+        video.currentTime = 0;
+        // Gunakan Promise untuk memastikan video benar-benar jalan
+        video.play().then(() => {
+            console.log("Video is playing, starting transition...");
+            
+            // 2. MULAI TRANSISI (Hanya jika video sudah 'play')
+            setTimeout(() => {
+                overlay.style.opacity = "0";
+                
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                    world.style.opacity = "1";
+                    // Paksa background world transparan
+                    world.style.background = "transparent";
+                }, 600);
+            }, 150);
+        }).catch(e => {
+            console.log("Video fail, opening overlay anyway:", e);
+            overlay.style.opacity = "0";
+            setTimeout(() => overlay.style.display = "none", 600);
+        });
     }
-  }, 500);
 
-  // --- Sisa Logika Splash & Audio ---
-  const splashElement = document.getElementById("splash");
-  if (splashElement) {
-    const randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
-    splashElement.innerText = randomSplash;
-  }
+    // --- Splash & Audio ---
+    const splashElement = document.getElementById("splash");
+    if (splashElement) {
+        const randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
+        splashElement.innerText = randomSplash;
+    }
 
-  const bgm = document.getElementById("bgm");
-  bgm.volume = 0.3;
-  bgm.play().catch(e => console.log("Audio play blocked"));
-  
-  refreshHotbar();
+    if (bgm) {
+        bgm.volume = 0.3;
+        bgm.play().catch(e => console.log("Audio blocked by browser"));
+    }
+    
+    refreshHotbar();
 }
+
+// ... Fungsi refreshHotbar, actionEat, dll tetap sama ...
+
 function refreshHotbar() {
   const hotbar = document.getElementById("main-hotbar");
   hotbar.innerHTML = "";
