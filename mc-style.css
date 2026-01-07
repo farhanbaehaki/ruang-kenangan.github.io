@@ -16,18 +16,40 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Cari bagian .mc-world dan GANTI TOTAL dengan ini */
 .mc-world {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("assets/background1.jfif") center/cover;
-  opacity: 0;
-  transition: 1.5s ease;
-  background: none !important
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 1.5s ease;
+    /* HAPUS baris background: url(...) yang lama */
+    background-color: transparent; 
+    position: relative;
+    overflow: hidden;
+}
+
+/* Pastikan video benar-benar ada di lapisan paling bawah */
+#mc-bg-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2;
+    transform: translate(-50%, -50%); /* Agar video selalu center */
+    object-fit: cover;
+    background-color: #000; /* Warna cadangan jika video gagal muat */
+}
+
+/* Tambahkan ini agar saat transisi opacity 1, video tidak ikut menghilang */
+.mc-world.show-content {
+    opacity: 1;
 }
 
 .mc-header {
