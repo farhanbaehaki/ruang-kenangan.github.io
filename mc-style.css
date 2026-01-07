@@ -23,21 +23,19 @@ html {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Lebar penuh layar */
-  height: 100vh; /* Tinggi penuh layar */
+  width: 100%; /* Lebar penuh layar */
+  height: 100%; /* Tinggi penuh layar */
   z-index: -2;
-  object-fit: cover; /* Gunakan cover agar tidak gepeng, atau 'fill' agar tidak zoom */
+
+  object-fit: fill !important;
+
   display: block !important;
   filter: brightness(0.8);
   pointer-events: none;
 
-  /* Perbaikan untuk Warning 'vendorPrefix' */
-  -webkit-transform: translate3d(0, 0, 0); /* Optimasi performa di iPhone */
-  transform: translate3d(
-    0,
-    0,
-    0
-  ); /* Properti standar (menghilangkan warning) */
+  /* Menghilangkan Warning & Optimasi */
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
