@@ -1,65 +1,69 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Minecraft Quest - Naura</title>
-    <link rel="stylesheet" href="mc-style.css">
+    <title>Minecraft: Naura Edition</title>
+    <link rel="stylesheet" href="mc-style.css" />
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="start-overlay">
-        <div style="text-align: center">
-            <h2 style="font-family: 'Minecraftia'; color: #fff;">[ SERVER ONLINE ]</h2>
-            <p style="font-family: 'Minecraftia'; color: #aaa;">Tap to Start Quest</p>
-        </div>
+      <div style="text-align: center">
+        <h2 style="letter-spacing: 5px; color: #fff; font-family: 'Minecraftia';">[ SERVER ONLINE ]</h2>
+        <p style="color: #aaa; font-family: 'Minecraftia'; margin-top: 10px;">Tap to Connect</p>
+      </div>
     </div>
 
-    <audio id="bgm" loop><source src="assets/Haggstrom.mp3" type="audio/mpeg" /></audio>
-    <audio id="sfx-click"><source src="assets/Click.mp3" type="audio/mpeg" /></audio>
-    <audio id="sfx-challenge"><source src="assets/Challenge_complete.ogg" type="audio/ogg" /></audio>
+    <audio id="bgm" loop><source src="assets/music/Haggstrom.mp3" type="audio/mpeg" /></audio>
+    <audio id="sfx-click"><source src="assets/music/Click.mp3" type="audio/mpeg" /></audio>
+    <audio id="sfx-challenge"><source src="assets/music/Challenge_complete.ogg" type="audio/ogg" /></audio>
 
     <div class="minecraft-screen">
-        <div class="logo-container">
-            <h1 class="main-title">NAURA'S QUEST</h1>
-            <div id="splash" class="splash-text">Follow the Quest!</div>
-        </div>
+      <div class="logo-container">
+        <h1 class="main-title">OUR WORLD</h1>
+        <div id="splash" class="splash-text">HBD Naura!</div>
+      </div>
 
-        <div class="menu-container">
-            <button id="btn-creative" class="mc-button" onclick="checkPasscode()" style="opacity: 0.5;">CREATIVE MODE (Locked 🔒)</button>
-            <button class="mc-button" onclick="window.location.href='index.html'">EXIT WORLD</button>
-        </div>
+      <div class="menu-container">
+        <button class="mc-button" onclick="showAdvancement('Survivor', 'Bertahan hidup bersama Naura.')">SURVIVAL MODE</button>
+        <button class="mc-button" onclick="checkPasscode()">CREATIVE MODE (Locked)</button>
+        <button class="mc-button" onclick="window.location.href='index.html'">BACK TO REALITY</button>
+      </div>
 
-        <div class="hotbar">
-            <div class="hotbar-slot active-slot" id="slot-cake" onclick="eatCake(this)">
-                <img src="https://minecraft.wiki/images/Cake_JE4.png" />
-            </div>
-            <div class="hotbar-slot" id="slot-diamond" onclick="openLoot('Diamond', 'Kamu adalah diamond paling berharga di server ini.', this)" style="display:none;">
-                <img src="https://minecraft.wiki/images/Diamond_JE3_BE3.png" />
-            </div>
-            <div class="hotbar-slot" id="slot-heart" onclick="openLoot('Heart', 'Koordinat kado fisik telah terdeteksi!', this)" style="display:none;">
-                <img src="https://minecraft.wiki/images/Heart_of_the_Sea_JE1_BE1.png" />
-            </div>
-        </div>
+<div class="hotbar">
+    <div class="hotbar-slot active-slot" id="slot-cake" onclick="eatCake(this)">
+        <img src="https://minecraft.wiki/images/Cake_JE4.png" />
+    </div>
+
+    <div class="hotbar-slot" id="slot-diamond" style="display: none;" onclick="openLoot('Diamond', 'Sama seperti kamu, langka dan berharga.', this)">
+        <img src="https://minecraft.wiki/images/Diamond_JE3_BE3.png" />
+    </div>
+
+    <div class="hotbar-slot" id="slot-heart" style="display: none;" onclick="openLoot('Heart', 'Kepingan paling berharga. Terhubung dengan kado aslimu!', this)">
+        <img src="https://minecraft.wiki/images/Heart_of_the_Sea_JE1_BE1.png" />
+    </div>
+</div>
+      <div class="version-text">Minecraft: Naura Edition (13 Jan 2007)</div>
     </div>
 
     <div id="loot-modal" class="mc-modal">
-        <div class="mc-modal-content">
-            <h3 id="loot-title" style="color: #ffff55;"></h3>
-            <div id="loot-text"></div>
-            <button class="mc-button" style="margin-top: 20px; width: 120px" onclick="closeLoot()">CLOSE</button>
-        </div>
+      <div class="mc-modal-content">
+        <h3 id="loot-title" style="color: #ffff55; margin-bottom: 15px; font-size: 16px;"></h3>
+        <div id="loot-text" style="font-size: 11px; line-height: 1.5;"></div>
+        <button class="mc-button" style="margin-top: 20px; width: 140px; padding: 8px;" onclick="closeLoot()">CLOSE</button>
+      </div>
     </div>
 
     <div id="advancement" class="advancement">
-        <div class="adv-iconbox">🟡</div>
-        <div class="adv-text">
-            <div class="adv-title-yellow">Advancement Made!</div>
-            <div id="adv-title" style="color: white; font-size: 10px;"></div>
-            <div id="adv-desc" style="color: white; font-size: 8px; opacity: 0.8;"></div>
-        </div>
+      <div class="adv-iconbox">🟡</div>
+      <div class="adv-text">
+        <div class="adv-title-yellow">Advancement Made!</div>
+        <div id="adv-title" style="color: white; font-size: 10px;"></div>
+        <div id="adv-desc" style="color: white; font-size: 8px; opacity: 0.8;"></div>
+      </div>
     </div>
 
     <script src="mc-script.js"></script>
-</body>
+  </body>
 </html>
