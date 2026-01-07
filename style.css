@@ -767,3 +767,19 @@ body.dark .gallery img {
 .confess-text:not(.type)::after {
   display: none;
 }
+
+.mc-button {
+    background: #52ad2d;
+    color: white;
+    padding: 15px 30px;
+    border: 4px solid #2e6119;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+}
+.mc-button:hover {
+    background: #418a24;
+    transform: scale(1.1);
+}

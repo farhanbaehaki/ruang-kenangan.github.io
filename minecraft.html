@@ -1,85 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft for Naura</title>
     <style>
         body {
-            background: #1a1a1a;
-            color: white;
-            font-family: 'Courier New', Courier, monospace; /* Mirip font Minecraft */
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
+            /* Tekstur background tanah minecraft */
             background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
         }
-        .mc-card {
+
+        .inventory-box {
             background: #c6c6c6;
-            border: 4px solid #ffffff;
-            border-right-color: #555555;
-            border-bottom-color: #555555;
+            border: 6px solid #373737;
             padding: 20px;
-            width: 320px;
+            box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
+            width: 90%;
+            max-width: 400px;
             text-align: center;
-            image-rendering: pixelated;
         }
+
         .mc-title {
             color: #3f3f3f;
-            text-shadow: 2px 2px #ffffff;
+            text-shadow: 2px 2px #fff;
+            font-size: 1.5rem;
             margin-bottom: 20px;
         }
-        .slot-container {
+
+        .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             background: #8b8b8b;
             padding: 10px;
             border: 4px solid #373737;
-            border-right-color: #ffffff;
-            border-bottom-color: #ffffff;
         }
+
         .slot {
-            width: 60px;
-            height: 60px;
+            width: 100%;
+            aspect-ratio: 1/1;
             background: #8b8b8b;
             border: 4px solid #373737;
-            border-right-color: #ffffff;
-            border-bottom-color: #ffffff;
+            box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            font-size: 2rem;
+            transition: 0.2s;
         }
-        .slot:hover { background: #9d9d9d; }
-        .item-icon { font-size: 30px; }
-        #message { margin-top: 20px; color: #52ad2d; font-weight: bold; }
+
+        .slot:hover {
+            background: #9d9d9d;
+            transform: scale(1.05);
+        }
+
+        #mc-message {
+            margin-top: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border: 2px solid #52ad2d;
+            min-height: 50px;
+            font-size: 0.9rem;
+        }
+
+        /* Animasi Masuk Portal */
+        .portal-effect {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: purple;
+            opacity: 0;
+            pointer-events: none;
+            animation: portalIn 1.5s ease-out;
+        }
+
+        @keyframes portalIn {
+            0% { opacity: 1; transform: scale(2); filter: blur(20px); }
+            100% { opacity: 0; transform: scale(1); filter: blur(0); }
+        }
     </style>
 </head>
 <body>
-    <div class="mc-card">
-        <h2 class="mc-title">Naura's Inventory</h2>
-        <div class="slot-container">
-            <div class="slot" onclick="reveal('🌹')"><span class="item-icon">🌹</span></div>
-            <div class="slot" onclick="reveal('💎')"><span class="item-icon">💎</span></div>
-            <div class="slot" onclick="reveal('🍰')"><span class="item-icon">🍰</span></div>
-            <div class="slot" onclick="reveal('🐱')"><span class="item-icon">🐱</span></div>
-            <div class="slot" onclick="reveal('💖')"><span class="item-icon">💖</span></div>
-            <div class="slot" onclick="reveal('🏠')"><span class="item-icon">🏠</span></div>
-        </div>
-        <p id="message">Pilih item untuk di-craft!</p>
-    </div>
 
-    <script>
-        function reveal(item) {
-            const msg = document.getElementById('message');
-            if(item === '💎') msg.innerText = "You found a Diamond! You're precious! ✨";
-            if(item === '🍰') msg.innerText = "Happy Birthday! Let's eat cake! 🎂";
-            if(item === '🐱') msg.innerText = "Miauww! Naura cat mode: ON! 🐾";
-            if(item === '💖') msg.innerText = "Achievement Get: Falling in Love! ❤️";
-            if(item === '🌹') msg.innerText = "A flower for the most beautiful girl.";
-            if(item === '🏠') msg.innerText = "Wanna build a home together? 🏡";
-        }
-    </script>
+<div class="portal-effect"></div>
+
+<div class="inventory-box">
+    <h2 class="mc-title">Naura's Stuff</h2>
+    <div class="grid">
+        <div class="slot" onclick="show('💎')">💎</div>
+        <div class="slot" onclick="show('🌹')">🌹</div>
+        <div class="slot" onclick="show('🍎')">🍎</div>
+        <div class="slot" onclick="show('🐱')">🐱</div>
+        <div class="slot" onclick="show('💖')">💖</div>
+        <div class="slot" onclick="show('🎂')">🎂</div>
+    </div>
+    <div id="mc-message">Klik item untuk melihat deskripsi...</div>
+    <br>
+    <a href="index.html" style="color: #3f3f3f; font-size: 0.7rem; text-decoration: none;">← Kembali ke Realita</a>
+</div>
+
+<script>
+    function show(item) {
+        const msg = document.getElementById('mc-message');
+        const items = {
+            '💎': "Diamond ini kalah terang sama senyum kamu. (Achievement Get: Precious!)",
+            '🌹': "Satu bunga untuk bidadari paling sabar (kalau nggak lagi jadi singa).",
+            '🍎': "Golden Apple buat kamu, biar energinya penuh terus buat dengerin ceritaku.",
+            '🐱': "Kucing ini mirip kamu, lucu tapi suka random tiba-tiba.",
+            '💖': "Health bar aku penuh kalau lagi chat-an sama kamu.",
+            '🎂': "Selamat ulang tahun! Maaf ya nggak bisa spawn kue beneran di sini."
+        };
+        msg.innerHTML = items[item];
+        
+        // Efek getar kecil saat klik
+        msg.style.transform = "translateX(5px)";
+        setTimeout(() => msg.style.transform = "translateX(0)", 100);
+    }
+</script>
+
 </body>
 </html>
