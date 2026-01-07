@@ -14,22 +14,24 @@ function startQuest() {
   const world = document.querySelector(".mc-world");
   const video = document.getElementById("mc-bg-video");
 
-  // 1. Pancing video putar di balik layar hitam
+// PAKSA VIDEO JALAN SEBELUM OVERLAY HILANG
   if (video) {
-    video.muted = true; // Syarat mutlak autoplay browser modern
-    video.currentTime = 0;
-    video.play().catch(e => console.log("Video warming up..."));
+    video.muted = true;
+    video.play();
   }
 
-  // 2. Beri jeda 100ms agar frame video muncul, baru pudarkan overlay
+  overlay.style.opacity = "0";
+  
   setTimeout(() => {
-    overlay.style.opacity = "0";
+    overlay.style.display = "none";
+    world.style.opacity = "1";
     
-    setTimeout(() => {
-      overlay.style.display = "none";
-      world.style.opacity = "1";
-    }, 500);
-  }, 100);
+    // TRIGGER KEDUA: Paksa lagi saat UI muncul
+    if (video) {
+        video.currentTime = video.currentTime; // Soft reset frame
+        video.play();
+    }
+  }, 500);
 
   // --- Sisa Logika Splash & Audio ---
   const splashElement = document.getElementById("splash");

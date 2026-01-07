@@ -31,6 +31,10 @@ html {
     /* Tambahan agar video tetap di-render browser */
     display: block !important;
     background-color: #000; 
+
+    visibility: visible !important;
+    display: block !important;
+    opacity: 1 !important;
 }
 .video-overlay {
   position: fixed;
@@ -51,7 +55,7 @@ html {
     transition: opacity 1.5s ease; /* Hanya transisi opacity */
     position: relative;
     /* Hapus semua background agar video di bawah terlihat tembus */
-    background: none !important; 
+    background: transparent !important; 
 }
 
 /* --- HEADER & SPLASH --- */
