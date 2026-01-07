@@ -1,197 +1,67 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Crafting - For Naura</title>
-    <style>
-        :root {
-            --mc-gray: #c6c6c6;
-            --mc-dark: #373737;
-            --mc-green: #52ad2d;
-        }
-
-        body {
-            background: #1a1a1a url('https://www.transparenttextures.com/patterns/pixel-weave.png');
-            color: white;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        /* Container Utama ala Inventory */
-        .mc-container {
-            background: var(--mc-gray);
-            border: 5px solid var(--mc-dark);
-            box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
-            padding: 20px;
-            text-align: center;
-            image-rendering: pixelated;
-        }
-
-        .mc-header {
-            color: #3f3f3f;
-            text-shadow: 2px 2px #fff;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-
-        /* Slot Crafting */
-        .crafting-area {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .slots-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 60px);
-            gap: 5px;
-        }
-
-        .slot {
-            width: 60px;
-            height: 60px;
-            background: #8b8b8b;
-            border: 4px solid var(--mc-dark);
-            box-shadow: inset -3px -3px #555, inset 3px 3px #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-
-        .slot:active { transform: scale(0.95); }
-
-        .arrow {
-            font-size: 2rem;
-            color: var(--mc-dark);
-        }
-
-        .result-slot {
-            width: 80px;
-            height: 80px;
-            background: #8b8b8b;
-            border: 4px solid var(--mc-dark);
-            box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-        }
-
-        /* Pesan Log */
-        #status-bar {
-            background: rgba(0,0,0,0.8);
-            border: 2px solid var(--mc-green);
-            padding: 10px;
-            min-height: 40px;
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #52ad2d;
-        }
-
-        .btn-reset {
-            margin-top: 15px;
-            background: #a0a0a0;
-            border: 2px solid var(--mc-dark);
-            color: #3f3f3f;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        /* Animasi Bergetar */
-        .shake { animation: shake 0.2s; }
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(5px); }
-            50% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="mc-container">
-        <div class="mc-header">Crafting Something Special</div>
-        
-        <div class="crafting-area">
-            <div class="slots-grid">
-                <div class="slot" id="s1" onclick="addItem('🐱')">🐱</div>
-                <div class="slot" id="s2" onclick="addItem('💎')">💎</div>
-                <div class="slot" id="s3" onclick="addItem('🎂')">🎂</div>
-                <div class="slot" id="s4" onclick="addItem('💖')">💖</div>
-            </div>
-            
-            <div class="arrow">➡</div>
-            
-            <div class="result-slot" id="result">?</div>
-        </div>
-
-        <div id="status-bar">Pilih 2 item untuk di-craft!</div>
-        <button class="btn-reset" onclick="resetCraft()">Reset Table</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Minecraft: Naura Edition</title>
+    <link rel="stylesheet" href="mc-style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  </head>
+  <body>
+    <div id="start-overlay">
+      <div style="text-align: center">
+        <h2 style="letter-spacing: 5px; color: #fff;">[ SERVER ONLINE ]</h2>
+        <p style="color: #aaa;">Tap to Play</p>
+      </div>
     </div>
 
-    <script>
-        let selected = [];
+    <audio id="bgm" loop><source src="assets/Haggstrom.mp3" type="audio/mpeg" /></audio>
+    <audio id="sfx-click"><source src="assets/Click.mp3" type="audio/mpeg" /></audio>
+    <audio id="sfx-challenge"><source src="assets/Challenge_complete.ogg" type="audio/ogg" /></audio>
 
-        function addItem(item) {
-            if (selected.length < 2) {
-                selected.push(item);
-                updateStatus();
-            }
-            
-            if (selected.length === 2) {
-                checkRecipe();
-            }
-        }
+    <div class="minecraft-screen">
+      <div class="logo-container">
+        <h1 class="main-title">OUR WORLD</h1>
+        <div id="splash" class="splash-text">HBD Naura!</div>
+      </div>
 
-        function updateStatus() {
-            const status = document.getElementById('status-bar');
-            status.innerText = "Selected: " + selected.join(" + ");
-        }
+      <div class="menu-container">
+        <button class="mc-button" onclick="showAdvancement('Survivor', 'Bertahan hidup bersama Naura.')">SURVIVAL MODE</button>
+        <button class="mc-button" onclick="checkPasscode()">CREATIVE MODE (Locked)</button>
+        <button class="mc-button" onclick="window.location.href='index.html'">BACK TO REALITY</button>
+      </div>
 
-        function checkRecipe() {
-            const result = document.getElementById('result');
-            const status = document.getElementById('status-bar');
-            const combo = selected.sort().join("");
+      <div class="hotbar">
+        <div class="hotbar-slot" onclick="openLoot('Diamond', 'Sama seperti kamu, langka dan sangat berharga.', this)">
+          <img src="https://minecraft.wiki/images/Diamond_JE3_BE3.png" />
+        </div>
+        <div class="hotbar-slot" onclick="eatCake(this)">
+          <img src="https://minecraft.wiki/images/Cake_JE4.png" />
+        </div>
+        <div class="hotbar-slot active-slot" onclick="openLoot('Heart', 'Kepingan paling berharga. Terhubung dengan sesuatu di dunia nyata.', this)">
+          <img src="https://minecraft.wiki/images/Heart_of_the_Sea_JE1_BE1.png" />
+        </div>
+      </div>
+      <div class="version-text">Minecraft: Naura Edition (13 Jan 2007)</div>
+    </div>
 
-            // Logika Kombinasi
-            if (combo === "🐱💎") {
-                result.innerText = "✨";
-                status.innerText = "Achievement Get: 'Rare Naura'! Kamu itu permata yang berbentuk kucing.";
-            } else if (combo === "🎂💖") {
-                result.innerText = "🎁";
-                status.innerText = "Kado Terbuka: 'Cinta Tanpa Batas'. Selamat ulang tahun, Sayang!";
-            } else if (combo === "🐱💖") {
-                result.innerText = "🐾";
-                status.innerText = "Crafted: 'Love Cat'. Makasih ya udah jadi kucing yang paling aku sayang.";
-            } else if (combo === "💎💖") {
-                result.innerText = "💍";
-                status.innerText = "Crafted: 'The Future'. Apapun status kita nanti, kamu tetap yang paling berharga.";
-            } else {
-                result.innerText = "💥";
-                status.innerText = "Recipe Failed! Tapi aku tetep sayang kok. Coba lagi?";
-                document.querySelector('.mc-container').classList.add('shake');
-                setTimeout(() => document.querySelector('.mc-container').classList.remove('shake'), 200);
-            }
-        }
+    <div id="loot-modal" class="mc-modal">
+      <div class="mc-modal-content">
+        <h3 id="loot-title" style="color: #ffff55; margin-bottom: 10px"></h3>
+        <div id="loot-text"></div>
+        <button class="mc-button" style="margin-top: 20px; width: 120px" onclick="closeLoot()">CLOSE</button>
+      </div>
+    </div>
 
-        function resetCraft() {
-            selected = [];
-            document.getElementById('result').innerText = "?";
-            document.getElementById('status-bar').innerText = "Table cleared. Pilih 2 item lagi!";
-        }
-    </script>
-</body>
+    <div id="advancement" class="advancement">
+      <div class="adv-iconbox">🟡</div>
+      <div class="adv-text">
+        <div class="adv-title-yellow">Advancement Made!</div>
+        <div id="adv-title" style="color: white; font-size: 10px;"></div>
+        <div id="adv-desc" style="color: white; font-size: 8px; opacity: 0.8;"></div>
+      </div>
+    </div>
+
+    <script src="mc-script.js"></script>
+  </body>
 </html>

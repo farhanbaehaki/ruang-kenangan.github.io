@@ -1,37 +1,225 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Surprise - Naura</title>
-    <link rel="stylesheet" href="mc-style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ini apa Yahhh</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h2 id="title-hint">Pilih Item Kesukaanmu!</h2>
+<div id="loader">
+  <div class="loader-content">
+    <div class="heart-loader"></div>
+    <p>Menyiapkan sesuatu yang manis...</p>
+  </div>
+</div>
 
-    <div class="chest-container" onclick="openChest()">
-        <div id="chest-icon">📦</div>
+  <button id="themeToggle" aria-label="Toggle Dark Mode">🌙</button>
+
+  <div class="floating-bubbles"></div>
+  <div class="floating-hearts"></div>
+
+  <section class="section hero fade-up">
+    <h1 class="fade-slide">Happy Birthday</h1>
+    <h2 class="fade-slide">my favorite person 🎂</h2>
+    <button id="startBtn">klik duluu yaa 🐱</button>
+  </section>
+
+  <section class="section fade-up">
+    <h3>menuju hari spesial 🎂</h3>
+    <div id="countdown" aria-live="polite">
+      <div><span id="days">0</span><small>hari</small></div>
+      <div><span id="hours">0</span><small>jam</small></div>
+      <div><span id="minutes">0</span><small>menit</small></div>
+      <div><span id="seconds">0</span><small>detik</small></div>
+    </div>
+  </section>
+
+  <section class="section fade-up">
+    <p>
+      Naura,<br><br>
+      kamu itu lucu tanpa sadar,<br>
+      nyebelin tanpa niat,<br>
+      tapi selalu berhasil bikin aku nyaman.<br><br>
+      Dan entah gimana caranya,<br>
+      semua hal tentang kamu<br>
+      selalu aku suka.
+    </p>
+  </section>
+
+  <section class="section fade-up">
+    <h3>our little story</h3>
+    <p>
+      Kita punya cerita yang nggak selalu sempurna,<br>
+      tapi selalu jujur.<br><br>
+      Dari hal kecil,<br>
+      sampai momen yang bikin aku sadar. <br>
+      <i>“oh, aku suka orang ini.”</i>
+    </p>
+  </section>
+
+  <section class="section fade-up">
+  <h3>some memories 🤍</h3>
+  <div class="gallery">
+    <div class="polaroid">
+      <img src="assets/photos/1.jpg" alt="Memory 1">
+      <span>You, me, and Toleransi 🤍 🛸</span>
+    </div>
+    <div class="polaroid">
+      <img src="assets/photos/2.jpg" alt="Memory 2">
+      <span>Definisi bahagia itu sederhana. sama kamu. 🤡🎈</span>
+    </div>
+    <div class="polaroid">
+      <img src="assets/photos/3.jpg" alt="Memory 3">
+      <span>Dua orang random yang entah kenapa bisa cocok. 😂 👾👾</span>
+    </div>
+    <div class="polaroid">
+      <img src="assets/photos/4.jpg" alt="Memory 4">
+      <span>Gatau lagi mau gaya apaaa 🦙✨</span>
     </div>
 
-    <div class="inventory">
-        <div class="item-slot" onclick="selectItem(this, '🐱')">🐱</div>
-        <div class="item-slot" onclick="selectItem(this, '💎')">💎</div>
-        <div class="item-slot" onclick="selectItem(this, '🍰')">🍰</div>
-        <div class="item-slot" onclick="selectItem(this, '💖')">💖</div>
+    <div class="polaroid">
+      <img src="assets/photos/5.jpg" alt="Memory 5">
+      <span>Favorite person, favorite place. 😆🤍 🦖💨</span>
+    </div>
+    <div class="polaroid portrait">
+      <img src="assets/photos/6.jpg" alt="Memory 6">
+      <span>MIIAWWW??? 🐱✨🌈 </span>
+    </div>
+    <div class="polaroid portrait">
+      <img src="assets/photos/7.jpg" alt="Memory 7">
+      <span>Tolong jangan berhenti jadi Naura yang lucu ya. 🍄🔥</span>
+    </div>
+    <div class="polaroid portrait">
+      <img src="assets/photos/8.jpg" alt="Memory 8">
+      <span>Cantik bangettt, nggak paham lagi! 😆👺</span>
     </div>
 
-    <div class="game-ui" id="instruction">
-        Pilih semua item dulu, lalu klik box-nya!
+    <div class="polaroid portrait">
+      <img src="assets/photos/9.jpg" alt="Memory 9">
+      <span>Simply beautiful. ✨🐸🌸</span>
+    </div>
+    <div class="polaroid portrait">
+      <img src="assets/photos/10.jpg" alt="Memory 10">
+      <span>Cantiknya konsisten banget, nggak pernah libur. 🗿💖</span>
+    </div>
+    <div class="polaroid portrait">
+      <img src="assets/photos/11.jpg" alt="Memory 11">
+      <span>Lucky to have you in my life. ✨🐣</span>
+    </div>
+    <div class="polaroid portrait">
+      <img src="assets/photos/12.jpg" alt="Memory 12">
+      <span>Makan Neng? hehehe 🍛💨</span>
+    </div>
+  </div>
+  <small>*aku senyum sendiri tiap lihat ini</small>
+</section>
+
+  <section class="section fade-up">
+    <p>
+      Di ulang tahun kamu ini,<br>
+      aku cuma mau bilang:<br><br>
+      aku bangga sama kamu.<br>
+      sama caramu bertahan,<br>
+      sama caramu tumbuh.<br><br>
+      semoga hari-hari kamu lebih ringan,<br>
+      dan aku masih boleh ada di samping kamu.<br><br>
+      Selamat ulang tahun, sayang 🤍
+    </p>
+  </section>
+
+  <section class="section fade-up" style="text-align: center; padding: 60px 20px;">
+  
+ <button class="surprise">Jangan di klik! 🤫</button>
+  
+<div id="surpriseText">
+    <h2 class="surprise-title">Review Jujur Tentang Kamu 📝</h2>
+    
+   <div class="rating-card">
+    <div class="rating-item">
+        <div class="rating-info"><span>Tingkat Kegemasan</span><span>1000%</span></div>
+        <div class="rating-bar"><div class="rating-fill" style="--target-width: 100%;"></div></div>
+        <small class="rating-status">Melampaui batas kewajaran! ⚠️</small>
     </div>
 
-    <div id="gift-popup" class="hidden-gift">
-        <h3>ACHIEVEMENT UNLOCKED!</h3>
-        <p>Kamu berhasil merakit kasih sayangku!</p>
-        <p id="gift-location">Cek di bawah bantal kamu sekarang! 🎁</p>
-        <button class="btn-claim" onclick="location.reload()">Main Lagi?</button>
+    <div class="rating-item">
+        <div class="rating-info"><span>Lemah Lembut</span><span>95%</span></div>
+        <div class="rating-bar"><div class="rating-fill" style="--target-width: 95%;"></div></div>
+        <small class="rating-status">Definisi bidadari, tapi kalau marah jadi singa. 🦁</small>
     </div>
 
-    <script src="mc-script.js"></script>
+    <div class="rating-item">
+        <div class="rating-info"><span>Pengertian & Sabar</span><span>100%</span></div>
+        <div class="rating-bar"><div class="rating-fill" style="--target-width: 100%;"></div></div>
+        <small class="rating-status">Sabar banget ngadepin aku yang random ini.</small>
+    </div>
+
+<div class="rating-item">
+    <div class="rating-info"><span>Tingkat Nyebelin</span><span>85%</span></div>
+    <div class="rating-bar"><div class="rating-fill" style="--target-width: 85%;"></div></div>
+    <small class="rating-status">Tingkat nyebelinnya tinggi, tapi herannya tetep sayang. 🙄</small>
+</div>
+
+<div class="rating-item">
+    <div class="rating-info"><span>Mandiri</span><span>100%</span></div>
+    <div class="rating-bar"><div class="rating-fill" style="--target-width: 100%;"></div></div>
+    <small class="rating-status">Hebat banget bisa handle banyak hal sendiri, bangga deh!</small>
+</div>
+
+    <div class="rating-item">
+        <div class="rating-info"><span>Tingkat Absurd</span><span>88%</span></div>
+        <div class="rating-bar"><div class="rating-fill" style="--target-width: 88%; background: linear-gradient(to right, #ffd166, #f78c6c);"></div></div>
+        <small class="rating-status">Hanya kita yang paham jokes-nya. 👽</small>
+    </div>
+
+    <div class="rating-item">
+        <div class="rating-info"><span>Sayang Aku ke Kamu</span><span>Unlimited ♾️</span></div>
+        <div class="rating-bar"><div class="rating-fill" style="--target-width: 100%; background: #ff4d6d;"></div></div>
+        <small class="rating-status">Tidak bisa dihitung pakai rumus matematika apapun.</small>
+    </div>
+</div>
+
+    <hr style="border: 0; border-top: 1px dashed #ffcad4; margin: 20px 0;">
+
+<ul class="funny-list">
+    <li><span>🫠</span> Tiba-tiba random ngirim pap atau video lucu.</li>
+    <li><span>😤</span> Kalau lagi fokus sama sesuatu, dunia serasa milik sendiri.</li>
+    <li><span>🌙</span> Pendengar yang baik, bahkan untuk ceritaku yang nggak jelas.</li>
+    <li><span>🤡</span> Bilang mau tidur, tapi 1 jam kemudian masih kelihatan online.</li>
+    <li><span>🎧</span> Sering dengerin lagu yang sama berulang-ulang sampai bosen.</li>
+</ul>
+
+    <p class="footer-note">"Data ini divalidasi oleh detak jantungku sendiri."</p>
+</div>
+
+<section class="confess" id="confess">
+  <div style="height: 350px;"></div>
+
+  <h3>Sebentar ya… 😅</h3>
+  
+  <p class="confess-text">Aku sempat mikir lama banget, ini mau aku simpan sendiri aja, atau mending aku jujur sekalian sekarang.</p>
+  
+  <p class="confess-text">Soalnya kalau dipikir-pikir kita tuh lucu. Udah saling sayang, udah saling perhatian setiap hari, tapi kadang aku masih nanya ke diri sendiri…<br><b>“Sebenarnya kita ini apa sih?”</b> 😂</p>
+  
+  <p class="confess-text">Jujur, aku nyaman banget sama kamu, Naura. Beneran. Dan kenyamanan ini bukan sesuatu yang pengin aku sembunyiin lagi.</p>
+  
+  <p class="confess-text">Jadi, di hari yang spesial ini, aku cuma mau bilang kalau aku sayang sama kamu. ✨</p>
+  
+  <p class="confess-text">Aku nggak minta jawaban sekarang kok. Kalau kamu ngerasa hal yang sama, mungkin kita bisa coba buat jalanin ini lebih jelas. Pelan-pelan aja, yang penting kita sama-sama tahu arahnya ke mana.</p>
+  
+  <p class="confess-text">Tapi kalau pun belum, nggak apa-apa juga. Setidaknya aku udah merasa lega karena akhirnya bisa jujur sama kamu. 😌</p>
+  
+
+  <audio id="music" loop preload="auto">
+    <source src="assets/music/sempurna.mp3" type="audio/mpeg">
+  </audio>
+
+<a href="minecraft.html" style="color: #ff4d6d; text-decoration: underline;">Klik di sini untuk rahasia terakhir... ⛏️</a>
+
+  <script src="script.js"></script>
 </body>
 </html>
