@@ -1,12 +1,40 @@
 let currentStep = 0;
 
+const splashes = [
+    "Happy Birthday, Naura!",
+    "The Best Player!",
+    "LDR is just a number!",
+    "Diamond for Diamond!",
+    "Made with Love!",
+    "Level 19 Unlocked!"
+];
+
 function startQuest() {
-  document.getElementById("start-overlay").style.opacity = "0";
+  // 1. Animasi transisi overlay ke World
+  const overlay = document.getElementById("start-overlay");
+  overlay.style.opacity = "0";
+  
   setTimeout(() => {
-    document.getElementById("start-overlay").style.display = "none";
+    overlay.style.display = "none";
     document.querySelector(".mc-world").style.opacity = "1";
   }, 500);
 
+// --- TAMBAHAN BARU: RANDOM SPLASH TEXT ---
+  const splashElement = document.getElementById("splash");
+  if (splashElement) {
+    const randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
+    splashElement.innerText = randomSplash;
+  }
+  // 2. PAKSA VIDEO PLAY (Solusi agar tidak hilang/berhenti)
+  const video = document.getElementById("mc-bg-video");
+  if (video) {
+    video.muted = true; // Wajib agar bisa autoplay di browser modern
+    video.play().catch(error => {
+        console.log("Autoplay dicegah, namun dipicu lewat interaksi klik.");
+    });
+  }
+
+  // 3. Audio & UI
   const bgm = document.getElementById("bgm");
   bgm.volume = 0.3;
   bgm.play();
