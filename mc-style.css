@@ -18,6 +18,7 @@ html {
 
 .mc-world {
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,6 +27,7 @@ html {
     url("assets/background1.jfif") center/cover;
   opacity: 0;
   transition: 1.5s ease;
+  background: none !important
 }
 
 .mc-header {
@@ -157,4 +159,79 @@ html {
   text-align: center;
   color: #333;
   box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
+}
+
+/* --- PERBAIKAN START OVERLAY (AGAR SERVER ONLINE DI TENGAH) --- */
+#start-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    /* Gunakan Flexbox untuk menengahkan konten */
+    display: flex;
+    justify-content: center; /* Tengah Horizontal */
+    align-items: center;     /* Tengah Vertikal */
+    cursor: pointer;
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+/* Memastikan box di dalamnya mengambil lebar penuh agar alignment bekerja */
+.pixel-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tambahan styling untuk teks di Start Overlay */
+.mc-font {
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: white;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 15px;
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+
+/* --- CSS UNTUK BACKGROUND VIDEO --- */
+#mc-bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2; /* Di paling belakang */
+    object-fit: cover; /* Agar video tidak gepeng */
+}
+
+/* Overlay transparan hitam agar teks/tombol lebih kontras */
+.video-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* Kegelapan 40% */
+    z-index: -1;
+}
+
+/* Hapus atau komentari background: url(...) di .mc-world yang lama */
+.mc-world {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 1.5s ease;
+    /* background: ... (hapus ini agar video terlihat) */
 }
