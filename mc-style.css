@@ -16,47 +16,49 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Cari bagian .mc-world dan GANTI TOTAL dengan ini */
-.mc-world {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: 1.5s ease;
-    /* HAPUS baris background: url(...) yang lama */
-    background-color: transparent; 
-    position: relative;
-    overflow: hidden;
-}
-
-/* Pastikan video benar-benar ada di lapisan paling bawah */
+/* --- BACKGROUND VIDEO (LOGIKA FIX) --- */
 #mc-bg-video {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -2;
-    transform: translate(-50%, -50%); /* Agar video selalu center */
-    object-fit: cover;
-    background-color: #000; /* Warna cadangan jika video gagal muat */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -2;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  background-color: #000;
 }
 
-/* Tambahkan ini agar saat transisi opacity 1, video tidak ikut menghilang */
-.mc-world.show-content {
-    opacity: 1;
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
 }
 
+/* --- CONTAINER DUNIA --- */
+.mc-world {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 1.5s ease;
+  position: relative;
+  background: none !important;
+}
+
+/* --- HEADER & SPLASH --- */
 .mc-header {
   text-align: center;
   position: relative;
   margin-bottom: 30px;
 }
+
 .mc-logo {
   font-size: 26px;
   text-shadow: 3px 3px #373737;
@@ -83,7 +85,7 @@ html {
   }
 }
 
-/* Perbaikan Menu Tengah */
+/* --- MENU & TOMBOL (TENGAH POSISI) --- */
 .mc-menu {
   display: flex;
   flex-direction: column;
@@ -110,13 +112,14 @@ html {
   transform: scale(0.98);
   box-shadow: inset 4px 4px #555, inset -4px -4px #fff;
 }
+
 .mc-btn.locked {
   opacity: 0.6;
   filter: grayscale(1);
   cursor: not-allowed;
 }
 
-/* Hotbar Tengah Presisi */
+/* --- HOTBAR (TENGAH PRESIISI) --- */
 .mc-hotbar {
   position: absolute;
   bottom: 35px;
@@ -146,7 +149,46 @@ html {
   image-rendering: pixelated;
 }
 
-/* Advancement */
+/* --- START OVERLAY --- */
+#start-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.5s ease;
+}
+
+.pixel-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mc-font {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 3px;
+}
+
+.blink {
+  animation: blinker 1s linear infinite;
+  font-size: 10px;
+  color: #aaa;
+  margin-top: 15px;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --- ADVANCEMENT & MODAL --- */
 .mc-adv {
   position: fixed;
   top: -100px;
@@ -158,11 +200,11 @@ html {
   transition: 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   z-index: 2000;
 }
+
 .mc-adv.show {
   top: 20px;
 }
 
-/* Modal */
 .mc-overlay {
   display: none;
   position: fixed;
@@ -172,6 +214,7 @@ html {
   justify-content: center;
   align-items: center;
 }
+
 .mc-modal-box {
   background: #c6c6c6;
   border: 4px solid #fff;
@@ -181,79 +224,4 @@ html {
   text-align: center;
   color: #333;
   box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
-}
-
-/* --- PERBAIKAN START OVERLAY (AGAR SERVER ONLINE DI TENGAH) --- */
-#start-overlay {
-    position: fixed;
-    inset: 0;
-    background: #000;
-    z-index: 9999;
-    /* Gunakan Flexbox untuk menengahkan konten */
-    display: flex;
-    justify-content: center; /* Tengah Horizontal */
-    align-items: center;     /* Tengah Vertikal */
-    cursor: pointer;
-    text-align: center;
-    transition: opacity 0.5s ease;
-}
-
-/* Memastikan box di dalamnya mengambil lebar penuh agar alignment bekerja */
-.pixel-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Tambahan styling untuk teks di Start Overlay */
-.mc-font {
-    margin: 0;
-    font-size: 20px;
-    letter-spacing: 3px;
-    color: white;
-}
-
-.blink {
-    animation: blinker 1s linear infinite;
-    font-size: 10px;
-    color: #aaa;
-    margin-top: 15px;
-}
-
-@keyframes blinker {
-    50% { opacity: 0; }
-}
-
-/* --- CSS UNTUK BACKGROUND VIDEO --- */
-#mc-bg-video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -2; /* Di paling belakang */
-    object-fit: cover; /* Agar video tidak gepeng */
-}
-
-/* Overlay transparan hitam agar teks/tombol lebih kontras */
-.video-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4); /* Kegelapan 40% */
-    z-index: -1;
-}
-
-/* Hapus atau komentari background: url(...) di .mc-world yang lama */
-.mc-world {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: 1.5s ease;
-    /* background: ... (hapus ini agar video terlihat) */
 }
