@@ -5,245 +5,231 @@
 }
 
 /* --- RESET & BASE --- */
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #000;
-  font-family: "Minecraftia", sans-serif;
-  color: white;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    font-family: "Minecraftia", sans-serif;
+    color: white;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* --- LAYER -2: BACKGROUND VIDEO --- */
+/* --- LAYER -2: BACKGROUND VIDEO (Versi yang Berhasil Tampil) --- */
 #mc-bg-video {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -2;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  display: block !important;
-  backface-visibility: hidden;
-  filter: brightness(0.8);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    display: block !important;
+    /* Mencegah flickering saat transisi */
+    backface-visibility: hidden;
+    filter: brightness(0.8);
 }
 
 /* --- LAYER -1: VIGNETTE OVERLAY --- */
 .video-overlay {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.5) 100%
-  );
-  z-index: -1;
-  pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* --- LAYER 1: MAIN UI CONTAINER --- */
 .mc-world {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  position: relative;
-  z-index: 1;
-  background: transparent !important;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    position: relative;
+    z-index: 1;
+    /* PAKSA TRANSPARAN AGAR VIDEO TERLIHAT */
+    background: transparent !important;
 }
 
-/* --- HEADER & SPLASH --- */
+/* --- LAYER 9999: START OVERLAY (FIXED TENGAH) --- */
+#start-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column; /* Perbaikan agar teks vertikal */
+    justify-content: center; /* Perbaikan agar teks di tengah vertikal */
+    align-items: center;    /* Perbaikan agar teks di tengah horizontal */
+    text-align: center;     /* Perbaikan agar teks baris baru tetap di tengah */
+    cursor: pointer;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.pixel-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mc-font {
+    font-size: 22px;
+    text-shadow: 2px 2px #373737;
+    margin: 0;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 20px;
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+
+/* --- LOGO & SPLASH --- */
 .mc-header {
-  text-align: center;
-  position: relative;
-  margin-bottom: 20px; /* Sedikit dikurangi agar muat di layar HP */
+    text-align: center;
+    position: relative;
+    margin-bottom: 25px;
 }
 
 .mc-logo {
-  font-size: 24px;
-  text-shadow: 3px 3px #373737;
-  margin: 0;
-  color: #fff;
+    font-size: 26px;
+    text-shadow: 3px 3px #373737;
+    margin: 0;
+    color: #fff;
 }
 
 .mc-splash {
-  position: absolute;
-  right: -10px;
-  bottom: -10px;
-  color: #ffff55;
-  text-shadow: 2px 2px #373737;
-  font-size: 10px;
-  transform: rotate(-15deg);
-  animation: bounce 0.5s infinite alternate;
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    color: #ffff55;
+    text-shadow: 2px 2px #373737;
+    font-size: 11px;
+    transform: rotate(-15deg);
+    animation: bounce 0.5s infinite alternate;
 }
 
 @keyframes bounce {
-  from {
-    transform: scale(1) rotate(-15deg);
-  }
-  to {
-    transform: scale(1.1) rotate(-15deg);
-  }
+    from { transform: scale(1) rotate(-15deg); }
+    to { transform: scale(1.1) rotate(-15deg); }
 }
 
 /* --- MENU BUTTONS --- */
 .mc-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 60px; /* Ruang tambahan agar tidak tabrakan dengan hotbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 80px; /* Memberi ruang agar tidak tabrakan dengan hotbar */
 }
 
 .mc-btn {
-  width: 240px;
-  padding: 12px;
-  background: #a0a0a0;
-  border: 4px solid #000;
-  color: white;
-  font-family: "Minecraftia";
-  font-size: 10px;
-  box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
-  cursor: pointer;
-  text-align: center;
+    width: 250px;
+    padding: 14px;
+    background: #a0a0a0;
+    border: 4px solid #000;
+    color: white;
+    font-family: "Minecraftia";
+    font-size: 10px;
+    box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
+    cursor: pointer;
+    text-align: center;
 }
 
 .mc-btn:active {
-  transform: scale(0.98);
-  box-shadow: inset 4px 4px #555, inset -4px -4px #fff;
+    transform: scale(0.98);
+    box-shadow: inset 4px 4px #555, inset -4px -4px #fff;
 }
 
 .mc-btn.locked {
-  opacity: 0.5;
-  filter: grayscale(1);
-  cursor: not-allowed;
+    opacity: 0.5;
+    filter: grayscale(1);
+    cursor: not-allowed;
 }
 
-/* --- HOTBAR (FIX POSISI HP) --- */
+/* --- HOTBAR (FIXED POSISI HP) --- */
 .mc-hotbar {
-  position: absolute;
-  bottom: 85px; /* NAIKKAN JARAK agar tidak tertutup tombol navigasi HP */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  background: rgba(0, 0, 0, 0.7);
-  border: 4px solid #373737;
-  padding: 4px;
-  gap: 4px;
-  z-index: 5;
+    position: absolute;
+    bottom: 80px; /* Dinaikkan agar tidak tertutup bar navigasi HP */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    background: rgba(0, 0, 0, 0.7);
+    border: 4px solid #373737;
+    padding: 4px;
+    gap: 4px;
+    z-index: 10;
 }
 
 .mc-slot {
-  width: 50px;
-  height: 50px;
-  background: #8b8b8b;
-  border: 3px solid;
-  border-color: #373737 #fff #fff #373737;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #8b8b8b;
+    border: 3px solid;
+    border-color: #373737 #fff #fff #373737;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .mc-slot img {
-  width: 32px;
-  height: 32px;
-  image-rendering: pixelated;
+    width: 34px;
+    height: 34px;
+    image-rendering: pixelated;
 }
 
-/* --- START OVERLAY (FIX TENGAH PRESIISI) --- */
-#start-overlay {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center; /* Pastikan teks di tengah */
-  cursor: pointer;
-  transition: opacity 0.8s ease;
-}
-
-.pixel-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.mc-font {
-  margin: 0;
-  font-size: 18px;
-  letter-spacing: 2px;
-  width: 100%;
-}
-
-.blink {
-  animation: blinker 1s linear infinite;
-  font-size: 10px;
-  color: #aaa;
-  margin-top: 20px;
-}
-
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
-
-/* --- ADVANCEMENTS (FIX LAYER) --- */
+/* --- MODALS & ADVANCEMENTS (FIXED POSISI) --- */
 .mc-adv {
-  position: fixed;
-  top: -120px; /* Sembunyi lebih jauh ke atas */
-  right: 10px;
-  background: #212121;
-  border: 2px solid #555;
-  padding: 10px;
-  display: flex;
-  gap: 10px;
-  transition: 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  z-index: 10001; /* Pastikan paling depan, di atas tombol */
+    position: fixed;
+    top: -120px; /* Mulai dari luar layar (atas) */
+    right: 10px;
+    background: #212121;
+    border: 2px solid #555;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    transition: 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    z-index: 10001; /* Di atas segalanya */
 }
 
 .mc-adv.show {
-  top: 20px;
+    top: 20px; /* Muncul turun dari atas */
 }
 
-/* --- MODALS --- */
 .mc-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  z-index: 10000;
-  justify-content: center;
-  align-items: center;
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
 }
 
 .mc-modal-box {
-  background: #c6c6c6;
-  border: 4px solid #fff;
-  padding: 25px;
-  width: 85%;
-  max-width: 320px;
-  text-align: center;
-  color: #333;
-  box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
+    background: #c6c6c6;
+    border: 4px solid #fff;
+    padding: 25px;
+    width: 85%;
+    max-width: 320px;
+    text-align: center;
+    color: #333;
+    box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
 }
 
-/* --- UTILS --- */
-::-webkit-scrollbar {
-  display: none;
-}
+/* Sembunyikan scrollbar untuk pengalaman full screen */
+::-webkit-scrollbar { display: none; }
