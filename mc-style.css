@@ -18,27 +18,33 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* --- LAYER -2: BACKGROUND VIDEO (BAGIAN INI TIDAK SAYA UBAH) --- */
+/* --- LAYER -2: BACKGROUND VIDEO (ANTI-ZOOM & FULL SCREEN LOCK) --- */
 #mc-bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%; /* Lebar penuh layar */
-  height: 100%; /* Tinggi penuh layar */
-  z-index: -2;
+    position: fixed;
+    /* Kunci di semua sudut agar tidak ada celah */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    /* Gunakan vh/vw dan % secara bersamaan untuk memaksa */
+    width: 100vw !important;
+    height: 100vh !important;
+    width: 100% !important;
+    height: 100% !important;
+    
+    z-index: -2;
+    
+    /* 'fill' memaksa video masuk ke layar tanpa potong pinggir */
+    object-fit: fill !important; 
+    
+    display: block !important;
+    filter: brightness(0.8);
+    pointer-events: none;
 
-  object-fit: fill !important;
-
-  display: block !important;
-  filter: brightness(0.8);
-  pointer-events: none;
-
-  /* Menghilangkan Warning & Optimasi */
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+    /* Menghilangkan warning & menjaga stabilitas di mobile */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 /* --- LAYER -1: VIGNETTE OVERLAY --- */
