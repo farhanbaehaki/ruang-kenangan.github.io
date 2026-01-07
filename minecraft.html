@@ -10,8 +10,8 @@
   <body>
     <div id="start-overlay">
       <div style="text-align: center">
-        <h2 style="letter-spacing: 5px; color: #fff;">[ SERVER ONLINE ]</h2>
-        <p style="color: #aaa;">Tap to Play</p>
+        <h2 style="letter-spacing: 5px; color: #fff; font-family: 'Minecraftia';">[ SERVER ONLINE ]</h2>
+        <p style="color: #aaa; font-family: 'Minecraftia'; margin-top: 10px;">Tap to Connect</p>
       </div>
     </div>
 
@@ -33,13 +33,13 @@
 
       <div class="hotbar">
         <div class="hotbar-slot" onclick="openLoot('Diamond', 'Sama seperti kamu, langka dan sangat berharga.', this)">
-          <img src="https://minecraft.wiki/images/Diamond_JE3_BE3.png" />
+          <img src="https://minecraft.wiki/images/Diamond_JE3_BE3.png" alt="Diamond" />
         </div>
         <div class="hotbar-slot" onclick="eatCake(this)">
-          <img src="https://minecraft.wiki/images/Cake_JE4.png" />
+          <img src="https://minecraft.wiki/images/Cake_JE4.png" alt="Cake" />
         </div>
         <div class="hotbar-slot active-slot" onclick="openLoot('Heart', 'Kepingan paling berharga. Terhubung dengan sesuatu di dunia nyata.', this)">
-          <img src="https://minecraft.wiki/images/Heart_of_the_Sea_JE1_BE1.png" />
+          <img src="https://minecraft.wiki/images/Heart_of_the_Sea_JE1_BE1.png" alt="Heart" />
         </div>
       </div>
       <div class="version-text">Minecraft: Naura Edition (13 Jan 2007)</div>
@@ -47,9 +47,9 @@
 
     <div id="loot-modal" class="mc-modal">
       <div class="mc-modal-content">
-        <h3 id="loot-title" style="color: #ffff55; margin-bottom: 10px"></h3>
-        <div id="loot-text"></div>
-        <button class="mc-button" style="margin-top: 20px; width: 120px" onclick="closeLoot()">CLOSE</button>
+        <h3 id="loot-title" style="color: #ffff55; margin-bottom: 15px; font-size: 16px;"></h3>
+        <div id="loot-text" style="font-size: 11px; line-height: 1.5;"></div>
+        <button class="mc-button" style="margin-top: 20px; width: 140px; padding: 8px;" onclick="closeLoot()">CLOSE</button>
       </div>
     </div>
 
