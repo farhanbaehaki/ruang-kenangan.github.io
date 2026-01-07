@@ -71,23 +71,30 @@ function checkPasscode() {
     alert("❌ Passcode Salah! Hint: Tanggal & Bulan lahir Naura.");
   }
 }
-
+// Tambahkan di fungsi finalCinematic agar lebih meriah
 function finalCinematic() {
-  playSfx(sfxChallenge);
-  confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+    playSfx(sfxChallenge);
+    
+    // Efek Confetti
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
 
-  mainScreen.innerHTML = `
+    mainScreen.innerHTML = `
       <div style="text-align: center; color: white; padding: 20px; padding-top: 25vh; font-family: 'Minecraftia';">
-        <h2 style="color: #ffff55; text-shadow: 2px 2px #000; font-size: 20px;">ACHIEVEMENT REACHED!</h2>
-        <p style="margin: 20px; font-size: 11px; line-height: 1.8; opacity: 0.9;">
-          "I see the player you mean... Naura.<br>Cintaku ke kamu gak akan pernah retak."
+        <h2 style="color: #ffff55; text-shadow: 2px 2px #000; font-size: 20px;">QUEST COMPLETE!</h2>
+        <p style="margin: 20px; font-size: 10px; line-height: 1.8;">
+          "I see the player you mean... Naura.<br>
+          The one who just unlocked the best gift."
         </p>
-        <div style="background: #373737; border: 4px solid #52ad2d; padding: 15px; display: inline-block; margin-top: 20px;">
-          <p style="font-size: 9px; margin: 0; color: #aaa;">REAL LIFE LOOT:</p>
-          <p style="color: #ffff55; margin: 8px 0 0 0; font-size: 12px;">Ambil kado fisikmu sekarang! 🎁</p>
+        <div style="background: #313131; border: 4px solid #52ad2d; padding: 15px; display: inline-block;">
+          <p style="font-size: 8px; margin: 0; color: #aaaaaa;">CHEST COORDINATES:</p>
+          <p style="color: #ffff55; margin: 5px 0 0 0; font-size: 12px;">Cek di Bawah Kasur! 🎁</p>
         </div>
         <br>
-        <button onclick="location.reload()" class="mc-button" style="margin-top: 40px; width: 180px;">RESPAWN WORLD</button>
+        <button onclick="location.reload()" class="mc-button" style="margin-top: 30px; width: 180px;">RESPAWN</button>
       </div>
     `;
 }
