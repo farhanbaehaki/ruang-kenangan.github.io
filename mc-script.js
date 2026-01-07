@@ -14,32 +14,30 @@ function startQuest() {
   const world = document.querySelector(".mc-world");
   const video = document.getElementById("mc-bg-video");
 
-  // 1. Mulai transisi hilangkan overlay hitam
-  overlay.style.opacity = "0";
-  
-  // 2. Refresh Video sebelum ditampilkan
+  // 1. Pancing video putar di balik layar hitam
   if (video) {
-    video.load(); // Memaksa browser memuat ulang sumber video
-    video.play().catch(e => console.log("Video playing..."));
+    video.muted = true; // Syarat mutlak autoplay browser modern
+    video.currentTime = 0;
+    video.play().catch(e => console.log("Video warming up..."));
   }
 
+  // 2. Beri jeda 100ms agar frame video muncul, baru pudarkan overlay
   setTimeout(() => {
-    overlay.style.display = "none";
-    // 3. Tampilkan dunia (video & menu)
-    world.style.opacity = "1";
+    overlay.style.opacity = "0";
     
-    // 4. Pastikan video tidak pause setelah opacity muncul
-    if (video) video.play(); 
-  }, 500);
+    setTimeout(() => {
+      overlay.style.display = "none";
+      world.style.opacity = "1";
+    }, 500);
+  }, 100);
 
-  // Random Splash Text
+  // --- Sisa Logika Splash & Audio ---
   const splashElement = document.getElementById("splash");
   if (splashElement) {
     const randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
     splashElement.innerText = randomSplash;
   }
 
-  // Audio
   const bgm = document.getElementById("bgm");
   bgm.volume = 0.3;
   bgm.play().catch(e => console.log("Audio play blocked"));
