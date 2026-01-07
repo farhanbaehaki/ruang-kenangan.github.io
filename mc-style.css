@@ -1,108 +1,160 @@
 @font-face {
-    font-family: 'Minecraftia';
-    src: url('Minecraftia.ttf');
+  font-family: "Minecraftia";
+  src: url("Minecraftia.ttf");
 }
 
-body, html {
-    margin: 0; padding: 0; height: 100%; width: 100%;
-    background-color: #000; font-family: 'Minecraftia', sans-serif;
-    color: white; overflow: hidden; -webkit-tap-highlight-color: transparent;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  font-family: "Minecraftia", sans-serif;
+  color: white;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mc-world {
-    height: 100vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('assets/background1.jfif') center/cover;
-    opacity: 0; transition: 1s ease;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("assets/background1.jfif") center/cover;
+  opacity: 0;
+  transition: 1.5s ease;
 }
 
-.mc-logo { font-size: 28px; text-shadow: 3px 3px #373737; margin: 0; }
+.mc-header {
+  text-align: center;
+  position: relative;
+  margin-bottom: 30px;
+}
+.mc-logo {
+  font-size: 26px;
+  text-shadow: 3px 3px #373737;
+  margin: 0;
+}
 
 .mc-splash {
-    color: #ffff55; text-shadow: 2px 2px #373737;
-    font-size: 12px; transform: rotate(-15deg);
-    animation: bounce 0.5s infinite alternate;
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  color: #ffff55;
+  text-shadow: 2px 2px #373737;
+  font-size: 11px;
+  transform: rotate(-15deg);
+  animation: bounce 0.5s infinite alternate;
 }
 
-@keyframes bounce { from { transform: scale(1) rotate(-15deg); } to { transform: scale(1.1) rotate(-15deg); } }
+@keyframes bounce {
+  from {
+    transform: scale(1) rotate(-15deg);
+  }
+  to {
+    transform: scale(1.1) rotate(-15deg);
+  }
+}
 
-/* --- PERBAIKAN POSISI MENU & TOMBOL --- */
-
+/* Perbaikan Menu Tengah */
 .mc-menu {
-    display: flex;
-    flex-direction: column; /* Menyusun tombol atas-bawah */
-    align-items: center;    /* MENENGAHKAN TOMBOL secara horizontal */
-    justify-content: center;
-    width: 100%;            /* Mengambil lebar penuh agar alignment akurat */
-    margin-top: 20px;
-    gap: 10px;              /* Jarak antar tombol */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
 }
 
 .mc-btn {
-    width: 240px; 
-    padding: 12px;
-    background: #a0a0a0; 
-    border: 4px solid #000;
-    color: white; 
-    font-family: 'Minecraftia'; 
-    font-size: 10px;
-    box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
-    cursor: pointer;
-    text-align: center;     /* Menengahkan teks di dalam tombol */
-    display: block;         /* Memastikan tombol berperilaku sebagai block */
+  width: 250px;
+  padding: 14px;
+  background: #a0a0a0;
+  border: 4px solid #000;
+  color: white;
+  font-family: "Minecraftia";
+  font-size: 10px;
+  box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
+  cursor: pointer;
+  text-align: center;
 }
 
-/* --- PERBAIKAN POSISI HOTBAR --- */
+.mc-btn:active {
+  transform: scale(0.98);
+  box-shadow: inset 4px 4px #555, inset -4px -4px #fff;
+}
+.mc-btn.locked {
+  opacity: 0.6;
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
 
+/* Hotbar Tengah Presisi */
 .mc-hotbar {
-    position: absolute; 
-    bottom: 30px; 
-    left: 50%;              /* Geser ke tengah */
-    transform: translateX(-50%); /* Penyesuaian agar benar-benar center */
-    display: flex;
-    background: rgba(0,0,0,0.6); 
-    border: 4px solid #373737; 
-    padding: 4px; 
-    gap: 4px;
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  background: rgba(0, 0, 0, 0.7);
+  border: 4px solid #373737;
+  padding: 4px;
+  gap: 4px;
 }
 
 .mc-slot {
-    width: 48px; height: 48px; background: #8b8b8b;
-    border: 3px solid; border-color: #373737 #fff #fff #373737;
-    display: flex; align-items: center; justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: #8b8b8b;
+  border: 3px solid;
+  border-color: #373737 #fff #fff #373737;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.mc-slot img { width: 32px; height: 32px; image-rendering: pixelated; }
+.mc-slot img {
+  width: 34px;
+  height: 34px;
+  image-rendering: pixelated;
+}
 
-/* Advancement Pop */
+/* Advancement */
 .mc-adv {
-    position: fixed; top: -100px; right: 10px;
-    background: #212121; border: 2px solid #555;
-    padding: 8px; display: flex; transition: 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  position: fixed;
+  top: -100px;
+  right: 10px;
+  background: #212121;
+  border: 2px solid #555;
+  padding: 10px;
+  display: flex;
+  transition: 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  z-index: 2000;
 }
-
-.mc-adv.show { top: 15px; }
-.adv-top { color: #ffff55; font-size: 9px; }
-.adv-bottom { font-size: 10px; }
-
-/* Start Overlay */
-#start-overlay {
-    position: fixed; inset: 0; background: #000;
-    z-index: 100; display: flex; justify-content: center; align-items: center;
-    cursor: pointer; text-align: center;
+.mc-adv.show {
+  top: 20px;
 }
-
-.blink { animation: blinker 1s linear infinite; font-size: 10px; color: #aaa; margin-top: 10px;}
-@keyframes blinker { 50% { opacity: 0; } }
 
 /* Modal */
 .mc-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-    z-index: 1000; justify-content: center; align-items: center;
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
 }
-
 .mc-modal-box {
-    background: #c6c6c6; border: 4px solid #fff; padding: 20px;
-    width: 85%; max-width: 320px; text-align: center; color: #333;
-    box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
+  background: #c6c6c6;
+  border: 4px solid #fff;
+  padding: 25px;
+  width: 85%;
+  max-width: 320px;
+  text-align: center;
+  color: #333;
+  box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
 }
