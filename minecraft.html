@@ -1,69 +1,56 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Minecraft: Naura Edition</title>
-    <link rel="stylesheet" href="mc-style.css" />
+    <title>Minecraft Quest - Naura</title>
+    <link rel="stylesheet" href="mc-style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  </head>
-  <body>
-    <div id="start-overlay">
-      <div style="text-align: center">
-        <h2 style="letter-spacing: 5px; color: #fff; font-family: 'Minecraftia';">[ SERVER ONLINE ]</h2>
-        <p style="color: #aaa; font-family: 'Minecraftia'; margin-top: 10px;">Tap to Connect</p>
-      </div>
+</head>
+<body>
+
+    <div id="start-overlay" onclick="startQuest()">
+        <div class="pixel-box">
+            <h2 class="mc-font">[ SERVER ONLINE ]</h2>
+            <p class="blink">TAP TO CONNECT</p>
+        </div>
     </div>
 
-    <audio id="bgm" loop><source src="assets/music/Haggstrom.mp3" type="audio/mpeg" /></audio>
-    <audio id="sfx-click"><source src="assets/music/Click.mp3" type="audio/mpeg" /></audio>
-    <audio id="sfx-challenge"><source src="assets/music/Challenge_complete.ogg" type="audio/ogg" /></audio>
+    <audio id="bgm" loop><source src="assets/Haggstrom.mp3" type="audio/mpeg"></audio>
+    <audio id="sfx-click"><source src="assets/Click.mp3" type="audio/mpeg"></audio>
+    <audio id="sfx-level"><source src="assets/Challenge_complete.ogg" type="audio/ogg"></audio>
 
-    <div class="minecraft-screen">
-      <div class="logo-container">
-        <h1 class="main-title">OUR WORLD</h1>
-        <div id="splash" class="splash-text">HBD Naura!</div>
-      </div>
+    <div class="mc-world">
+        <div class="mc-header">
+            <h1 class="mc-logo">NAURA EDITION</h1>
+            <div id="splash" class="mc-splash">Happy Birthday!</div>
+        </div>
 
-      <div class="menu-container">
-        <button class="mc-button" onclick="showAdvancement('Survivor', 'Bertahan hidup bersama Naura.')">SURVIVAL MODE</button>
-        <button class="mc-button" onclick="checkPasscode()">CREATIVE MODE (Locked)</button>
-        <button class="mc-button" onclick="window.location.href='index.html'">BACK TO REALITY</button>
-      </div>
+        <div class="mc-menu">
+            <button class="mc-btn" onclick="questAction('survival')">SURVIVAL MODE</button>
+            <button id="btn-creative" class="mc-btn locked" onclick="questAction('creative')">CREATIVE MODE 🔒</button>
+        </div>
 
-<div class="hotbar">
-    <div class="hotbar-slot active-slot" id="slot-cake" onclick="eatCake(this)">
-        <img src="https://minecraft.wiki/images/Cake_JE4.png" />
+        <div class="mc-hotbar" id="main-hotbar">
+            </div>
+
+        <div id="adv-pop" class="mc-adv">
+            <div class="adv-icon">🟡</div>
+            <div class="adv-body">
+                <div class="adv-top">Advancement Made!</div>
+                <div id="adv-title" class="adv-bottom"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="hotbar-slot" id="slot-diamond" style="display: none;" onclick="openLoot('Diamond', 'Sama seperti kamu, langka dan berharga.', this)">
-        <img src="https://minecraft.wiki/images/Diamond_JE3_BE3.png" />
-    </div>
-
-    <div class="hotbar-slot" id="slot-heart" style="display: none;" onclick="openLoot('Heart', 'Kepingan paling berharga. Terhubung dengan kado aslimu!', this)">
-        <img src="https://minecraft.wiki/images/Heart_of_the_Sea_JE1_BE1.png" />
-    </div>
-</div>
-      <div class="version-text">Minecraft: Naura Edition (13 Jan 2007)</div>
-    </div>
-
-    <div id="loot-modal" class="mc-modal">
-      <div class="mc-modal-content">
-        <h3 id="loot-title" style="color: #ffff55; margin-bottom: 15px; font-size: 16px;"></h3>
-        <div id="loot-text" style="font-size: 11px; line-height: 1.5;"></div>
-        <button class="mc-button" style="margin-top: 20px; width: 140px; padding: 8px;" onclick="closeLoot()">CLOSE</button>
-      </div>
-    </div>
-
-    <div id="advancement" class="advancement">
-      <div class="adv-iconbox">🟡</div>
-      <div class="adv-text">
-        <div class="adv-title-yellow">Advancement Made!</div>
-        <div id="adv-title" style="color: white; font-size: 10px;"></div>
-        <div id="adv-desc" style="color: white; font-size: 8px; opacity: 0.8;"></div>
-      </div>
+    <div id="mc-modal" class="mc-overlay">
+        <div class="mc-modal-box">
+            <h3 id="modal-title" style="color: #ffff55; margin-bottom: 10px;"></h3>
+            <p id="modal-desc" style="font-size: 11px; line-height: 1.6;"></p>
+            <button class="mc-btn" style="margin-top: 15px; width: 100px;" onclick="closeMcModal()">CLOSE</button>
+        </div>
     </div>
 
     <script src="mc-script.js"></script>
-  </body>
+</body>
 </html>
