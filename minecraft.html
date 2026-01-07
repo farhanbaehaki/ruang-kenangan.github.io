@@ -11,6 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   </head>
   <body>
+    <video autoplay muted loop playsinline id="mc-bg-video">
+      <source src="assets/photos/live.mp4" type="video/mp4" />
+    </video>
+
+    <div class="video-overlay"></div>
+
     <div id="start-overlay" onclick="startQuest()">
       <div class="pixel-box">
         <h2 class="mc-font">[ SERVER ONLINE ]</h2>
@@ -18,23 +24,7 @@
       </div>
     </div>
 
-    <audio id="bgm" loop>
-      <source src="assets/Haggstrom.mp3" type="audio/mpeg" />
-    </audio>
-    <audio id="sfx-click">
-      <source src="assets/Click.mp3" type="audio/mpeg" />
-    </audio>
-    <audio id="sfx-level">
-      <source src="assets/Challenge_complete.ogg" type="audio/ogg" />
-    </audio>
-
     <div class="mc-world">
-<video autoplay muted loop playsinline preload="auto" id="mc-bg-video">
-    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-</video>
-
-      <div class="video-overlay"></div>
-
       <div class="mc-header">
         <h1 class="mc-logo">NAURA EDITION</h1>
         <div id="splash" class="mc-splash">Happy Birthday!</div>
@@ -77,6 +67,16 @@
         </button>
       </div>
     </div>
+
+    <audio id="bgm" loop>
+      <source src="assets/Haggstrom.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="sfx-click">
+      <source src="assets/Click.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="sfx-level">
+      <source src="assets/Challenge_complete.ogg" type="audio/ogg" />
+    </audio>
 
     <script src="mc-script.js"></script>
   </body>
