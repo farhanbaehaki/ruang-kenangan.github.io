@@ -20,17 +20,14 @@ body, html {
 /* --- LAYER -2: BACKGROUND VIDEO (BAGIAN INI TIDAK SAYA UBAH) --- */
 #mc-bg-video {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -2;
     transform: translate(-50%, -50%);
-    object-fit: contain;
+    object-fit: fill;
     display: block !important;
-    backface-visibility: hidden;
     filter: brightness(0.8);
 }
 
