@@ -3,129 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft for Naura</title>
+    <title>Minecraft Crafting - For Naura</title>
     <style>
+        :root {
+            --mc-gray: #c6c6c6;
+            --mc-dark: #373737;
+            --mc-green: #52ad2d;
+        }
+
         body {
-            background-color: #1a1a1a;
-            color: #ffffff;
+            background: #1a1a1a url('https://www.transparenttextures.com/patterns/pixel-weave.png');
+            color: white;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            /* Tekstur background tanah minecraft */
-            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
         }
 
-        .inventory-box {
-            background: #c6c6c6;
-            border: 6px solid #373737;
-            padding: 20px;
+        /* Container Utama ala Inventory */
+        .mc-container {
+            background: var(--mc-gray);
+            border: 5px solid var(--mc-dark);
             box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
-            width: 90%;
-            max-width: 400px;
+            padding: 20px;
             text-align: center;
+            image-rendering: pixelated;
         }
 
-        .mc-title {
+        .mc-header {
             color: #3f3f3f;
             text-shadow: 2px 2px #fff;
-            font-size: 1.5rem;
             margin-bottom: 20px;
+            font-size: 1.2rem;
         }
 
-        .grid {
+        /* Slot Crafting */
+        .crafting-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .slots-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            background: #8b8b8b;
-            padding: 10px;
-            border: 4px solid #373737;
+            grid-template-columns: repeat(2, 60px);
+            gap: 5px;
         }
 
         .slot {
-            width: 100%;
-            aspect-ratio: 1/1;
+            width: 60px;
+            height: 60px;
             background: #8b8b8b;
-            border: 4px solid #373737;
+            border: 4px solid var(--mc-dark);
+            box-shadow: inset -3px -3px #555, inset 3px 3px #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .slot:active { transform: scale(0.95); }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--mc-dark);
+        }
+
+        .result-slot {
+            width: 80px;
+            height: 80px;
+            background: #8b8b8b;
+            border: 4px solid var(--mc-dark);
             box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            font-size: 2rem;
-            transition: 0.2s;
+            font-size: 2.5rem;
         }
 
-        .slot:hover {
-            background: #9d9d9d;
-            transform: scale(1.05);
-        }
-
-        #mc-message {
-            margin-top: 20px;
-            background: rgba(0,0,0,0.7);
+        /* Pesan Log */
+        #status-bar {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--mc-green);
             padding: 10px;
-            border: 2px solid #52ad2d;
-            min-height: 50px;
-            font-size: 0.9rem;
+            min-height: 40px;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #52ad2d;
         }
 
-        /* Animasi Masuk Portal */
-        .portal-effect {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: purple;
-            opacity: 0;
-            pointer-events: none;
-            animation: portalIn 1.5s ease-out;
+        .btn-reset {
+            margin-top: 15px;
+            background: #a0a0a0;
+            border: 2px solid var(--mc-dark);
+            color: #3f3f3f;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: inherit;
         }
 
-        @keyframes portalIn {
-            0% { opacity: 1; transform: scale(2); filter: blur(20px); }
-            100% { opacity: 0; transform: scale(1); filter: blur(0); }
+        /* Animasi Bergetar */
+        .shake { animation: shake 0.2s; }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(5px); }
+            50% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
 
-<div class="portal-effect"></div>
-
-<div class="inventory-box">
-    <h2 class="mc-title">Naura's Stuff</h2>
-    <div class="grid">
-        <div class="slot" onclick="show('💎')">💎</div>
-        <div class="slot" onclick="show('🌹')">🌹</div>
-        <div class="slot" onclick="show('🍎')">🍎</div>
-        <div class="slot" onclick="show('🐱')">🐱</div>
-        <div class="slot" onclick="show('💖')">💖</div>
-        <div class="slot" onclick="show('🎂')">🎂</div>
-    </div>
-    <div id="mc-message">Klik item untuk melihat deskripsi...</div>
-    <br>
-    <a href="index.html" style="color: #3f3f3f; font-size: 0.7rem; text-decoration: none;">← Kembali ke Realita</a>
-</div>
-
-<script>
-    function show(item) {
-        const msg = document.getElementById('mc-message');
-        const items = {
-            '💎': "Diamond ini kalah terang sama senyum kamu. (Achievement Get: Precious!)",
-            '🌹': "Satu bunga untuk bidadari paling sabar (kalau nggak lagi jadi singa).",
-            '🍎': "Golden Apple buat kamu, biar energinya penuh terus buat dengerin ceritaku.",
-            '🐱': "Kucing ini mirip kamu, lucu tapi suka random tiba-tiba.",
-            '💖': "Health bar aku penuh kalau lagi chat-an sama kamu.",
-            '🎂': "Selamat ulang tahun! Maaf ya nggak bisa spawn kue beneran di sini."
-        };
-        msg.innerHTML = items[item];
+    <div class="mc-container">
+        <div class="mc-header">Crafting Something Special</div>
         
-        // Efek getar kecil saat klik
-        msg.style.transform = "translateX(5px)";
-        setTimeout(() => msg.style.transform = "translateX(0)", 100);
-    }
-</script>
+        <div class="crafting-area">
+            <div class="slots-grid">
+                <div class="slot" id="s1" onclick="addItem('🐱')">🐱</div>
+                <div class="slot" id="s2" onclick="addItem('💎')">💎</div>
+                <div class="slot" id="s3" onclick="addItem('🎂')">🎂</div>
+                <div class="slot" id="s4" onclick="addItem('💖')">💖</div>
+            </div>
+            
+            <div class="arrow">➡</div>
+            
+            <div class="result-slot" id="result">?</div>
+        </div>
 
+        <div id="status-bar">Pilih 2 item untuk di-craft!</div>
+        <button class="btn-reset" onclick="resetCraft()">Reset Table</button>
+    </div>
+
+    <script>
+        let selected = [];
+
+        function addItem(item) {
+            if (selected.length < 2) {
+                selected.push(item);
+                updateStatus();
+            }
+            
+            if (selected.length === 2) {
+                checkRecipe();
+            }
+        }
+
+        function updateStatus() {
+            const status = document.getElementById('status-bar');
+            status.innerText = "Selected: " + selected.join(" + ");
+        }
+
+        function checkRecipe() {
+            const result = document.getElementById('result');
+            const status = document.getElementById('status-bar');
+            const combo = selected.sort().join("");
+
+            // Logika Kombinasi
+            if (combo === "🐱💎") {
+                result.innerText = "✨";
+                status.innerText = "Achievement Get: 'Rare Naura'! Kamu itu permata yang berbentuk kucing.";
+            } else if (combo === "🎂💖") {
+                result.innerText = "🎁";
+                status.innerText = "Kado Terbuka: 'Cinta Tanpa Batas'. Selamat ulang tahun, Sayang!";
+            } else if (combo === "🐱💖") {
+                result.innerText = "🐾";
+                status.innerText = "Crafted: 'Love Cat'. Makasih ya udah jadi kucing yang paling aku sayang.";
+            } else if (combo === "💎💖") {
+                result.innerText = "💍";
+                status.innerText = "Crafted: 'The Future'. Apapun status kita nanti, kamu tetap yang paling berharga.";
+            } else {
+                result.innerText = "💥";
+                status.innerText = "Recipe Failed! Tapi aku tetep sayang kok. Coba lagi?";
+                document.querySelector('.mc-container').classList.add('shake');
+                setTimeout(() => document.querySelector('.mc-container').classList.remove('shake'), 200);
+            }
+        }
+
+        function resetCraft() {
+            selected = [];
+            document.getElementById('result').innerText = "?";
+            document.getElementById('status-bar').innerText = "Table cleared. Pilih 2 item lagi!";
+        }
+    </script>
 </body>
 </html>

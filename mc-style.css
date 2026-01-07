@@ -1,0 +1,83 @@
+body {
+    background: #1a1a1a;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    image-rendering: pixelated;
+    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+}
+
+.chest-container {
+    position: relative;
+    cursor: pointer;
+    font-size: 100px;
+    margin: 20px 0;
+    transition: transform 0.2s;
+}
+
+.chest-container:hover { transform: scale(1.1); }
+
+.inventory {
+    display: grid;
+    grid-template-columns: repeat(4, 60px);
+    gap: 10px;
+    background: #c6c6c6;
+    padding: 15px;
+    border: 4px solid #373737;
+    box-shadow: inset -4px -4px #555, inset 4px 4px #fff;
+}
+
+.item-slot {
+    width: 60px;
+    height: 60px;
+    background: #8b8b8b;
+    border: 3px solid #373737;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.item-slot.selected {
+    background: #ffffff;
+    border-color: #52ad2d;
+    box-shadow: 0 0 10px #52ad2d;
+}
+
+.game-ui {
+    margin-top: 20px;
+    background: rgba(0,0,0,0.8);
+    border: 2px solid #52ad2d;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.hidden-gift {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #c6c6c6;
+    border: 5px solid #52ad2d;
+    padding: 30px;
+    z-index: 100;
+    text-align: center;
+    color: #333;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+.btn-claim {
+    background: #52ad2d;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+}
