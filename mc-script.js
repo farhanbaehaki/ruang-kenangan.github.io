@@ -10,37 +10,42 @@ const splashes = [
 ];
 
 function startQuest() {
-  // 1. Animasi transisi overlay ke World
   const overlay = document.getElementById("start-overlay");
+  const world = document.querySelector(".mc-world");
+  const video = document.getElementById("mc-bg-video");
+
+  // 1. Mulai transisi hilangkan overlay hitam
   overlay.style.opacity = "0";
   
+  // 2. Refresh Video sebelum ditampilkan
+  if (video) {
+    video.load(); // Memaksa browser memuat ulang sumber video
+    video.play().catch(e => console.log("Video playing..."));
+  }
+
   setTimeout(() => {
     overlay.style.display = "none";
-    document.querySelector(".mc-world").style.opacity = "1";
+    // 3. Tampilkan dunia (video & menu)
+    world.style.opacity = "1";
+    
+    // 4. Pastikan video tidak pause setelah opacity muncul
+    if (video) video.play(); 
   }, 500);
 
-// --- TAMBAHAN BARU: RANDOM SPLASH TEXT ---
+  // Random Splash Text
   const splashElement = document.getElementById("splash");
   if (splashElement) {
     const randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
     splashElement.innerText = randomSplash;
   }
-  // 2. PAKSA VIDEO PLAY (Solusi agar tidak hilang/berhenti)
-  const video = document.getElementById("mc-bg-video");
-  if (video) {
-    video.muted = true; // Wajib agar bisa autoplay di browser modern
-    video.play().catch(error => {
-        console.log("Autoplay dicegah, namun dipicu lewat interaksi klik.");
-    });
-  }
 
-  // 3. Audio & UI
+  // Audio
   const bgm = document.getElementById("bgm");
   bgm.volume = 0.3;
-  bgm.play();
+  bgm.play().catch(e => console.log("Audio play blocked"));
+  
   refreshHotbar();
 }
-
 function refreshHotbar() {
   const hotbar = document.getElementById("main-hotbar");
   hotbar.innerHTML = "";
