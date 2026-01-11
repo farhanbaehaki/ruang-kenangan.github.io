@@ -50,14 +50,14 @@ function refreshHotbar() {
     hotbar.innerHTML = "";
 
     if (currentStep === 0) {
-        // Step 0: Munculkan Kue GIF
+        // Step 0: Kue (Hilangkan garis miring di depan assets)
         hotbar.innerHTML = `<div class="mc-slot" onclick="actionEat()"><img src="assets/photos/cake.gif"></div>`;
     } else if (currentStep === 1 || currentStep === 2) {
-        // Step 1: Munculkan Diamond
+        // Step 1: Hadiah (Pastikan namanya gift.jpg)
         hotbar.innerHTML = `<div class="mc-slot" onclick="actionDiamond()"><img src="assets/photos/gift.jpg"></div>`;
     } else if (currentStep === 3) {
-        // Step 3: Munculkan Heart of the Sea (Hadiah Final)
-        hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="/assets/photos/diamond1.jpg"></div>`;
+        // Step 3: Diamond (Hilangkan / di depan assets)
+        hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="assets/photos/diamond1.jpg"></div>`;
     }
 }
 
