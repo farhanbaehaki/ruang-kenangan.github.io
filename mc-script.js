@@ -57,7 +57,7 @@ function refreshHotbar() {
         hotbar.innerHTML = `<div class="mc-slot" onclick="actionDiamond()"><img src="assets/photos/gift.jpg"></div>`;
     } else if (currentStep === 3) {
         // Step 3: Munculkan Heart of the Sea (Hadiah Final)
-        hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="https://minecraft.wiki/images/assets/photos/diamond1.jpg"></div>`;
+        hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="/assets/photos/diamond1.jpg"></div>`;
     }
 }
 
