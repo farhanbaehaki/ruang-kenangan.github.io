@@ -209,7 +209,9 @@ html {
 .mc-slot img {
   width: 34px;
   height: 34px;
-  image-rendering: pixelated;
+image-rendering: pixelated; 
+    image-rendering: -moz-crisp-edges;
+    object-fit: contain;
 }
 
 /* --- ADVANCEMENTS (DIPERBAIKI: MUNCUL DARI ATAS) --- */
