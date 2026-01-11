@@ -4,134 +4,127 @@ const splashes = [
     "Happy Birthday, Naura!",
     "The Best Player!",
     "LDR is just a number!",
-    "Diamond for Diamond!",
-    "Made with Love!",
-    "Level 19 Unlocked!"
+    "Level 19 Unlocked!",
+    "Made with Love!"
 ];
 
+// 1. Fungsi Utama saat Klik "TAP TO JOIN WORLD"
 function startQuest() {
     const overlay = document.getElementById("start-overlay");
     const world = document.querySelector(".mc-world");
     const video = document.getElementById("mc-bg-video");
     const bgm = document.getElementById("bgm");
 
-    // 1. HIDUPKAN VIDEO DI BALIK LAYAR HITAM
+    // Mainkan Video & Musik
     if (video) {
-        video.muted = true; 
-        video.play().then(() => {
-            console.log("Video playing...");
-            setTimeout(() => {
-                overlay.style.opacity = "0";
-                setTimeout(() => {
-                    overlay.style.display = "none";
-                    world.style.opacity = "1";
-                    world.style.background = "transparent";
-                }, 600);
-            }, 150);
-        }).catch(e => {
-            overlay.style.opacity = "0";
-            setTimeout(() => overlay.style.display = "none", 600);
-        });
-    }
-
-    // --- Splash & Audio ---
-    const splashElement = document.getElementById("splash");
-    if (splashElement) {
-        const randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
-        splashElement.innerText = randomSplash;
-    }
-
-    if (bgm) {
-        bgm.volume = 0.3;
-        bgm.play().catch(e => console.log("Audio blocked"));
+        video.muted = false; // Agar suara video terdengar
+        video.play().catch(e => console.log("Video play dipending"));
     }
     
-    refreshHotbar();
+    if (bgm) {
+        bgm.volume = 0.3;
+        bgm.play().catch(e => console.log("Audio diblokir browser"));
+    }
+
+    // Transisi halus: Hilangkan layar hitam, munculkan dunia Minecraft
+    overlay.style.opacity = "0";
+    setTimeout(() => {
+        overlay.style.display = "none";
+        world.style.opacity = "1";
+        // PENTING: Refresh hotbar agar kue muncul segera setelah dunia terbuka
+        refreshHotbar(); 
+    }, 800);
+
+    // Set Splash Text secara acak
+    const splashElement = document.getElementById("splash");
+    if (splashElement) {
+        splashElement.innerText = splashes[Math.floor(Math.random() * splashes.length)];
+    }
 }
 
+// 2. Logika Update Hotbar
 function refreshHotbar() {
     const hotbar = document.getElementById("main-hotbar");
+    if (!hotbar) return;
+
     hotbar.innerHTML = "";
 
     if (currentStep === 0) {
-        // PAKAI GIF KUE KAMU DI SINI
+        // Step 0: Munculkan Kue GIF
         hotbar.innerHTML = `<div class="mc-slot" onclick="actionEat()"><img src="assets/photos/cake.gif"></div>`;
     } else if (currentStep === 1 || currentStep === 2) {
-        hotbar.innerHTML = `<div class="mc-slot" onclick="actionDiamond()"><img src="assets/photos/gift.png"></div>`;
+        // Step 1: Munculkan Diamond
+        hotbar.innerHTML = `<div class="mc-slot" onclick="actionDiamond()"><img src="assets/photos/gift.jpg"></div>`;
     } else if (currentStep === 3) {
-        hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="assets/photos/diamond.png"></div>`;
+        // Step 3: Munculkan Heart of the Sea (Hadiah Final)
+        hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="https://minecraft.wiki/images/assets/photos/diamond1.jpg"></div>`;
     }
 }
 
+// 3. Aksi saat Item di Hotbar diklik
 function actionEat() {
     playMcSfx("sfx-click");
     currentStep = 1;
-    showMcAdvancement("Sweet 19!", "Kue dimakan. Diamond muncul di Hotbar!");
+    showMcAdvancement("Sweet 19!", "Kue dimakan. Diamond didapatkan!");
     refreshHotbar();
 }
 
 function actionDiamond() {
     playMcSfx("sfx-click");
     showMcModal(
-        "The Memory Crystal",
-        "Jarak 1000 block bukan masalah, karena kamu adalah berlian paling langka di server ini. <br><br><b>Tugas:</b> Aktifkan Mode Kreatif untuk menembus batas."
+        "Crystal of Memory",
+        "Jarak bukan halangan bagi pemain hebat. <br><br><b>Misi:</b> Klik tombol CREATIVE MODE dan masukkan kode rahasia."
     );
     currentStep = 2;
+    // Buka kunci tombol Creative
     const btn = document.getElementById("btn-creative");
-    if(btn) btn.classList.remove("locked");
+    if (btn) {
+        btn.classList.remove("locked");
+        btn.innerHTML = "CREATIVE MODE 🔓";
+    }
 }
 
+// 4. Aksi Tombol Menu (Survival & Creative)
 function questAction(type) {
+    playMcSfx("sfx-click");
+    
     if (type === "survival") {
-        showMcModal(
-            "Survival Mode",
-            "Kamu sudah bertahan sejauh ini dengan hebat. Teruslah berjalan!"
-        );
+        showMcModal("Survival Mode", "Kamu telah bertahan di server ini selama 19 tahun dengan sangat baik!");
     } else if (type === "creative") {
         if (currentStep < 2) {
-            showMcModal("LOCKED", "Selesaikan misi Diamond dulu di Hotbar!");
+            showMcModal("LOCKED", "Selesaikan misi Diamond di Hotbar terlebih dahulu!");
             return;
         }
         
-        let code = prompt("Masukkan Passcode (DDMM):");
+        let code = prompt("Masukkan Passcode (Tanggal Lahir Naura DDMM):");
         if (code === "1301") {
             playMcSfx("sfx-level");
             currentStep = 3;
-            showMcAdvancement("The Architect", "Akses Jantung Samudera Terbuka!");
+            showMcAdvancement("The Architect", "Akses Jantung Samudera telah terbuka!");
             refreshHotbar();
         } else if (code !== null) {
-            alert("❌ Kode salah! Coba tanggal lahirmu.");
+            alert("❌ Kode salah! Petunjuk: Tanggal lahirmu (Contoh: 0101)");
         }
     }
 }
 
 function actionFinal() {
     playMcSfx("sfx-level");
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-    showMcModal(
-        "THE END?",
-        "Kamu berhasil menyelesaikan Fase 1! <br><br>Siap untuk kejutan berikutnya?"
-    );
+    // Efek kembang api kado
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+    showMcModal("HAPPY BIRTHDAY!", "Selamat Naura! Quest selesai. Semoga harimu menyenangkan! 🎉");
 }
 
-// Helpers
+// 5. Fungsi Pembantu (Helpers)
 function playMcSfx(id) {
-    const s = document.getElementById(id);
-    if (s) {
-        s.currentTime = 0;
-        s.play();
-    }
-    if (navigator.vibrate) navigator.vibrate(50);
-}
-
-function showMcAdvancement(title, msg) {
-    playMcSfx("sfx-level");
-    const adv = document.getElementById("adv-pop");
-    const advTitle = document.getElementById("adv-title");
-    if (adv && advTitle) {
-        advTitle.innerText = title;
-        adv.classList.add("show");
-        setTimeout(() => adv.classList.remove("show"), 4500);
+    const sfx = document.getElementById(id);
+    if (sfx) {
+        sfx.currentTime = 0;
+        sfx.play();
     }
 }
 
@@ -148,5 +141,15 @@ function closeMcModal() {
     document.getElementById("mc-modal").style.display = "none";
 }
 
-// Inisialisasi
+function showMcAdvancement(title, msg) {
+    const adv = document.getElementById("adv-pop");
+    const advTitle = document.getElementById("adv-title");
+    if (adv && advTitle) {
+        advTitle.innerText = title;
+        adv.classList.add("show");
+        setTimeout(() => adv.classList.remove("show"), 4500);
+    }
+}
+
+// Inisialisasi awal agar hotbar tidak kosong saat pertama kali world muncul
 document.addEventListener("DOMContentLoaded", refreshHotbar);
