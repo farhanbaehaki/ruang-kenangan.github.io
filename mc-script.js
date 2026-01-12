@@ -111,7 +111,7 @@ function questAction(type) {
       return;
     }
 
-    let code = prompt("Masukkan Passcode (hari ini??? DDMMYYYY):");
+    let code = prompt("Masukkan Passcode (hari ini???):");
     if (code === "13012026") {
       playMcSfx("sfx-level");
       currentStep = 3;
@@ -123,7 +123,7 @@ function questAction(type) {
       setTimeout(() => world.classList.remove("shake-effect"), 500);
 
       playMcSfx("sfx-click");
-      showMcModal("SECURITY ALERT", "Naura fell from a high place (Wrong Password!). <br><br> Hint: your special day (DDMMYYYY)");
+      showMcModal("SECURITY ALERT", "Naura fell from a high place (Wrong Password!). <br><br> Hint: your special day");
     }
   }
 }
