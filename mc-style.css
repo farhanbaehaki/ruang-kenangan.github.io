@@ -308,3 +308,24 @@ image-rendering: pixelated;
     gap: 4px;
     pointer-events: auto; /* Penting: agar slot bisa diklik */
 }
+
+#mc-chat-container {
+    position: fixed;
+    bottom: 160px; /* Di atas Hotbar */
+    left: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column; /* Pesan baru di bawah pesan lama */
+    gap: 4px;
+    pointer-events: none;
+}
+
+.chat-line {
+    color: #ffffff;
+    text-shadow: 2px 2px #000;
+    font-size: 11px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 2px 6px;
+    transition: opacity 1s;
+    width: fit-content;
+}

@@ -8,16 +8,17 @@ const splashes = [
   "Made with Love!",
 ];
 
-// 1. Fungsi Utama saat Klik "TAP TO JOIN WORLD"
+// 1. Fungsi Utama (Gabungan & Diperbaiki)
 function startQuest() {
   const overlay = document.getElementById("start-overlay");
   const world = document.querySelector(".mc-world");
   const video = document.getElementById("mc-bg-video");
   const bgm = document.getElementById("bgm");
 
+  // Kontrol Media
   if (video) {
     video.muted = true;
-    video.play().catch((e) => console.log("Video play dipending"));
+    video.play().catch((e) => console.log("Video pending"));
   }
 
   if (bgm) {
@@ -25,24 +26,28 @@ function startQuest() {
     bgm.play().catch((e) => console.log("Audio diblokir"));
   }
 
+  // Transisi UI
   overlay.style.opacity = "0";
   setTimeout(() => {
     overlay.style.display = "none";
     world.style.opacity = "1";
     refreshHotbar();
-    // Tambahan Chat Sambutan
+    
+    // Antrian Chat ala Minecraft
     sendMcChat("Welcome back, Naura!");
-    sendMcChat("Server version 13.0.1");
+    setTimeout(() => {
+      sendMcChat("Server version 13.0.1");
+    }, 1500);
+
   }, 800);
 
   const splashElement = document.getElementById("splash");
   if (splashElement) {
-    splashElement.innerText =
-      splashes[Math.floor(Math.random() * splashes.length)];
+    splashElement.innerText = splashes[Math.floor(Math.random() * splashes.length)];
   }
 }
 
-// 2. Logika Update Hotbar & Item Name
+// 2. Logika Update Hotbar & Tooltip
 function refreshHotbar() {
   const hotbar = document.getElementById("main-hotbar");
   if (!hotbar) return;
@@ -73,7 +78,7 @@ function showItemName(name) {
   }, 2000);
 }
 
-// 3. Aksi & SFX
+// 3. Aksi Game
 function actionEat() {
   playMcSfx("sfx-click");
   currentStep = 1;
@@ -99,33 +104,26 @@ function questAction(type) {
   playMcSfx("sfx-click");
 
   if (type === "survival") {
-    showMcModal(
-      "Survival Mode",
-      "Kamu telah bertahan di server ini selama 19 tahun dengan sangat baik!"
-    );
+    showMcModal("Survival Mode", "Kamu telah bertahan di server ini selama 19 tahun dengan sangat baik!");
   } else if (type === "creative") {
     if (currentStep < 2) {
       showMcModal("LOCKED", "Selesaikan misi di Hotbar terlebih dahulu!");
       return;
     }
 
-    let code = prompt("Masukkan Passcode (hari ini???):");
+    let code = prompt("Masukkan Passcode (hari ini??? DDMMYYYY):");
     if (code === "13012026") {
       playMcSfx("sfx-level");
       currentStep = 3;
       showMcAdvancement("The Architect", "Akses Berlian telah terbuka!");
       refreshHotbar();
     } else if (code !== null) {
-      // Efek Getar saat Salah
       const world = document.querySelector(".mc-world");
       world.classList.add("shake-effect");
       setTimeout(() => world.classList.remove("shake-effect"), 500);
 
       playMcSfx("sfx-click");
-      showMcModal(
-        "SECURITY ALERT",
-        "Naura fell from a high place (Wrong Password!). <br><br> Hint: your special day"
-      );
+      showMcModal("SECURITY ALERT", "Naura fell from a high place (Wrong Password!). <br><br> Hint: your special day (DDMMYYYY)");
     }
   }
 }
@@ -149,7 +147,7 @@ function playMcSfx(id) {
   const sfx = document.getElementById(id);
   if (sfx) {
     sfx.currentTime = 0;
-    sfx.play().catch((e) => console.log("SFX Error"));
+    sfx.play().catch(() => {});
   }
 }
 
@@ -174,21 +172,16 @@ function showMcAdvancement(title, msg) {
 }
 
 function sendMcChat(message) {
-  const chatBox = document.createElement("div");
-  chatBox.style.position = "fixed";
-  chatBox.style.bottom = "160px";
-  chatBox.style.left = "20px";
-  chatBox.style.color = "#ffffff";
-  chatBox.style.textShadow = "2px 2px #000";
-  chatBox.style.fontSize = "10px";
-  chatBox.style.zIndex = "1000";
-  chatBox.style.transition = "opacity 1s";
-  chatBox.innerHTML = `<span style="color: #aaa;">[Server]</span> ${message}`;
-  document.body.appendChild(chatBox);
+  const container = document.getElementById("mc-chat-container");
+  if (!container) return;
+  const chatLine = document.createElement("div");
+  chatLine.className = "chat-line"; 
+  chatLine.innerHTML = `<span style="color: #aaa;">[Server]</span> ${message}`;
+  container.appendChild(chatLine);
   setTimeout(() => {
-    chatBox.style.opacity = "0";
-    setTimeout(() => chatBox.remove(), 1000);
-  }, 5000);
+    chatLine.style.opacity = "0";
+    setTimeout(() => chatLine.remove(), 1000);
+  }, 6000);
 }
 
 document.addEventListener("DOMContentLoaded", refreshHotbar);
