@@ -131,33 +131,54 @@ function questAction(type) {
 function actionFinal() {
   playMcSfx("sfx-level");
   
-  // Confetti warna-warni
   confetti({ 
-    particleCount: 200, 
+    particleCount: 150, 
     spread: 70, 
     origin: { y: 0.6 },
-    colors: ['#52ad2d', '#ffff55', '#ff4d6d', '#ffffff']
+    colors: ['#b350ff', '#ffff55', '#55ff55'] 
   });
 
+  // Desain Voucher ala Minecraft Tooltip (Legendary Purple)
   showMcModal(
-    "ITEM UNLOCKED: THE INFINITY TREAT 🎫",
-    `<div style="background: rgba(0,0,0,0.05); border: 2px solid #52ad2d; padding: 15px; margin: 10px 0; border-radius: 8px; position: relative; overflow: hidden;">
-        <p style="color: #2e7d32; font-size: 13px; margin: 0; font-weight:bold; text-transform: uppercase; letter-spacing: 1px;">Legendary Consumable</p>
+    "⭐ MISSION ACCOMPLISHED ⭐",
+    `<div style="
+        background: rgba(16, 1, 32, 0.95); 
+        border: 3px solid #b350ff; 
+        padding: 20px; 
+        margin: 10px 0; 
+        border-radius: 2px; 
+        box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+        text-align: left;
+        position: relative;">
         
-        <div style="margin-top: 10px; text-align: left; font-size: 10px; color: #444;">
-          <p style="margin: 5px 0;">✅ <b>MAKAN ENAK:</b> Bebas pilih tempat & menu favorit.</p>
-          <p style="margin: 5px 0;">✅ <b>NGOPI SANTAI:</b> Deep talk sambil ngopi/matcha.</p>
-          <p style="margin: 5px 0;">✅ <b>FREE DELIVERY:</b> Bisa dipake buat jajan via ojol.</p>
+        <h4 style="color: #b350ff; margin: 0 0 10px 0; font-size: 14px; text-shadow: 2px 2px #000;">[ Legendary Voucher ]</h4>
+        
+        <div style="color: #ffffff; font-size: 11px; line-height: 1.8; text-shadow: 1px 1px #000;">
+          <span style="color: #55ff55;">+ Unlimited</span> <b>Makan Enak</b><br>
+          <span style="color: #55ff55;">+ Unlimited</span> <b>Ngopi/Matcha Date</b><br>
+          <span style="color: #55ff55;">+ 100%</span> <b>Deep Talk Buff</b>
         </div>
 
-        <p style="color: #666; font-size: 9px; margin-top: 10px; border-top: 1px solid #ddd; padding-top: 8px; font-style: italic;">
-          "Gunakan saat lapar atau saat ingin cerita banyak hal."
-        </p>
+        <div style="margin-top: 15px; border-top: 2px solid #373737; padding-top: 10px;">
+          <p style="color: #aaa; font-size: 9px; font-style: italic; margin: 0;">
+            "Item ini sangat langka. Gunakan untuk memulihkan energi dan mood Naura kapan saja."
+          </p>
+        </div>
+
+        <div style="
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            font-size: 20px; 
+            opacity: 0.8;
+            animation: bounce 1s infinite alternate;">🎫</div>
      </div>
-     <p style="font-size: 10px; color: #ff4d6d; font-weight: bold;">Screenshot layar ini & redeem ke aku ya! ❤️</p>`
+     
+     <p style="font-size: 10px; color: #333; font-weight: bold; background: #ffff55; display: inline-block; padding: 2px 8px; margin-top: 10px;">
+        SCREENSHOT TO CLAIM
+     </p>`
   );
 }
-
 // Helpers
 function playMcSfx(id) {
   const sfx = document.getElementById(id);
