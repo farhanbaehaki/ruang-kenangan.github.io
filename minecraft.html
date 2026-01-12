@@ -25,13 +25,13 @@
       <source src="assets/music/Click.mp3" type="audio/mpeg" />
     </audio>
     <audio id="sfx-level">
-      <source src="assets/Challenge_complete.ogg" type="audio/ogg" />
+      <source src="assets/music/Challenge_complete.ogg" type="audio/ogg" />
     </audio>
 
     <div class="mc-world">
-<video autoplay muted loop playsinline preload="auto" id="mc-bg-video">
-    <source src="assets/photos/lipe.mp4" type="video/mp4">
-</video>
+      <video autoplay muted loop playsinline preload="auto" id="mc-bg-video">
+        <source src="assets/photos/lipe.mp4" type="video/mp4" />
+      </video>
 
       <div class="video-overlay"></div>
 
@@ -53,7 +53,10 @@
         </button>
       </div>
 
-      <div class="mc-hotbar" id="main-hotbar"></div>
+      <div class="mc-ui-container">
+        <div id="item-name" class="mc-font"></div>
+        <div class="mc-hotbar" id="main-hotbar"></div>
+      </div>
 
       <div id="adv-pop" class="mc-adv">
         <div class="adv-icon">🟡</div>
@@ -67,7 +70,7 @@
     <div id="mc-modal" class="mc-overlay">
       <div class="mc-modal-box">
         <h3 id="modal-title" style="color: #ffff55; margin-bottom: 10px"></h3>
-        <p id="modal-desc" style="font-size: 11px; line-height: 1.6"></p>
+        <div id="modal-desc" style="font-size: 11px; line-height: 1.6"></div>
         <button
           class="mc-btn"
           style="margin-top: 15px; width: 100px"

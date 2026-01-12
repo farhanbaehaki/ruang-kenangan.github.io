@@ -15,27 +15,24 @@ function startQuest() {
   const video = document.getElementById("mc-bg-video");
   const bgm = document.getElementById("bgm");
 
-  // SETINGAN SUARA
   if (video) {
-    video.muted = true; // MATIKAN suara video agar tidak tabrakan
+    video.muted = true;
     video.play().catch((e) => console.log("Video play dipending"));
   }
 
   if (bgm) {
-    bgm.volume = 0.3; // Atur volume musik Haggstrom agar pas (0.1 - 1.0)
-    bgm
-      .play()
-      .catch((e) =>
-        console.log("Audio diblokir browser, butuh interaksi user")
-      );
+    bgm.volume = 0.3;
+    bgm.play().catch((e) => console.log("Audio diblokir"));
   }
 
-  // Transisi
   overlay.style.opacity = "0";
   setTimeout(() => {
     overlay.style.display = "none";
     world.style.opacity = "1";
     refreshHotbar();
+    // Tambahan Chat Sambutan
+    sendMcChat("Welcome back, Naura!");
+    sendMcChat("Server version 13.0.1");
   }, 800);
 
   const splashElement = document.getElementById("splash");
@@ -45,29 +42,40 @@ function startQuest() {
   }
 }
 
-// 2. Logika Update Hotbar (Foto & Jalur File)
+// 2. Logika Update Hotbar & Item Name
 function refreshHotbar() {
   const hotbar = document.getElementById("main-hotbar");
   if (!hotbar) return;
 
   hotbar.innerHTML = "";
-
-  // Pastikan path folder benar: assets/photos/
   const path = "assets/photos/";
 
   if (currentStep === 0) {
     hotbar.innerHTML = `<div class="mc-slot" onclick="actionEat()"><img src="${path}cake.gif"></div>`;
+    showItemName("Birthday Cake");
   } else if (currentStep === 1 || currentStep === 2) {
-    hotbar.innerHTML = `<div class="mc-slot" onclick="actionDiamond()"><img src="${path}gift1.png"></div>`;
+    hotbar.innerHTML = `<div class="mc-slot" onclick="actionDiamond()"><img src="${path}gift1.png" onerror="this.src='https://minecraft.wiki/images/Filled_Chest_JE2_BE2.png'"></div>`;
+    showItemName("Mysterious Gift");
   } else if (currentStep === 3) {
-    // PERBAIKAN: Foto Diamond Terakhir
-    hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="${path}diamond1.jpg"></div>`;
+    hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="${path}diamond1.jpg" onerror="this.src='https://minecraft.wiki/images/Diamond_JE3_BE3.png'"></div>`;
+    showItemName("The Eternal Diamond");
   }
+}
+
+function showItemName(name) {
+  const el = document.getElementById("item-name");
+  if (!el) return;
+  el.innerText = name;
+  el.style.opacity = "1";
+  if (window.itemTimeout) clearTimeout(window.itemTimeout);
+  window.itemTimeout = setTimeout(() => {
+    el.style.opacity = "0";
+  }, 2000);
 }
 
 // 3. Aksi & SFX
 function actionEat() {
-  playMcSfx("sfx-click"); // Memutar suara klik
+  playMcSfx("sfx-click");
   currentStep = 1;
   showMcAdvancement("Sweet 19!", "Kue dimakan. Hadiah muncul!");
   refreshHotbar();
@@ -103,26 +111,40 @@ function questAction(type) {
 
     let code = prompt("Masukkan Passcode (Tanggal Lahir Naura DDMM):");
     if (code === "1301") {
-      playMcSfx("sfx-level"); // Memutar suara challenge complete
+      playMcSfx("sfx-level");
       currentStep = 3;
       showMcAdvancement("The Architect", "Akses Berlian telah terbuka!");
       refreshHotbar();
     } else if (code !== null) {
-      alert("❌ Kode salah! Petunjuk: Tanggal lahirmu (Contoh: 0101)");
+      // Efek Getar saat Salah
+      const world = document.querySelector(".mc-world");
+      world.classList.add("shake-effect");
+      setTimeout(() => world.classList.remove("shake-effect"), 500);
+
+      playMcSfx("sfx-click");
+      showMcModal(
+        "SECURITY ALERT",
+        "Naura fell from a high place (Wrong Password!). <br><br> Hint: 13-01"
+      );
     }
   }
 }
 
 function actionFinal() {
   playMcSfx("sfx-level");
-  confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+  confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
+
   showMcModal(
-    "HAPPY BIRTHDAY!",
-    "Selamat Naura! Quest selesai. Kamu mendapatkan Diamond! 🎉"
+    "YOU FOUND: THE INFINITY VOUCHER",
+    `<div style="background: rgba(0,0,0,0.1); border: 2px dashed #ffff55; padding: 15px; margin: 10px 0;">
+            <p style="color: #ffff55; font-size: 14px; margin: 0; font-weight:bold;">🎫 DINNER DATE VOUCHER</p>
+            <p style="color: #333; font-size: 10px; margin-top: 5px;">Item ini dapat digunakan kapanpun Naura ingin makan bareng. Berlaku selamanya!</p>
+         </div>
+         <p style="font-size: 10px;">Screenshot layar ini dan kirim ke aku untuk klaim hadiahnya! ❤️</p>`
   );
 }
 
-// Fungsi bantu untuk memutar suara
+// Helpers
 function playMcSfx(id) {
   const sfx = document.getElementById(id);
   if (sfx) {
@@ -149,6 +171,24 @@ function showMcAdvancement(title, msg) {
     adv.classList.add("show");
     setTimeout(() => adv.classList.remove("show"), 4500);
   }
+}
+
+function sendMcChat(message) {
+  const chatBox = document.createElement("div");
+  chatBox.style.position = "fixed";
+  chatBox.style.bottom = "160px";
+  chatBox.style.left = "20px";
+  chatBox.style.color = "#ffffff";
+  chatBox.style.textShadow = "2px 2px #000";
+  chatBox.style.fontSize = "10px";
+  chatBox.style.zIndex = "1000";
+  chatBox.style.transition = "opacity 1s";
+  chatBox.innerHTML = `<span style="color: #aaa;">[Server]</span> ${message}`;
+  document.body.appendChild(chatBox);
+  setTimeout(() => {
+    chatBox.style.opacity = "0";
+    setTimeout(() => chatBox.remove(), 1000);
+  }, 5000);
 }
 
 document.addEventListener("DOMContentLoaded", refreshHotbar);
