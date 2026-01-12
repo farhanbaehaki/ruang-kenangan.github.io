@@ -58,7 +58,7 @@ function refreshHotbar() {
   if (currentStep === 0) {
     hotbar.innerHTML = `<div class="mc-slot" onclick="actionEat()"><img src="${path}cake.gif"></div>`;
   } else if (currentStep === 1 || currentStep === 2) {
-    hotbar.innerHTML = `<div class="mc-slot" onclick="actionDiamond()"><img src="${path}gift1.jpg"></div>`;
+    hotbar.innerHTML = `<div class="mc-slot" onclick="actionDiamond()"><img src="${path}gift1.png"></div>`;
   } else if (currentStep === 3) {
     // PERBAIKAN: Foto Diamond Terakhir
     hotbar.innerHTML = `<div class="mc-slot" onclick="actionFinal()"><img src="${path}diamond1.jpg"></div>`;
