@@ -311,7 +311,7 @@ image-rendering: pixelated;
 
 #mc-chat-container {
     position: fixed;
-    bottom: 160px; /* Di atas Hotbar */
+    bottom: 140px; /* Di atas Hotbar */
     left: 20px;
     z-index: 1000;
     display: flex;
