@@ -85,7 +85,7 @@ function actionDiamond() {
   playMcSfx("sfx-click");
   showMcModal(
     "Crystal of Memory",
-    "Jarak bukan halangan bagi pemain hebat. <br><br><b>Misi:</b> Klik tombol CREATIVE MODE dan masukkan kode rahasia."
+    "Jarak bukan halangan bagi pemain hebat. <br><br><b>Misi: </b> Klik tombol CREATIVE MODE dan masukkan kode rahasia."
   );
   currentStep = 2;
   const btn = document.getElementById("btn-creative");
@@ -109,8 +109,8 @@ function questAction(type) {
       return;
     }
 
-    let code = prompt("Masukkan Passcode (Tanggal Lahir Naura DDMM):");
-    if (code === "1301") {
+    let code = prompt("Masukkan Passcode (hari ini???):");
+    if (code === "13012026") {
       playMcSfx("sfx-level");
       currentStep = 3;
       showMcAdvancement("The Architect", "Akses Berlian telah terbuka!");
@@ -124,7 +124,7 @@ function questAction(type) {
       playMcSfx("sfx-click");
       showMcModal(
         "SECURITY ALERT",
-        "Naura fell from a high place (Wrong Password!). <br><br> Hint: 13-01"
+        "Naura fell from a high place (Wrong Password!). <br><br> Hint: your special day"
       );
     }
   }
