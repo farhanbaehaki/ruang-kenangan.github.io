@@ -130,15 +130,31 @@ function questAction(type) {
 
 function actionFinal() {
   playMcSfx("sfx-level");
-  confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
+  
+  // Confetti warna-warni
+  confetti({ 
+    particleCount: 200, 
+    spread: 70, 
+    origin: { y: 0.6 },
+    colors: ['#52ad2d', '#ffff55', '#ff4d6d', '#ffffff']
+  });
 
   showMcModal(
-    "YOU FOUND: THE INFINITY VOUCHER",
-    `<div style="background: rgba(0,0,0,0.1); border: 2px dashed #ffff55; padding: 15px; margin: 10px 0;">
-            <p style="color: #ffff55; font-size: 14px; margin: 0; font-weight:bold;">🎫 DINNER DATE VOUCHER</p>
-            <p style="color: #333; font-size: 10px; margin-top: 5px;">Item ini dapat digunakan kapanpun Naura ingin makan bareng. Berlaku selamanya!</p>
-         </div>
-         <p style="font-size: 10px;">Screenshot layar ini dan kirim ke aku untuk klaim hadiahnya! ❤️</p>`
+    "ITEM UNLOCKED: THE INFINITY TREAT 🎫",
+    `<div style="background: rgba(0,0,0,0.05); border: 2px solid #52ad2d; padding: 15px; margin: 10px 0; border-radius: 8px; position: relative; overflow: hidden;">
+        <p style="color: #2e7d32; font-size: 13px; margin: 0; font-weight:bold; text-transform: uppercase; letter-spacing: 1px;">Legendary Consumable</p>
+        
+        <div style="margin-top: 10px; text-align: left; font-size: 10px; color: #444;">
+          <p style="margin: 5px 0;">✅ <b>MAKAN ENAK:</b> Bebas pilih tempat & menu favorit.</p>
+          <p style="margin: 5px 0;">✅ <b>NGOPI SANTAI:</b> Deep talk sambil ngopi/matcha.</p>
+          <p style="margin: 5px 0;">✅ <b>FREE DELIVERY:</b> Bisa dipake buat jajan via ojol.</p>
+        </div>
+
+        <p style="color: #666; font-size: 9px; margin-top: 10px; border-top: 1px solid #ddd; padding-top: 8px; font-style: italic;">
+          "Gunakan saat lapar atau saat ingin cerita banyak hal."
+        </p>
+     </div>
+     <p style="font-size: 10px; color: #ff4d6d; font-weight: bold;">Screenshot layar ini & redeem ke aku ya! ❤️</p>`
   );
 }
 
