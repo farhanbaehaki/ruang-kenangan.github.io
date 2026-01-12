@@ -161,7 +161,7 @@ function actionFinal() {
 
         <div style="margin-top: 15px; border-top: 2px solid #373737; padding-top: 10px;">
           <p style="color: #aaa; font-size: 9px; font-style: italic; margin: 0;">
-            "Item ini sangat langka. Gunakan untuk memulihkan energi dan mood Naura kapan saja."
+            "Item ini sangat langka. Gunakan untuk memulihkan energi dan mood kamu kapan saja."
           </p>
         </div>
 
